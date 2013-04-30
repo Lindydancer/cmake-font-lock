@@ -1,7 +1,7 @@
 # andersl-cmake-font-lock - Syntax coloring support for CMake
 
 *Author:* Anders Lindgren<br>
-*Version:* 0.0.0<br>
+*Version:* 0.0.2<br>
 
 Advanced syntax coloring support for CMake scripts.
 
@@ -33,7 +33,7 @@ colored as a constant.
 
 ## Installation
 
-Place this file in a directory in Emacs' load path.
+Place the file in a directory in Emacs' load path.
 
 Add the following lines to a suitable init file, like ~/.emacs, to
 enable this package:
@@ -51,8 +51,8 @@ enable this package:
 * The arguments of functions are colored according to the type, as
   specified by the function *signature*. The built-in signatures
   can color an arguments as a *variable*, a *function*, a
-  *property*, a *target*, and finally a CMake keyword is colored as
-  a *type*.
+  *property*, a *target*, a *policy*, and finally a CMake keyword
+  is colored as a *type*.
 * The constants `true`, `false`, `yes`, `no`, `y`, `n`, `on`, and
   `off` are colored as *constants*.
 * `${...}` constructs are fontified as *variables*. Nested

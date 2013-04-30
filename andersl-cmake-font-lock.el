@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012-2013 Anders Lindgren
 
 ;; Author: Anders Lindgren
-;; Version: 0.0.0
+;; Version: 0.0.2
 ;; Created: 2012-12-05
 ;; Keywords: faces languages
 
