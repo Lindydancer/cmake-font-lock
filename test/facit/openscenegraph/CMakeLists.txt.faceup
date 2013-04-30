@@ -117,13 +117,13 @@
 
     «f:ADD_CUSTOM_COMMAND»(
         «t:OUTPUT»    Android-OpenSceneGraph
-        «t:DEPENDS»   «D:${»«v:CMAKE_BINARY_DIR»«D:}»«c:/Android.mk»
+        «t:DEPENDS»   «D:${»«v:CMAKE_BINARY_DIR»«D:}»/Android.mk
         «t:COMMAND»   «s:"${«v:ANDROID_NDK»}/ndk-build"»
         «t:ARGS»      --directory=«D:${»«v:CMAKE_BINARY_DIR»«D:}» NDK_APPLICATION_MK=Application.mk -j«D:${»«v:J»«D:}» NDK_LOG=1
     )
 
     «f:ADD_CUSTOM_TARGET»(«c:ndk» «t:ALL» echo
-          «t:DEPENDS» «c:Android-OpenSceneGraph»
+          «t:DEPENDS» Android-OpenSceneGraph
     )
     «f:install»(«t:DIRECTORY» include/ «t:DESTINATION» include/
         «t:PATTERN» «s:".svn"» «t:EXCLUDE»

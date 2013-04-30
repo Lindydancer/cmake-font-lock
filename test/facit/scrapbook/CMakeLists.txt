@@ -10,6 +10,8 @@ add_compiler_rt_static_runtime(clang_rt.asan-${arch} ${arch}
       CFLAGS ${ASAN_CFLAGS}
       DEFS ${ASAN_COMMON_DEFINITIONS})
 
+source_group(alpha FILES test.c)
+source_group(alpha\\beta FILES test.c)
 
 foo({allan})
 foo(${allan})

@@ -52,7 +52,7 @@
 
 ;; Installation:
 ;;
-;; Place this file in a directory in Emacs' load path.
+;; Place the file in a directory in Emacs' load path.
 ;;
 ;; Add the following lines to a suitable init file, like ~/.emacs, to
 ;; enable this package:
@@ -602,11 +602,11 @@ This is used to keep down the size of
 
 
 (defvar andersl-cmake-font-lock-function-signatures
-  '(("add_custom_command"     ()     (("DEPENDS" :repeat :tgt)
-                                      ("IMPLICIT_DEPENDS" nil :repeat :tgt)
-                                      ("MAIN_DEPENDENCY" :tgt)
+  '(("add_custom_command"     ()     (("DEPENDS" :repeat :path)
+                                      ("IMPLICIT_DEPENDS" nil :repeat :path)
+                                      ("MAIN_DEPENDENCY" :path)
                                       ("TARGET" :tgt)))
-    ("add_custom_target"      (:tgt) (("DEPENDS" :repeat :tgt)))
+    ("add_custom_target"      (:tgt) (("DEPENDS" :repeat :path)))
     ("add_dependencies"       (:repeat :tgt))
     ("add_executable"         (:tgt))
     ("add_library"            (:tgt))
@@ -992,6 +992,9 @@ This is useful as a font-lock pre-match form."
 (defun andersl-cmake-font-lock-this-argument (&optional limit)
   "Set point at the current argument and return the end.
 
+Parameter `limit' points the before the closing parenthesis of
+the function call.
+
 Return nil if there are no more arguments.
 
 Treats parenthesis as individual tokens. A token can contain a
@@ -1012,6 +1015,11 @@ ${var} construct."
                    (cond ((memq (char-syntax (following-char))
                                 '(?w ?. ?_))
                           (forward-char)
+                          t)
+                         ((eq (following-char) ?\\)
+                          (forward-char)
+                          (unless (equal (point) limit)
+                            (forward-char))
                           t)
                          ((eq (following-char) ?\")
                           (condition-case nil

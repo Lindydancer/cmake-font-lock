@@ -10,6 +10,8 @@
       CFLAGS «D:${»«v:ASAN_CFLAGS»«D:}»
       DEFS «D:${»«v:ASAN_COMMON_DEFINITIONS»«D:}»)
 
+«f:source_group»(alpha «t:FILES» test.c)
+«f:source_group»(alpha\\beta «t:FILES» test.c)
 
 «f:foo»(«D:{»«v:allan»«D:}»)
 «f:foo»(«D:${»«v:allan»«D:}»)
