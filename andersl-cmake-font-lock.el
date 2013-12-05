@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012-2013 Anders Lindgren
 
 ;; Author: Anders Lindgren
-;; Version: 0.0.2
+;; Version: 0.0.3
 ;; Created: 2012-12-05
 ;; Keywords: faces languages
 
@@ -779,10 +779,12 @@ To activate this every time a CMake file is opened, use the following:
 
     (add-hook 'cmake-mode-hook 'andersl-cmake-font-lock-activate)"
   (interactive)
-  (if (not font-lock-mode)
-      (andersl-cmake-font-lock-setup)
-    (andersl-cmake-font-lock-setup)
-    (font-lock-refresh-defaults)))
+  (andersl-cmake-font-lock-setup)
+  ;; If this function is called after font-lock is up and running,
+  ;; refresh it. (This does not work on older Emacs versions.)
+  (if (and font-lock-mode
+           (fboundp 'font-lock-refresh-defaults))
+      (font-lock-refresh-defaults)))
 
 
 (defun andersl-cmake-font-lock-add-keywords (name keywords)
