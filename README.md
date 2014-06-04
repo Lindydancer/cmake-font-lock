@@ -1,15 +1,15 @@
 # andersl-cmake-font-lock - Syntax coloring support for CMake
 
 *Author:* Anders Lindgren<br>
-*Version:* 0.0.3<br>
+*Version:* 0.0.4<br>
+*URL:* [https://github.com/Lindydancer/cmake-font-lock](https://github.com/Lindydancer/cmake-font-lock)<br>
 
 Advanced syntax coloring support for CMake scripts.
 
-This package is designed to be used together with a major mode for
-editing CMake files. Once such package is `cmake-mode.el`
-distributed by Kitware, however this package is not dependent upon
-or associated with any specific CMake major mode. (Note that the
-Kitware package contains rudimentary syntax coloring support.)
+The major feature of this package is to highlighting function
+arguments according to their use. For example:
+
+![Example CMake script](doc/demo.png)
 
 CMake, as a programming language, has a very simple syntax.
 Unfortunately, this makes it hard to read CMake scripts. CMake
@@ -20,16 +20,11 @@ the scope of the parent. In other words, a parameter could be
 anything like the name of a variable, a keyword, a property, or
 even a plain string.
 
-The major feature of this package is to color the parameters of
-(known) functions according to their use. For example:
+By highlighting each argument, CMake scripts becomes much easier to
+read, and also to write.
 
-    get_directory_property(var1 DEFINITION var2 my_property)
-
-In this case, `get_directory_property` is marked as a function.
-`var1` and `var2` are highlighted as variables. `DEFINITION` (a
-"keyword" in the jargon of CMake) is colored as a type (much like
-`&optional` is colored in lisp). Finally, `my_property` is finally
-colored as a constant.
+This package is aware of all built-in CMake functions. In addition,
+it allows you to add function signatures for your own functions.
 
 ## Installation
 
@@ -40,6 +35,12 @@ enable this package:
 
     (autoload 'andersl-cmake-font-lock-activate "andersl-cmake-font-lock" nil t)
     (add-hook 'cmake-mode-hook 'andersl-cmake-font-lock-activate)
+
+This package is designed to be used together with a major mode for
+editing CMake files. Once such package is `cmake-mode.el`
+distributed by Kitware, however this package is not dependent upon
+or associated with any specific CMake major mode. (Note that the
+Kitware package contains rudimentary syntax coloring support.)
 
 ## What is colored
 
@@ -127,4 +128,4 @@ the script `ParseCMakeDocCommands.rb` from the CMake documentation.
 
 
 ---
-Converted from `andersl-cmake-font-lock.el` by *el2markup*.
+Converted from `andersl-cmake-font-lock.el` by [*el2markdown*](https://github.com/Lindydancer/el2markdown).

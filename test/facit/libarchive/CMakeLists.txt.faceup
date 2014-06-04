@@ -11,7 +11,7 @@
 «x:#
 # Version - read from 'version' file.
 #
-»«f:FILE»(«t:STRINGS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/build/version _version)
+»«f:FILE»(«t:STRINGS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/build/version «v:_version»)
 «f:STRING»(«t:REGEX» «t:REPLACE»
  «s:"^([0-9])[0-9][0-9][0-9][0-9][0-9][0-9][a-z]?$"» «s:"\\1"» «v:_major» «D:${»«v:_version»«D:}»)
 «f:STRING»(«t:REGEX» «t:REPLACE»
@@ -89,12 +89,12 @@
     «f:FILE»(«t:WRITE» «D:${»«v:_listfile»«D:}» «s:""»)
     «k:FOREACH» («v:testfile» «D:${»«v:_argv»«D:}»)
       «k:IF» («v:testfile» «t:MATCHES» «s:"^test_[^/]+[.]c$"»)
-        «f:FILE»(«t:STRINGS» «D:${»«v:testfile»«D:}» testvar «t:REGEX» «s:"^DEFINE_TEST"»)
+        «f:FILE»(«t:STRINGS» «D:${»«v:testfile»«D:}» «v:testvar» «t:REGEX» «s:"^DEFINE_TEST"»)
         «k:FOREACH» («v:deftest» «D:${»«v:testvar»«D:}»)
           «f:FILE»(«t:APPEND» «D:${»«v:_listfile»«D:}» «s:"${«v:deftest»}\n"»)
-        «k:ENDFOREACH» (deftest)
+        «k:ENDFOREACH» («v:deftest»)
       «k:ENDIF» («v:testfile» «t:MATCHES» «s:"^test_[^/]+[.]c$"»)
-    «k:ENDFOREACH» (testfile)
+    «k:ENDFOREACH» («v:testfile»)
 
   «k:ENDIF» («t:NOT» «t:EXISTS» «s:"${«v:_listfile»}"» «t:OR»
      «D:${»«v:_cmlist»«D:}» «t:IS_NEWER_THAN» «s:"${«v:_listfile»}"»)
@@ -106,7 +106,7 @@
   «k:FOREACH» («v:_man» «D:${»«v:ARGV»«D:}»)
     «f:STRING»(«t:REGEX» «t:REPLACE» «s:"^.+[.]([1-9])"» «s:"\\1"» «v:_mansect» «D:${»«v:_man»«D:}»)
     «f:INSTALL»(«t:FILES» «D:${»«v:_man»«D:}» «t:DESTINATION» «s:"share/man/man${«v:_mansect»}"»)
-  «k:ENDFOREACH» (_man)
+  «k:ENDFOREACH» («v:_man»)
 «k:ENDMACRO» («f:INSTALL_MAN» «v:__mans»)
 
 «x:#
@@ -298,12 +298,12 @@
 «x:#
 # Find MD5/RMD160/SHA library
 #
-»«f:FIND_LIBRARY»(«v:CRYPTO_LIBRARY» NAMES crypto)
+»«f:FIND_LIBRARY»(«v:CRYPTO_LIBRARY» «t:NAMES» crypto)
 «k:IF»(«v:CRYPTO_LIBRARY»)
   «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:CRYPTO_LIBRARY»«D:}»)
 «k:ELSE»(«v:CRYPTO_LIBRARY»)
   «k:IF»(«t:NOT» «v:OPENSSL_FOUND»)
-    «f:FIND_LIBRARY»(«v:MD_LIBRARY» NAMES md)
+    «f:FIND_LIBRARY»(«v:MD_LIBRARY» «t:NAMES» md)
     «k:IF»(«v:MD_LIBRARY»)
       «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:MD_LIBRARY»«D:}»)
     «k:ENDIF»(«v:MD_LIBRARY»)
@@ -675,7 +675,7 @@
   «f:CHECK_LIBRARY_EXISTS»(acl «s:"acl_get_file"» «s:""» HAVE_ACL_LIB)
   «k:IF»(«v:HAVE_ACL_LIB»)
     «f:SET»(«v:CMAKE_REQUIRED_LIBRARIES» «s:"acl"»)
-    «f:FIND_LIBRARY»(«v:ACL_LIBRARY» NAMES acl)
+    «f:FIND_LIBRARY»(«v:ACL_LIBRARY» «t:NAMES» acl)
     «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:ACL_LIBRARY»«D:}»)
   «k:ENDIF»(«v:HAVE_ACL_LIB»)
   «x:#

@@ -11,5 +11,5 @@ end
 
 desc "Generating html"
 task "html" => ["readme"] do
-  sh "Markdown.pl ../README.md > README.html"
+  sh "Markdown.pl ../README.md > ../README.html"
 end

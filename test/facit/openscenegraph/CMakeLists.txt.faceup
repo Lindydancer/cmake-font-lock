@@ -1031,7 +1031,7 @@
     «t:@ONLY»
     )
   «f:INSTALL»(«t:FILES» «D:${»«v:PROJECT_BINARY_DIR»«D:}»/packaging/pkgconfig/«D:${»«v:PKGCONFIG_FILE»«D:}».pc «t:DESTINATION» lib«D:${»«v:LIB_POSTFIX»«D:}»/pkgconfig «t:COMPONENT» libopenscenegraph-dev)
-«k:ENDFOREACH»(PKGCONFIG_FILE)
+«k:ENDFOREACH»(«v:PKGCONFIG_FILE»)
 
 
 «x:# Run this as late as possible so users can easier spot the message

@@ -84,7 +84,7 @@
     «k:IF»(«v:CMAKE_USE_SYSTEM_»«D:${»«v:util»«D:}»)
       «f:MESSAGE»(«t:STATUS» «s:"Using system-installed ${«v:util»}"»)
     «k:ENDIF»(«v:CMAKE_USE_SYSTEM_»«D:${»«v:util»«D:}»)
-  «k:ENDFOREACH»(util)
+  «k:ENDFOREACH»(«v:util»)
 
   «x:# Inform utility library header wrappers whether to use system versions.
 »  «f:CONFIGURE_FILE»(«D:${»«v:CMake_SOURCE_DIR»«D:}»/Utilities/cmThirdParty.h.in
@@ -140,7 +140,7 @@
       «k:IF»(«v:CMAKE_USE_SYSTEM_»«D:${»«v:util»«D:}»)
         «f:SET»(«v:CMAKE_TEST_SYSTEM_LIBRARIES» 1)
       «k:ENDIF»(«v:CMAKE_USE_SYSTEM_»«D:${»«v:util»«D:}»)
-    «k:ENDFOREACH»(util)
+    «k:ENDFOREACH»(«v:util»)
     
     «x:# This variable is set by cmake, however to
 »    «x:# test cmake we want to make sure that

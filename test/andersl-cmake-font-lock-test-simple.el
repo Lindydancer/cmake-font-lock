@@ -1,4 +1,4 @@
-;;; andersl-cmake-font-lock-test-simple.el -- Tests for CMake font-lock rules.
+;;; andersl-cmake-font-lock-test-simple.el --- Tests for CMake font-lock rules.
 
 ;; Copyright (C) 2013 Anders Lindgren
 
@@ -31,7 +31,7 @@
 
 ;;; Code:
 (require 'andersl-cmake-font-lock)
-(require 'faceup-test)
+(require 'faceup)
 
 (defun andersl-cmake-font-lock-test (faceup)
   (faceup-test-font-lock-string 'cmake-mode faceup))

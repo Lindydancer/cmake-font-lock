@@ -1,4 +1,4 @@
-;;; andersl-cmake-font-lock-test-facit.el -- Regression test CMake font-lock.
+;;; andersl-cmake-font-lock-test-facit.el --- Regression test CMake font-lock.
 
 ;; Copyright (C) 2012-2013 Anders Lindgren
 
@@ -31,6 +31,8 @@
 
 ;;; Code:
 
+(require 'faceup)
+
 (defvar andersl-cmake-font-lock-test-facit-file-name load-file-name
   "The file name of this file.")
 
@@ -61,6 +63,7 @@
   (should (andersl-cmake-font-lock-test-facit "facit/gamekit"))
   (should (andersl-cmake-font-lock-test-facit "facit/gazebo"))
   (should (andersl-cmake-font-lock-test-facit "facit/scrapbook"))
-  (should (andersl-cmake-font-lock-test-facit "facit/openscenegraph")))
+  (should (andersl-cmake-font-lock-test-facit "facit/openscenegraph"))
+  (should (andersl-cmake-font-lock-test-facit "facit/additions")))
 
 ;; cmake-font-lock-test-facit.el ends here.

@@ -1,11 +1,12 @@
-;;; andersl-cmake-font-lock.el -- Syntax coloring support for CMake.
+;;; andersl-cmake-font-lock.el --- Syntax coloring support for CMake.
 
 ;; Copyright (C) 2012-2013 Anders Lindgren
 
 ;; Author: Anders Lindgren
-;; Version: 0.0.3
+;; Version: 0.0.4
 ;; Created: 2012-12-05
 ;; Keywords: faces languages
+;; URL: https://github.com/Lindydancer/cmake-font-lock
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,11 +25,10 @@
 
 ;; Advanced syntax coloring support for CMake scripts.
 ;;
-;; This package is designed to be used together with a major mode for
-;; editing CMake files. Once such package is `cmake-mode.el'
-;; distributed by Kitware, however this package is not dependent upon
-;; or associated with any specific CMake major mode. (Note that the
-;; Kitware package contains rudimentary syntax coloring support.)
+;; The major feature of this package is to highlighting function
+;; arguments according to their use. For example:
+;;
+;; ![Example CMake script](doc/demo.png)
 ;;
 ;; CMake, as a programming language, has a very simple syntax.
 ;; Unfortunately, this makes it hard to read CMake scripts. CMake
@@ -39,16 +39,11 @@
 ;; anything like the name of a variable, a keyword, a property, or
 ;; even a plain string.
 ;;
-;; The major feature of this package is to color the parameters of
-;; (known) functions according to their use. For example:
+;; By highlighting each argument, CMake scripts becomes much easier to
+;; read, and also to write.
 ;;
-;;     get_directory_property(var1 DEFINITION var2 my_property)
-;;
-;; In this case, `get_directory_property' is marked as a function.
-;; `var1' and `var2' are highlighted as variables. `DEFINITION' (a
-;; "keyword" in the jargon of CMake) is colored as a type (much like
-;; `&optional' is colored in lisp). Finally, `my_property' is finally
-;; colored as a constant.
+;; This package is aware of all built-in CMake functions. In addition,
+;; it allows you to add function signatures for your own functions.
 
 ;; Installation:
 ;;
@@ -59,6 +54,12 @@
 ;;
 ;; (autoload 'andersl-cmake-font-lock-activate "andersl-cmake-font-lock" nil t)
 ;; (add-hook 'cmake-mode-hook 'andersl-cmake-font-lock-activate)
+;;
+;; This package is designed to be used together with a major mode for
+;; editing CMake files. Once such package is `cmake-mode.el'
+;; distributed by Kitware, however this package is not dependent upon
+;; or associated with any specific CMake major mode. (Note that the
+;; Kitware package contains rudimentary syntax coloring support.)
 
 ;; What is colored:
 ;;
@@ -219,6 +220,7 @@
     ("build_command"               . ("CONFIGURATION"
                                       "PROJECT_NAME"
                                       "TARGET"))
+    ("cmake_host_system_information" . ("QUERY"))
     ("cmake_minimum_required"      . ("FATAL_ERROR"
                                       "VERSION"))
     ("cmake_policy"                . ("CMP"
@@ -273,23 +275,28 @@
                                       "FILE"
                                       "NAMESPACE"
                                       "PACKAGE"
-                                      "TARGETS"))
+                                      "EXPORT_LINK_INTERFACE_LIBRARIES"))
     ("export_library_dependencies" . ("APPEND"))
     ("file"                        . ("APPEND"
+                                      "CONDITION"
+                                      "CONTENT"
                                       "COPY"
                                       "DESTINATION"
                                       "DIRECTORY_PERMISSIONS"
                                       "DOWNLOAD"
                                       "EXCLUDE"
+                                      "EXPECTED_HASH"
                                       "EXPECTED_MD5"
                                       "FILES_MATCHING"
                                       "FILE_PERMISSIONS"
                                       "FOLLOW_SYMLINKS"
+                                      "GENERATE"
                                       "GLOB"
                                       "GLOB_RECURSE"
                                       "HEX"
                                       "INACTIVITY_TIMEOUT"
                                       "INSTALL"
+                                      "INPUT"
                                       "LENGTH_MAXIMUM"
                                       "LENGTH_MINIMUM"
                                       "LIMIT"
@@ -303,9 +310,9 @@
                                       "NO_HEX_CONVERSION"
                                       "NO_SOURCE_PERMISSIONS"
                                       "OFFSET"
+                                      "OUTPUT"
                                       "PATTERN"
                                       "PERMISSIONS"
-                                      "READ"
                                       "REGEX"
                                       "RELATIVE"
                                       "RELATIVE_PATH"
@@ -319,12 +326,14 @@
                                       "SHA512"
                                       "SHOW_PROGRESS"
                                       "STATUS"
-                                      "STRINGS"
                                       "TIMEOUT"
+                                      "TLS_VERIFY"
+                                      "TLS_CAINFO"
                                       "TO_CMAKE_PATH"
                                       "TO_NATIVE_PATH"
                                       "UPLOAD"
                                       "USE_SOURCE_PERMISSIONS"
+                                      "UTC"
                                       "WRITE"))
     ("find_file"                   . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
@@ -345,6 +354,7 @@
                                       "ENV"
                                       "HINTS"
                                       "NAMES"
+                                      "NAMES_PER_DIR"
                                       "NO_CMAKE_ENVIRONMENT_PATH"
                                       "NO_CMAKE_FIND_ROOT_PATH"
                                       "NO_CMAKE_PATH"
@@ -440,6 +450,9 @@
     ("include_directories"         . ("AFTER"
                                       "BEFORE"
                                       "SYSTEM"))
+    ("include_external_msproject"  . ("GUID"
+                                      "PLATFORM"
+                                      "TYPE"))
     ("install"                     . ("ARCHIVE"
                                       "BUNDLE"
                                       "CODE"
@@ -455,6 +468,7 @@
                                       "FILES_MATCHING"
                                       "FILE_PERMISSIONS"
                                       "FRAMEWORK"
+                                      "INCLUDES"
                                       "LIBRARY"
                                       "MESSAGE"
                                       "NAMELINK_ONLY"
@@ -552,9 +566,16 @@
                                       "STRIP"
                                       "SUBSTRING"
                                       "TOLOWER"
-                                      "TOUPPER"))
+                                      "TOUPPER"
+                                      "UTC"))
     ("subdirs"                     . ("EXCLUDE_FROM_ALL"
                                       "PREORDER"))
+    ("target_compile_options"      . ("BEFORE"
+                                      "INTERFACE"
+                                      "PUBLIC"
+                                      "PRIVATE"))
+    ("target_include_directories"  . ("SYSTEM"
+                                      "BEFORE"))
     ("target_link_libraries"       . ("LINK_INTERFACE_LIBRARIES"
                                       "LINK_PRIVATE"
                                       "LINK_PUBLIC"
@@ -562,15 +583,14 @@
                                       "general"
                                       "optimized"))
     ("try_compile"                 . ("CMAKE_FLAGS"
-                                      "COMPILE_DEFINITIONS"
                                       "COPY_FILE"
                                       "INCLUDE_DIRECTORIES"
                                       "LINK_DIRECTORIES"
                                       "LINK_LIBRARIES"
-                                      "OUTPUT_VARIABLE"))
+                                      "OUTPUT_VARIABLE"
+                                      "SOURCES"))
     ("try_run"                     . ("ARGS"
                                       "CMAKE_FLAGS"
-                                      "COMPILE_DEFINITIONS"
                                       "COMPILE_OUTPUT_VARIABLE"
                                       "OUTPUT_VARIABLE"
                                       "RUN_OUTPUT_VARIABLE"))
@@ -592,6 +612,7 @@
     ("endif"       . "if")
     ("while"       . "if")
     ("endwhile"    . "if")
+    ("endforeach"  . "foreach")
     ("endfunction" . "function")
     ("endmacro"    . "macro"))
   "*Alias function names.
@@ -608,10 +629,11 @@ This is used to keep down the size of
                                       ("TARGET" :tgt)))
     ("add_custom_target"      (:tgt) (("DEPENDS" :repeat :path)))
     ("add_dependencies"       (:repeat :tgt))
-    ("add_executable"         (:tgt))
-    ("add_library"            (:tgt))
+    ("add_executable"         (:tgt) (("ALIAS" :tgt)))
+    ("add_library"            (:tgt) (("ALIAS" :tgt)))
     ("aux_source_directory"   (nil :var))
     ("build_command"          (:var) (("TARGET" :tgt)))
+    ("cmake_host_system_information" () (("RESULT" :var)))
     ("cmake_policy"           () (("GET" :policy :var)
                                   ("SET" :policy)))
     ("define_property"        () (("PROPERTY" :prop)))
@@ -627,16 +649,17 @@ This is used to keep down the size of
                                       ("SHA256"         :path :var)
                                       ("SHA384"         :path :var)
                                       ("SHA512"         :path :var)
-                                      ("STRING"         :path :var)
+                                      ("STRINGS"        :path :var)
+                                      ("TIMESTAMP"      :path :var)
                                       ("GLOB"           :var)
                                       ("GLOB_RECURSE"   :var)
                                       ("RELATIVE_PATH"  :var :path :path)
                                       ("TO_CMAKE_PATH"  :path :var)
                                       ("TO_NATIVE_PATH" :path :var)))
-    ("find_file"              (:var nil :repeat :path))
-    ("find_library"           (:var nil :repeat :path))
-    ("find_path"              (:var nil :repeat :path))
-    ("find_program"           (:var nil :repeat :path))
+    ("find_file"              (:var :optional nil :repeat :path))
+    ("find_library"           (:var :optional nil :repeat :path))
+    ("find_path"              (:var :optional nil :repeat :path))
+    ("find_program"           (:var :optional nil :repeat :path))
     ("foreach"                (:var) (("LISTS" :repeat :var)))
     ("function"               (:func :repeat :var))
     ("get_cmake_property"     (:var :prop))
@@ -688,6 +711,7 @@ This is used to keep down the size of
       ("VERSION_GREATER" :var)
       ("VERSION_LESS"    :var)))
     ("include"                ()     (("RESULT_VARIABLE"   :var)))
+    ("include_external_msproject" (:tgt :path))
     ("install"                ()     (("TARGETS"           :repeat :tgt)))
     ("list"                   ()     (("LENGTH"            nil :var)
                                       ("GET"               :repeat nil :var)
@@ -733,12 +757,26 @@ This is used to keep down the size of
                                        ("LENGTH"    nil :var)
                                        ("SUBSTRING" nil nil nil :var)
                                        ("STRIP"     nil :var)
+                                       ("TIMESTAMP" :var)
+                                       ("MAKE_C_IDENTIFIER" nil :var)
                                        ("RANDOM"    :repeat nil :var)
                                        ("FIND"      nil nil :var)))
+    ("target_compile_options" (:tgt))
+    ("target_compile_definitions" (:tgt) (("INTERFACE" :repeat :def)
+                                          ("PUBLIC"    :repeat :def)
+                                          ("PRIVATE"   :repeat :def)))
+    ("target_include_directories" (:tgt) (("INTERFACE" :repeat :path)
+                                          ("PUBLIC"    :repeat :path)
+                                          ("PRIVATE"   :repeat :path)))
     ("target_link_libraries"   (:tgt))
-    ("try_compile"             (:var nil nil :optional nil :tgt)
-                                      (("OUTPUT_VARIABLE" :var)))
-    ("try_run"                 (:var :var) (("OUTPUT_VARIABLE" :var)))
+    ;; Placement of :optional is to allow "try_compile(var dir SOURCES ...)"
+    ("try_compile"             (:var nil :optional nil nil :tgt)
+                                       (("OUTPUT_VARIABLE" :var)
+                                        ("COMPILE_DEFINITIONS" :repeat :def)
+                                        ("COPY_FILE_ERROR" :var)))
+    ("try_run"                 (:var :var)
+                                       (("OUTPUT_VARIABLE" :var)
+                                        ("COMPILE_DEFINITIONS" :repeat :def)))
     ("unset"                   (:var))
     ("variable_watch"          (:var)))
   "*List of function signatures.
@@ -757,6 +795,7 @@ An argument kind is:
  - :policy        A CMake policy
  - :path          A file or a directory
  - :tgt           A target
+ - :def           A preprocessor definition
  - :optional      The rest of the elements are not mandatory
  - :repeat what   Repeat the element `what'
  - :repeat (...)  Repeat the elements is the list.
@@ -1038,7 +1077,8 @@ ${var} construct."
           nil)))))
 
 (defvar andersl-cmake-font-lock-argument-kind-face-alist
-  '((:var     . font-lock-variable-name-face)
+  '((:def     . font-lock-constant-face)
+    (:var     . font-lock-variable-name-face)
     (:func    . font-lock-function-name-face)
     (:prop    . font-lock-constant-face)
     (:policy  . font-lock-constant-face)
