@@ -1,7 +1,7 @@
 # andersl-cmake-font-lock - Syntax coloring support for CMake
 
 *Author:* Anders Lindgren<br>
-*Version:* 0.0.4<br>
+*Version:* 0.0.5<br>
 *URL:* [https://github.com/Lindydancer/cmake-font-lock](https://github.com/Lindydancer/cmake-font-lock)<br>
 
 Advanced syntax coloring support for CMake scripts.

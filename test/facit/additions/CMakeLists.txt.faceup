@@ -1,42 +1,48 @@
-«x:#
+Â«x:#
 # This file is used to test new CMake additions.
 #
 # Note that this file contains badly formed CMake functions (e.g. the
 # call to "file") as it is only intended to be used to test CMake
 # highlight rules.
 #
-»
-«x:# 2.8.8.8 -> 2.8.12
-»
-«f:add_executable»(«c:alpha» «t:ALIAS» «c:beta»)
-«f:add_library»(«c:alpha» «t:ALIAS» «c:beta»)
-«f:cmake_host_system_information»(«t:RESULT» «v:var» «t:QUERY» HOSTNAME)
-«f:export»(«t:TARGETS» «c:tgt1» «c:tgt2» «c:tgt3» «t:EXPORT_LINK_INTERFACE_LIBRARIES»)
-«f:file»(«t:CONDITION»
-  «t:EXPECTED_HASH»
-  «t:GENERATE»
-  «t:INPUT»
-  «t:CONTENT»
-  «t:OUTPUT»
-  «t:READ» path «v:var»
-  «t:TLS_VERIFY»
-  «t:TLS_CAINFO»)
-«f:file»(«t:TIMESTAMP» file «v:var» format «t:UTC»)
-«f:include_external_msproject»(«c:tgt» file «t:TYPE» alpha
-  «t:GUID» beta «t:PLATFORM» delta dep1 dep2)
-«f:install»(«t:TARGETS» «c:tgt» «t:INCLUDES» «t:DESTINATION» path)
-«f:string»(«t:TIMESTAMP» «v:var» format «t:UTC»)
+Â»
+Â«x:# 2.8.8.8 -> 2.8.12
+Â»
+Â«f:add_executableÂ»(Â«c:alphaÂ» Â«t:ALIASÂ» Â«c:betaÂ»)
+Â«f:add_libraryÂ»(Â«c:alphaÂ» Â«t:ALIASÂ» Â«c:betaÂ»)
+Â«f:cmake_host_system_informationÂ»(Â«t:RESULTÂ» Â«v:varÂ» Â«t:QUERYÂ» HOSTNAME)
+Â«f:exportÂ»(Â«t:TARGETSÂ» Â«c:tgt1Â» Â«c:tgt2Â» Â«c:tgt3Â» Â«t:EXPORT_LINK_INTERFACE_LIBRARIESÂ»)
+Â«f:fileÂ»(Â«t:CONDITIONÂ»
+  Â«t:EXPECTED_HASHÂ»
+  Â«t:GENERATEÂ»
+  Â«t:INPUTÂ»
+  Â«t:CONTENTÂ»
+  Â«t:OUTPUTÂ»
+  Â«t:READÂ» path Â«v:varÂ»
+  Â«t:TLS_VERIFYÂ»
+  Â«t:TLS_CAINFOÂ»)
+Â«f:fileÂ»(Â«t:TIMESTAMPÂ» file Â«v:varÂ» format Â«t:UTCÂ»)
+Â«f:include_external_msprojectÂ»(Â«c:tgtÂ» file Â«t:TYPEÂ» alpha
+  Â«t:GUIDÂ» beta Â«t:PLATFORMÂ» delta dep1 dep2)
+Â«f:installÂ»(Â«t:TARGETSÂ» Â«c:tgtÂ» Â«t:INCLUDESÂ» Â«t:DESTINATIONÂ» path)
+Â«f:stringÂ»(Â«t:TIMESTAMPÂ» Â«v:varÂ» format Â«t:UTCÂ»)
 
-«f:target_compile_definitions»(«c:target» «t:PUBLIC» «c:THESE» «c:ARE» «t:INTERFACE» «c:SYMBOLS»)
+Â«f:target_compile_definitionsÂ»(Â«c:targetÂ» Â«t:PUBLICÂ» Â«c:THESEÂ» Â«c:AREÂ» Â«t:INTERFACEÂ» Â«c:SYMBOLSÂ»)
 
-«f:target_compile_options»(«c:target» «t:BEFORE» «t:PUBLIC» --these --are «t:INTERFACE» --options
-  -D«c:ALPHA»)
+Â«f:target_compile_optionsÂ»(Â«c:targetÂ» Â«t:BEFOREÂ» Â«t:PUBLICÂ» --these --are Â«t:INTERFACEÂ» --options
+  -DÂ«c:ALPHAÂ»)
 
-«f:target_include_directories»(«c:target» «t:SYSTEM» «t:BEFORE» «t:PUBLIC»
-  these are «t:INTERFACE» paths)
+Â«f:target_include_directoriesÂ»(Â«c:targetÂ» Â«t:SYSTEMÂ» Â«t:BEFOREÂ» Â«t:PUBLICÂ»
+  these are Â«t:INTERFACEÂ» paths)
 
-«f:try_compile»(«v:var» bindir srcdir projectName «c:tgt» «t:OUTPUT_VARIABLE» «v:var2»)
-«f:try_compile»(«v:var» bindir «t:SOURCES» src1 src2 «t:COMPILE_DEFINITIONS» «c:DEF1» «c:DEF2»)
-«f:try_compile»(«v:var» bindir src «t:COPY_FILE» file «t:COPY_FILE_ERROR» «v:var2»)
+Â«f:try_compileÂ»(Â«v:varÂ» bindir srcdir projectName Â«c:tgtÂ» Â«t:OUTPUT_VARIABLEÂ» Â«v:var2Â»)
+Â«f:try_compileÂ»(Â«v:varÂ» bindir Â«t:SOURCESÂ» src1 src2 Â«t:COMPILE_DEFINITIONSÂ» Â«c:DEF1Â» Â«c:DEF2Â»)
+Â«f:try_compileÂ»(Â«v:varÂ» bindir src Â«t:COPY_FILEÂ» file Â«t:COPY_FILE_ERRORÂ» Â«v:var2Â»)
 
-«f:try_run»(«v:var1» «v:var2» bindir srcdir «t:COMPILE_DEFINITIONS» «c:DEF1» «c:DEF2»)
+Â«f:try_runÂ»(Â«v:var1Â» Â«v:var2Â» bindir srcdir Â«t:COMPILE_DEFINITIONSÂ» Â«c:DEF1Â» Â«c:DEF2Â»)
+
+Â«x:#
+# Generator expressions
+#
+Â»
+Â«f:fooÂ»($<Â«c:FOOÂ»:$<Â«c:CONFIGURATIONÂ»>>)

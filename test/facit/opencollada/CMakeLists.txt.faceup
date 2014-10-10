@@ -1,245 +1,245 @@
 
-«k:if»(«D:${»«v:CMAKE_SOURCE_DIR»«D:}» «t:STREQUAL» «D:${»«v:CMAKE_BINARY_DIR»«D:}»)
-	«k:if»(«t:NOT» «t:DEFINED» «v:WITH_IN_SOURCE_BUILD»)
-		«f:message»(«t:FATAL_ERROR»
-			«s:"CMake generation for OpenCollada is not allowed within the source directory!"»
-			«s:"\n Remove the CMakeCache.txt file and try again from another folder, e.g.:"»
-			«s:"\n "»
-			«s:"\n rm CMakeCache.txt"»
-			«s:"\n cd .."»
-			«s:"\n mkdir cmake-make"»
-			«s:"\n cd cmake-make"»
-			«s:"\n cmake ../opencollada"»
-			«s:"\n "»
-			«s:"\n Alternately define WITH_IN_SOURCE_BUILD to force this option (not recommended!)"»
+Â«k:ifÂ»(Â«D:${Â»Â«v:CMAKE_SOURCE_DIRÂ»Â«D:}Â» Â«t:STREQUALÂ» Â«D:${Â»Â«v:CMAKE_BINARY_DIRÂ»Â«D:}Â»)
+	Â«k:ifÂ»(Â«t:NOTÂ» Â«t:DEFINEDÂ» Â«v:WITH_IN_SOURCE_BUILDÂ»)
+		Â«f:messageÂ»(Â«t:FATAL_ERRORÂ»
+			Â«s:"CMake generation for OpenCollada is not allowed within the source directory!"Â»
+			Â«s:"\n Remove the CMakeCache.txt file and try again from another folder, e.g.:"Â»
+			Â«s:"\n "Â»
+			Â«s:"\n rm CMakeCache.txt"Â»
+			Â«s:"\n cd .."Â»
+			Â«s:"\n mkdir cmake-make"Â»
+			Â«s:"\n cd cmake-make"Â»
+			Â«s:"\n cmake ../opencollada"Â»
+			Â«s:"\n "Â»
+			Â«s:"\n Alternately define WITH_IN_SOURCE_BUILD to force this option (not recommended!)"Â»
 		)
-	«k:endif»()
-«k:endif»()
+	Â«k:endifÂ»()
+Â«k:endifÂ»()
 
-«f:cmake_minimum_required»(«t:VERSION» 2.6)
+Â«f:cmake_minimum_requiredÂ»(Â«t:VERSIONÂ» 2.6)
 
 
-«x:#-----------------------------------------------------------------------------
+Â«x:#-----------------------------------------------------------------------------
 # Set policy.
-»
-«x:# see "cmake --help-policy CMP0003"
+Â»
+Â«x:# see "cmake --help-policy CMP0003"
 # So library linking is more sane
-»«f:cmake_policy»(«t:SET» «c:CMP0003» «t:NEW»)
+Â»Â«f:cmake_policyÂ»(Â«t:SETÂ» Â«c:CMP0003Â» Â«t:NEWÂ»)
 
-«x:# So defines are automatically quoted
-»«f:cmake_policy»(«t:SET» «c:CMP0005» «t:NEW»)
+Â«x:# So defines are automatically quoted
+Â»Â«f:cmake_policyÂ»(Â«t:SETÂ» Â«c:CMP0005Â» Â«t:NEWÂ»)
 
-«x:# So syntax problems are errors
-»«f:cmake_policy»(«t:SET» «c:CMP0010» «t:NEW»)
+Â«x:# So syntax problems are errors
+Â»Â«f:cmake_policyÂ»(Â«t:SETÂ» Â«c:CMP0010Â» Â«t:NEWÂ»)
 
-«x:# Input directories must have CMakeLists.txt
-»«f:cmake_policy»(«t:SET» «c:CMP0014» «t:NEW»)
+Â«x:# Input directories must have CMakeLists.txt
+Â»Â«f:cmake_policyÂ»(Â«t:SETÂ» Â«c:CMP0014Â» Â«t:NEWÂ»)
 
-«x:# avoid having empty buildtype
-»«f:set»(«v:CMAKE_BUILD_TYPE_INIT» «s:"Release"»)
+Â«x:# avoid having empty buildtype
+Â»Â«f:setÂ»(Â«v:CMAKE_BUILD_TYPE_INITÂ» Â«s:"Release"Â»)
 
-«f:list»(«t:APPEND» «v:CMAKE_MODULE_PATH» «s:"${«v:CMAKE_SOURCE_DIR»}/Externals/cmake-modules"»)
-«f:set»(«v:CMAKE_CONFIGURATION_TYPES» «s:"Debug;Release"» «t:CACHE» «t:STRING» «s:"Only do Release and Debug"» «t:FORCE» )
-«f:mark_as_advanced»(«v:CMAKE_CONFIGURATION_TYPES»)
+Â«f:listÂ»(Â«t:APPENDÂ» Â«v:CMAKE_MODULE_PATHÂ» Â«s:"${Â«v:CMAKE_SOURCE_DIRÂ»}/Externals/cmake-modules"Â»)
+Â«f:setÂ»(Â«v:CMAKE_CONFIGURATION_TYPESÂ» Â«s:"Debug;Release"Â» Â«t:CACHEÂ» Â«t:STRINGÂ» Â«s:"Only do Release and Debug"Â» Â«t:FORCEÂ» )
+Â«f:mark_as_advancedÂ»(Â«v:CMAKE_CONFIGURATION_TYPESÂ»)
 
 
-«x:#-----------------------------------------------------------------------------
+Â«x:#-----------------------------------------------------------------------------
 # Macro's
-»
-«k:macro»(«f:opencollada_add_lib»
-	«v:name»
-	«v:sources»
-	«v:target_libs»
+Â»
+Â«k:macroÂ»(Â«f:opencollada_add_libÂ»
+	Â«v:nameÂ»
+	Â«v:sourcesÂ»
+	Â«v:target_libsÂ»
 	)
 
-	«f:link_directories»(«D:${»«v:LIBRARY_OUTPUT_PATH»«D:}»)
+	Â«f:link_directoriesÂ»(Â«D:${Â»Â«v:LIBRARY_OUTPUT_PATHÂ»Â«D:}Â»)
 
-	«k:if» («v:USE_STATIC»)
-		«f:add_library»(«D:${»«v:name»«D:}»«c:_static» «t:STATIC» «D:${»«v:sources»«D:}»)
-		«f:set_target_properties»(«D:${»«v:name»«D:}»«c:_static» «t:PROPERTIES» «c:OUTPUT_NAME» «D:${»«v:name»«D:}»)
-		«f:target_link_libraries»(«D:${»«v:name»«D:}»«c:_static» «D:${»«v:target_libs»«D:}»)
-		«f:set»(«v:CMAKE_REQUIRED_LIBRARIES» «s:"${«v:name»}_static;${«v:CMAKE_REQUIRED_LIBRARIES»}"» «t:PARENT_SCOPE»)
+	Â«k:ifÂ» (Â«v:USE_STATICÂ»)
+		Â«f:add_libraryÂ»(Â«D:${Â»Â«v:nameÂ»Â«D:}Â»Â«c:_staticÂ» Â«t:STATICÂ» Â«D:${Â»Â«v:sourcesÂ»Â«D:}Â»)
+		Â«f:set_target_propertiesÂ»(Â«D:${Â»Â«v:nameÂ»Â«D:}Â»Â«c:_staticÂ» Â«t:PROPERTIESÂ» Â«c:OUTPUT_NAMEÂ» Â«D:${Â»Â«v:nameÂ»Â«D:}Â»)
+		Â«f:target_link_librariesÂ»(Â«D:${Â»Â«v:nameÂ»Â«D:}Â»Â«c:_staticÂ» Â«D:${Â»Â«v:target_libsÂ»Â«D:}Â»)
+		Â«f:setÂ»(Â«v:CMAKE_REQUIRED_LIBRARIESÂ» Â«s:"${Â«v:nameÂ»}_static;${Â«v:CMAKE_REQUIRED_LIBRARIESÂ»}"Â» Â«t:PARENT_SCOPEÂ»)
 
-		«f:install»(
-			«t:TARGETS» «D:${»«v:name»«D:}»«c:_static»
-			«t:ARCHIVE» «t:DESTINATION» «D:${»«v:OPENCOLLADA_INST_LIBRARY»«D:}»
+		Â«f:installÂ»(
+			Â«t:TARGETSÂ» Â«D:${Â»Â«v:nameÂ»Â«D:}Â»Â«c:_staticÂ»
+			Â«t:ARCHIVEÂ» Â«t:DESTINATIONÂ» Â«D:${Â»Â«v:OPENCOLLADA_INST_LIBRARYÂ»Â«D:}Â»
 		)
-	«k:endif» ()
+	Â«k:endifÂ» ()
 
-	«k:if» («v:USE_SHARED»)
-		«k:if» («t:NOT» «v:UNIX»)
-			«f:message»(«D:${»«v:name»«D:}» «s:" WARNING: Shared library support implemented for UNIX-like OS only"»)
-		«k:endif» ()
-		«f:add_library»(«D:${»«v:name»«D:}»«c:_shared» «t:SHARED» «D:${»«v:sources»«D:}»)
-		«f:set_target_properties»(«D:${»«v:name»«D:}»«c:_shared» «t:PROPERTIES» «c:OUTPUT_NAME» «D:${»«v:name»«D:}»)
-		«f:target_link_libraries»(«D:${»«v:name»«D:}»«c:_shared» «D:${»«v:target_libs»«D:}»)
-		«f:set»(«v:CMAKE_REQUIRED_LIBRARIES» «s:"${«v:name»}_shared;${«v:CMAKE_REQUIRED_LIBRARIES»}"»  «t:PARENT_SCOPE»)
+	Â«k:ifÂ» (Â«v:USE_SHAREDÂ»)
+		Â«k:ifÂ» (Â«t:NOTÂ» Â«v:UNIXÂ»)
+			Â«f:messageÂ»(Â«D:${Â»Â«v:nameÂ»Â«D:}Â» Â«s:" WARNING: Shared library support implemented for UNIX-like OS only"Â»)
+		Â«k:endifÂ» ()
+		Â«f:add_libraryÂ»(Â«D:${Â»Â«v:nameÂ»Â«D:}Â»Â«c:_sharedÂ» Â«t:SHAREDÂ» Â«D:${Â»Â«v:sourcesÂ»Â«D:}Â»)
+		Â«f:set_target_propertiesÂ»(Â«D:${Â»Â«v:nameÂ»Â«D:}Â»Â«c:_sharedÂ» Â«t:PROPERTIESÂ» Â«c:OUTPUT_NAMEÂ» Â«D:${Â»Â«v:nameÂ»Â«D:}Â»)
+		Â«f:target_link_librariesÂ»(Â«D:${Â»Â«v:nameÂ»Â«D:}Â»Â«c:_sharedÂ» Â«D:${Â»Â«v:target_libsÂ»Â«D:}Â»)
+		Â«f:setÂ»(Â«v:CMAKE_REQUIRED_LIBRARIESÂ» Â«s:"${Â«v:nameÂ»}_shared;${Â«v:CMAKE_REQUIRED_LIBRARIESÂ»}"Â»  Â«t:PARENT_SCOPEÂ»)
 
-		«f:install»(
-			«t:TARGETS» «D:${»«v:name»«D:}»«c:_shared»
-			«t:LIBRARY» «t:DESTINATION» «D:${»«v:OPENCOLLADA_INST_LIBRARY»«D:}»
+		Â«f:installÂ»(
+			Â«t:TARGETSÂ» Â«D:${Â»Â«v:nameÂ»Â«D:}Â»Â«c:_sharedÂ»
+			Â«t:LIBRARYÂ» Â«t:DESTINATIONÂ» Â«D:${Â»Â«v:OPENCOLLADA_INST_LIBRARYÂ»Â«D:}Â»
 		)
-	«k:endif» ()
-«k:endmacro»()
+	Â«k:endifÂ» ()
+Â«k:endmacroÂ»()
 
 
-«x:# ---------------------
+Â«x:# ---------------------
 # copied from blender's
 # build_files/cmake/macros.cmake
-»
-«k:macro»(«f:ADD_CHECK_C_COMPILER_FLAG»
-	«v:_CFLAGS»
-	«v:_CACHE_VAR»
-	«v:_FLAG»)
+Â»
+Â«k:macroÂ»(Â«f:ADD_CHECK_C_COMPILER_FLAGÂ»
+	Â«v:_CFLAGSÂ»
+	Â«v:_CACHE_VARÂ»
+	Â«v:_FLAGÂ»)
 
-	«k:include»(CheckCCompilerFlag)
+	Â«k:includeÂ»(CheckCCompilerFlag)
 
-	«f:CHECK_C_COMPILER_FLAG»(«s:"${«v:_FLAG»}"» «s:"${«v:_CACHE_VAR»}"»)
-	«k:if»(«D:${»«v:_CACHE_VAR»«D:}»)
-		«x:# message(STATUS "Using CFLAG: ${«v:_FLAG»}")
-»		«f:set»(«D:${»«v:_CFLAGS»«D:}» «s:"${${«v:_CFLAGS»}} ${«v:_FLAG»}"»)
-	«k:else»()
-		«f:message»(«t:STATUS» «s:"Unsupported CFLAG: ${«v:_FLAG»}"»)
-	«k:endif»()
-«k:endmacro»()
+	Â«f:CHECK_C_COMPILER_FLAGÂ»(Â«s:"${Â«v:_FLAGÂ»}"Â» Â«s:"${Â«v:_CACHE_VARÂ»}"Â»)
+	Â«k:ifÂ»(Â«D:${Â»Â«v:_CACHE_VARÂ»Â«D:}Â»)
+		Â«x:# message(STATUS "Using CFLAG: ${Â«v:_FLAGÂ»}")
+Â»		Â«f:setÂ»(Â«D:${Â»Â«v:_CFLAGSÂ»Â«D:}Â» Â«s:"${${Â«v:_CFLAGSÂ»}} ${Â«v:_FLAGÂ»}"Â»)
+	Â«k:elseÂ»()
+		Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"Unsupported CFLAG: ${Â«v:_FLAGÂ»}"Â»)
+	Â«k:endifÂ»()
+Â«k:endmacroÂ»()
 
-«k:macro»(«f:ADD_CHECK_CXX_COMPILER_FLAG»
-	«v:_CXXFLAGS»
-	«v:_CACHE_VAR»
-	«v:_FLAG»)
+Â«k:macroÂ»(Â«f:ADD_CHECK_CXX_COMPILER_FLAGÂ»
+	Â«v:_CXXFLAGSÂ»
+	Â«v:_CACHE_VARÂ»
+	Â«v:_FLAGÂ»)
 
-	«k:include»(CheckCXXCompilerFlag)
+	Â«k:includeÂ»(CheckCXXCompilerFlag)
 
-	«f:CHECK_CXX_COMPILER_FLAG»(«s:"${«v:_FLAG»}"» «s:"${«v:_CACHE_VAR»}"»)
-	«k:if»(«D:${»«v:_CACHE_VAR»«D:}»)
-		«x:# message(STATUS "Using CXXFLAG: ${«v:_FLAG»}")
-»		«f:set»(«D:${»«v:_CXXFLAGS»«D:}» «s:"${${«v:_CXXFLAGS»}} ${«v:_FLAG»}"»)
-	«k:else»()
-		«f:message»(«t:STATUS» «s:"Unsupported CXXFLAG: ${«v:_FLAG»}"»)
-	«k:endif»()
-«k:endmacro»()
-«x:# end copy
+	Â«f:CHECK_CXX_COMPILER_FLAGÂ»(Â«s:"${Â«v:_FLAGÂ»}"Â» Â«s:"${Â«v:_CACHE_VARÂ»}"Â»)
+	Â«k:ifÂ»(Â«D:${Â»Â«v:_CACHE_VARÂ»Â«D:}Â»)
+		Â«x:# message(STATUS "Using CXXFLAG: ${Â«v:_FLAGÂ»}")
+Â»		Â«f:setÂ»(Â«D:${Â»Â«v:_CXXFLAGSÂ»Â«D:}Â» Â«s:"${${Â«v:_CXXFLAGSÂ»}} ${Â«v:_FLAGÂ»}"Â»)
+	Â«k:elseÂ»()
+		Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"Unsupported CXXFLAG: ${Â«v:_FLAGÂ»}"Â»)
+	Â«k:endifÂ»()
+Â«k:endmacroÂ»()
+Â«x:# end copy
 # --------
-»
-«x:#-----------------------------------------------------------------------------
+Â»
+Â«x:#-----------------------------------------------------------------------------
 # Initialize project.
-»
-«f:project»(OPENCOLLADA)  «x:# must be after setting cmake_configuration_types
-»
-«x:# defines where specific parts of BRICS_MM are stored or created
-»«f:set»(«v:LIBRARY_OUTPUT_PATH»            «D:${»«v:CMAKE_HOME_DIRECTORY»«D:}»/lib)  «x:# static libraries
-»«f:set»(«v:EXECUTABLE_OUTPUT_PATH»         «D:${»«v:CMAKE_HOME_DIRECTORY»«D:}»/bin)  «x:# executables
-»«f:set»(«v:EXTERNAL_LIBRARIES»        	   «D:${»«v:CMAKE_HOME_DIRECTORY»«D:}»/Externals)  «x:# external libraries
-»«f:set»(«v:CMAKE_MODULE_PATH» «s:"${«v:EXTERNAL_LIBRARIES»}/cmake-modules"»)
+Â»
+Â«f:projectÂ»(OPENCOLLADA)  Â«x:# must be after setting cmake_configuration_types
+Â»
+Â«x:# defines where specific parts of BRICS_MM are stored or created
+Â»Â«f:setÂ»(Â«v:LIBRARY_OUTPUT_PATHÂ»            Â«D:${Â»Â«v:CMAKE_HOME_DIRECTORYÂ»Â«D:}Â»/lib)  Â«x:# static libraries
+Â»Â«f:setÂ»(Â«v:EXECUTABLE_OUTPUT_PATHÂ»         Â«D:${Â»Â«v:CMAKE_HOME_DIRECTORYÂ»Â«D:}Â»/bin)  Â«x:# executables
+Â»Â«f:setÂ»(Â«v:EXTERNAL_LIBRARIESÂ»        	   Â«D:${Â»Â«v:CMAKE_HOME_DIRECTORYÂ»Â«D:}Â»/Externals)  Â«x:# external libraries
+Â»Â«f:setÂ»(Â«v:CMAKE_MODULE_PATHÂ» Â«s:"${Â«v:EXTERNAL_LIBRARIESÂ»}/cmake-modules"Â»)
 
 
-«x:#-----------------------------------------------------------------------------
+Â«x:#-----------------------------------------------------------------------------
 # Compiler warnings.
-»
-«f:set»(«v:C_WARNINGS»   «s:""»)
-«f:set»(«v:CXX_WARNINGS» «s:""»)
+Â»
+Â«f:setÂ»(Â«v:C_WARNINGSÂ»   Â«s:""Â»)
+Â«f:setÂ»(Â«v:CXX_WARNINGSÂ» Â«s:""Â»)
 
-«k:if» («v:CMAKE_COMPILER_IS_GNUCC»)
-	«f:ADD_CHECK_C_COMPILER_FLAG»(C_WARNINGS C_WARN_ALL -Wall)
-	«f:ADD_CHECK_C_COMPILER_FLAG»(C_WARNINGS C_WARN_EXTRA -Wextra)
-	«f:ADD_CHECK_C_COMPILER_FLAG»(C_WARNINGS C_WARN_NO_UNKNOWN_PRAGMAS -Wno-unknown-pragmas)
-	«f:ADD_CHECK_C_COMPILER_FLAG»(C_WARNINGS C_WARN_NO_SWITCH -Wno-switch)
-	«f:ADD_CHECK_C_COMPILER_FLAG»(C_WARNINGS C_WARN_NO_UNUSED_PARAMETER -Wno-unused-parameter)
-	«f:ADD_CHECK_C_COMPILER_FLAG»(C_WARNINGS C_WARN_NO_IGNORED_QUALIFIERS -Wno-ignored-qualifiers)
-«k:endif» ()
-«k:if» («v:CMAKE_COMPILER_IS_GNUCXX»)
-	«f:ADD_CHECK_CXX_COMPILER_FLAG»(CXX_WARNINGS CXX_WARN_ALL -Wall)
-	«f:ADD_CHECK_CXX_COMPILER_FLAG»(CXX_WARNINGS CXX_WARN_EXTRA -Wextra)
-	«f:ADD_CHECK_CXX_COMPILER_FLAG»(CXX_WARNINGS CXX_WARN_NO_UNKNOWN_PRAGMAS -Wno-unknown-pragmas)
-	«f:ADD_CHECK_CXX_COMPILER_FLAG»(CXX_WARNINGS CXX_WARN_NO_SWITCH -Wno-switch)
-	«f:ADD_CHECK_CXX_COMPILER_FLAG»(CXX_WARNINGS CXX_WARN_NO_REORDER -Wno-reorder)  «x:# could be re-ordered but for now this is just noise.
-»	«f:ADD_CHECK_CXX_COMPILER_FLAG»(CXX_WARNINGS CXX_WARN_NO_UNUSED_PARAMETER -Wno-unused-parameter)
-	«f:ADD_CHECK_CXX_COMPILER_FLAG»(CXX_WARNINGS CXX_WARN_NO_IGNORED_QUALIFIERS -Wno-ignored-qualifiers)
-«k:endif» ()
+Â«k:ifÂ» (Â«v:CMAKE_COMPILER_IS_GNUCCÂ»)
+	Â«f:ADD_CHECK_C_COMPILER_FLAGÂ»(C_WARNINGS C_WARN_ALL -Wall)
+	Â«f:ADD_CHECK_C_COMPILER_FLAGÂ»(C_WARNINGS C_WARN_EXTRA -Wextra)
+	Â«f:ADD_CHECK_C_COMPILER_FLAGÂ»(C_WARNINGS C_WARN_NO_UNKNOWN_PRAGMAS -Wno-unknown-pragmas)
+	Â«f:ADD_CHECK_C_COMPILER_FLAGÂ»(C_WARNINGS C_WARN_NO_SWITCH -Wno-switch)
+	Â«f:ADD_CHECK_C_COMPILER_FLAGÂ»(C_WARNINGS C_WARN_NO_UNUSED_PARAMETER -Wno-unused-parameter)
+	Â«f:ADD_CHECK_C_COMPILER_FLAGÂ»(C_WARNINGS C_WARN_NO_IGNORED_QUALIFIERS -Wno-ignored-qualifiers)
+Â«k:endifÂ» ()
+Â«k:ifÂ» (Â«v:CMAKE_COMPILER_IS_GNUCXXÂ»)
+	Â«f:ADD_CHECK_CXX_COMPILER_FLAGÂ»(CXX_WARNINGS CXX_WARN_ALL -Wall)
+	Â«f:ADD_CHECK_CXX_COMPILER_FLAGÂ»(CXX_WARNINGS CXX_WARN_EXTRA -Wextra)
+	Â«f:ADD_CHECK_CXX_COMPILER_FLAGÂ»(CXX_WARNINGS CXX_WARN_NO_UNKNOWN_PRAGMAS -Wno-unknown-pragmas)
+	Â«f:ADD_CHECK_CXX_COMPILER_FLAGÂ»(CXX_WARNINGS CXX_WARN_NO_SWITCH -Wno-switch)
+	Â«f:ADD_CHECK_CXX_COMPILER_FLAGÂ»(CXX_WARNINGS CXX_WARN_NO_REORDER -Wno-reorder)  Â«x:# could be re-ordered but for now this is just noise.
+Â»	Â«f:ADD_CHECK_CXX_COMPILER_FLAGÂ»(CXX_WARNINGS CXX_WARN_NO_UNUSED_PARAMETER -Wno-unused-parameter)
+	Â«f:ADD_CHECK_CXX_COMPILER_FLAGÂ»(CXX_WARNINGS CXX_WARN_NO_IGNORED_QUALIFIERS -Wno-ignored-qualifiers)
+Â«k:endifÂ» ()
 
-«f:set»(«v:CMAKE_C_FLAGS» «s:"${«v:CMAKE_C_FLAGS»} ${«v:C_WARNINGS»}"»)
-«f:set»(«v:CMAKE_CXX_FLAGS» «s:"${«v:CMAKE_CXX_FLAGS»} ${«v:CXX_WARNINGS»}"»)
+Â«f:setÂ»(Â«v:CMAKE_C_FLAGSÂ» Â«s:"${Â«v:CMAKE_C_FLAGSÂ»} ${Â«v:C_WARNINGSÂ»}"Â»)
+Â«f:setÂ»(Â«v:CMAKE_CXX_FLAGSÂ» Â«s:"${Â«v:CMAKE_CXX_FLAGSÂ»} ${Â«v:CXX_WARNINGSÂ»}"Â»)
 
 
-«x:#-----------------------------------------------------------------------------
+Â«x:#-----------------------------------------------------------------------------
 # Install vars
-»
-«f:set»(«v:OPENCOLLADA_INST_INCLUDE» «D:${»«v:CMAKE_INSTALL_PREFIX»«D:}»/include/opencollada)
-«f:set»(«v:OPENCOLLADA_INST_LIBRARY» «D:${»«v:CMAKE_INSTALL_PREFIX»«D:}»/lib/opencollada)
+Â»
+Â«f:setÂ»(Â«v:OPENCOLLADA_INST_INCLUDEÂ» Â«D:${Â»Â«v:CMAKE_INSTALL_PREFIXÂ»Â«D:}Â»/include/opencollada)
+Â«f:setÂ»(Â«v:OPENCOLLADA_INST_LIBRARYÂ» Â«D:${Â»Â«v:CMAKE_INSTALL_PREFIXÂ»Â«D:}Â»/lib/opencollada)
 
 
-«x:#-----------------------------------------------------------------------------
+Â«x:#-----------------------------------------------------------------------------
 # Redirect output files
-»
-«f:set»(«v:EXECUTABLE_OUTPUT_PATH» «D:${»«v:CMAKE_BINARY_DIR»«D:}»/bin «t:CACHE» «t:INTERNAL» «s:""» «t:FORCE» )
-«f:set»(«v:LIBRARY_OUTPUT_PATH» «D:${»«v:CMAKE_BINARY_DIR»«D:}»/lib «t:CACHE» «t:INTERNAL» «s:""» «t:FORCE» )
+Â»
+Â«f:setÂ»(Â«v:EXECUTABLE_OUTPUT_PATHÂ» Â«D:${Â»Â«v:CMAKE_BINARY_DIRÂ»Â«D:}Â»/bin Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:""Â» Â«t:FORCEÂ» )
+Â«f:setÂ»(Â«v:LIBRARY_OUTPUT_PATHÂ» Â«D:${Â»Â«v:CMAKE_BINARY_DIRÂ»Â«D:}Â»/lib Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:""Â» Â«t:FORCEÂ» )
 
 
-«x:#-----------------------------------------------------------------------------
+Â«x:#-----------------------------------------------------------------------------
 # Set default config options
-»
-«f:option»(«v:USE_STATIC» «s:"Build static libraries"»  «c:ON»)
-«f:option»(«v:USE_SHARED» «s:"Build shared libraries"»  «c:OFF»)
-«f:option»(«v:USE_LIBXML» «s:"Use LibXml2 parser"»      «c:ON»)
-«f:option»(«v:USE_EXPAT»  «s:"Use expat parser"»        «c:OFF»)
+Â»
+Â«f:optionÂ»(Â«v:USE_STATICÂ» Â«s:"Build static libraries"Â»  Â«c:ONÂ»)
+Â«f:optionÂ»(Â«v:USE_SHAREDÂ» Â«s:"Build shared libraries"Â»  Â«c:OFFÂ»)
+Â«f:optionÂ»(Â«v:USE_LIBXMLÂ» Â«s:"Use LibXml2 parser"Â»      Â«c:ONÂ»)
+Â«f:optionÂ»(Â«v:USE_EXPATÂ»  Â«s:"Use expat parser"Â»        Â«c:OFFÂ»)
 
-«x:#adding xml2
-»«k:if» («v:USE_LIBXML»)
-	«f:add_definitions»(
-		-D«c:GENERATEDSAXPARSER_XMLPARSER_LIBXML»
-		-D«c:XMLPARSER_LIBXML»
+Â«x:#adding xml2
+Â»Â«k:ifÂ» (Â«v:USE_LIBXMLÂ»)
+	Â«f:add_definitionsÂ»(
+		-DÂ«c:GENERATEDSAXPARSER_XMLPARSER_LIBXMLÂ»
+		-DÂ«c:XMLPARSER_LIBXMLÂ»
 	)
-	«f:find_package»(LibXml2)
-	«k:if» («v:LIBXML2_FOUND»)
-		«f:message»(«t:STATUS» «s:"SUCCESSFUL: LibXml2 found"»)
-	«k:else» ()  «x:# if xml2 not found building its local copy from ./Externals
-»		«k:if» («v:WIN32»)
-			«f:message»(«s:"WARNING: Native LibXml2 not found, taking LibXml from ./Externals"»)
-			«f:add_subdirectory»(«D:${»«v:EXTERNAL_LIBRARIES»«D:}»/LibXML)
-			«f:set»(«v:LIBXML2_INCLUDE_DIR»
-				«D:${»«v:libxml_include_dirs»«D:}»
+	Â«f:find_packageÂ»(LibXml2)
+	Â«k:ifÂ» (Â«v:LIBXML2_FOUNDÂ»)
+		Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"SUCCESSFUL: LibXml2 found"Â»)
+	Â«k:elseÂ» ()  Â«x:# if xml2 not found building its local copy from ./Externals
+Â»		Â«k:ifÂ» (Â«v:WIN32Â»)
+			Â«f:messageÂ»(Â«s:"WARNING: Native LibXml2 not found, taking LibXml from ./Externals"Â»)
+			Â«f:add_subdirectoryÂ»(Â«D:${Â»Â«v:EXTERNAL_LIBRARIESÂ»Â«D:}Â»/LibXML)
+			Â«f:setÂ»(Â«v:LIBXML2_INCLUDE_DIRÂ»
+				Â«D:${Â»Â«v:libxml_include_dirsÂ»Â«D:}Â»
 			)
-			«f:set»(«v:LIBXML2_LIBRARIES» xml)
-		«k:else» ()
-			«f:message»(«s:"ERROR: LibXml2 not found, please install xml2 library (for Debian libxml2-dev)"»)
-		«k:endif» ()
-	«k:endif» ()
-«k:endif» ()
+			Â«f:setÂ»(Â«v:LIBXML2_LIBRARIESÂ» xml)
+		Â«k:elseÂ» ()
+			Â«f:messageÂ»(Â«s:"ERROR: LibXml2 not found, please install xml2 library (for Debian libxml2-dev)"Â»)
+		Â«k:endifÂ» ()
+	Â«k:endifÂ» ()
+Â«k:endifÂ» ()
 
-«k:if» («v:USE_EXPAT»)
-	«f:add_definitions»(-D«c:GENERATEDSAXPARSER_XMLPARSER_EXPAT»)
-	«f:message»(«s:"FATAL: EXPAT support not implemented"»)
-	«x:# TODO:: use externals
-»«k:endif» ()
+Â«k:ifÂ» (Â«v:USE_EXPATÂ»)
+	Â«f:add_definitionsÂ»(-DÂ«c:GENERATEDSAXPARSER_XMLPARSER_EXPATÂ»)
+	Â«f:messageÂ»(Â«s:"FATAL: EXPAT support not implemented"Â»)
+	Â«x:# TODO:: use externals
+Â»Â«k:endifÂ» ()
 
-«x:#adding PCRE
-»«f:find_package»(PCRE)
-«k:if» («v:PCRE_FOUND»)
-	«f:message»(«t:STATUS» «s:"SUCCESSFUL: PCRE found"»)
-«k:else» ()  «x:# if pcre not found building its local copy from ./Externals
-»	«k:if» («v:WIN32»)
-		«f:message»(«s:"WARNING: Native PCRE not found, taking PCRE from ./Externals"»)
-		«f:add_definitions»(-D«c:PCRE_STATIC»)
-		«f:add_subdirectory»(«D:${»«v:EXTERNAL_LIBRARIES»«D:}»/pcre)
-		«f:set»(«v:PCRE_INCLUDE_DIR» «D:${»«v:libpcre_include_dirs»«D:}»)
-		«f:set»(«v:PCRE_LIBRARIES» pcre)
-	«k:else» ()
-		«f:message»(«s:"ERROR: PCRE not found, please install pcre library"»)
-	«k:endif» ()
-«k:endif» ()
+Â«x:#adding PCRE
+Â»Â«f:find_packageÂ»(PCRE)
+Â«k:ifÂ» (Â«v:PCRE_FOUNDÂ»)
+	Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"SUCCESSFUL: PCRE found"Â»)
+Â«k:elseÂ» ()  Â«x:# if pcre not found building its local copy from ./Externals
+Â»	Â«k:ifÂ» (Â«v:WIN32Â»)
+		Â«f:messageÂ»(Â«s:"WARNING: Native PCRE not found, taking PCRE from ./Externals"Â»)
+		Â«f:add_definitionsÂ»(-DÂ«c:PCRE_STATICÂ»)
+		Â«f:add_subdirectoryÂ»(Â«D:${Â»Â«v:EXTERNAL_LIBRARIESÂ»Â«D:}Â»/pcre)
+		Â«f:setÂ»(Â«v:PCRE_INCLUDE_DIRÂ» Â«D:${Â»Â«v:libpcre_include_dirsÂ»Â«D:}Â»)
+		Â«f:setÂ»(Â«v:PCRE_LIBRARIESÂ» pcre)
+	Â«k:elseÂ» ()
+		Â«f:messageÂ»(Â«s:"ERROR: PCRE not found, please install pcre library"Â»)
+	Â«k:endifÂ» ()
+Â«k:endifÂ» ()
 
-«x:# building required libs
-»«f:add_subdirectory»(common/libftoa)
-«f:add_subdirectory»(common/libBuffer)
-«f:add_subdirectory»(«D:${»«v:EXTERNAL_LIBRARIES»«D:}»/UTF)
-«f:add_subdirectory»(«D:${»«v:EXTERNAL_LIBRARIES»«D:}»/MathMLSolver)
+Â«x:# building required libs
+Â»Â«f:add_subdirectoryÂ»(common/libftoa)
+Â«f:add_subdirectoryÂ»(common/libBuffer)
+Â«f:add_subdirectoryÂ»(Â«D:${Â»Â«v:EXTERNAL_LIBRARIESÂ»Â«D:}Â»/UTF)
+Â«f:add_subdirectoryÂ»(Â«D:${Â»Â«v:EXTERNAL_LIBRARIESÂ»Â«D:}Â»/MathMLSolver)
 
-«x:# building OpenCOLLADA libs
-»«f:add_subdirectory»(COLLADABaseUtils)
-«f:add_subdirectory»(COLLADAFramework)
-«f:add_subdirectory»(GeneratedSaxParser)
-«f:add_subdirectory»(COLLADASaxFrameworkLoader)
-«f:add_subdirectory»(COLLADAStreamWriter)
+Â«x:# building OpenCOLLADA libs
+Â»Â«f:add_subdirectoryÂ»(COLLADABaseUtils)
+Â«f:add_subdirectoryÂ»(COLLADAFramework)
+Â«f:add_subdirectoryÂ»(GeneratedSaxParser)
+Â«f:add_subdirectoryÂ»(COLLADASaxFrameworkLoader)
+Â«f:add_subdirectoryÂ»(COLLADAStreamWriter)
 
-«x:# building COLLADAValidator app
-»«f:add_subdirectory»(COLLADAValidator)
+Â«x:# building COLLADAValidator app
+Â»Â«f:add_subdirectoryÂ»(COLLADAValidator)

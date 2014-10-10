@@ -1,295 +1,295 @@
-«f:cmake_minimum_required»(«t:VERSION» 2.8 «t:FATAL_ERROR»)
+Â«f:cmake_minimum_requiredÂ»(Â«t:VERSIONÂ» 2.8 Â«t:FATAL_ERRORÂ»)
 
-«k:if»(«t:COMMAND» «f:CMAKE_POLICY»)
-  «f:CMAKE_POLICY»(«t:SET» «c:CMP0003» «t:NEW»)
-  «f:CMAKE_POLICY»(«t:SET» «c:CMP0004» «t:NEW»)
-«k:endif»(«t:COMMAND» «f:CMAKE_POLICY»)
+Â«k:ifÂ»(Â«t:COMMANDÂ» Â«f:CMAKE_POLICYÂ»)
+  Â«f:CMAKE_POLICYÂ»(Â«t:SETÂ» Â«c:CMP0003Â» Â«t:NEWÂ»)
+  Â«f:CMAKE_POLICYÂ»(Â«t:SETÂ» Â«c:CMP0004Â» Â«t:NEWÂ»)
+Â«k:endifÂ»(Â«t:COMMANDÂ» Â«f:CMAKE_POLICYÂ»)
 
-«f:project» (Gazebo)
-«f:string» («t:TOLOWER» «D:${»«v:PROJECT_NAME»«D:}» «v:PROJECT_NAME_LOWER»)
+Â«f:projectÂ» (Gazebo)
+Â«f:stringÂ» (Â«t:TOLOWERÂ» Â«D:${Â»Â«v:PROJECT_NAMEÂ»Â«D:}Â» Â«v:PROJECT_NAME_LOWERÂ»)
 
-«f:set» («v:GAZEBO_VERSION_NAME» «s:"helium"»)
-«f:set» («v:GAZEBO_MAJOR_VERSION» 1)
-«f:set» («v:GAZEBO_MINOR_VERSION» 2)
-«f:set» («v:GAZEBO_PATCH_VERSION» 6)
+Â«f:setÂ» (Â«v:GAZEBO_VERSION_NAMEÂ» Â«s:"helium"Â»)
+Â«f:setÂ» (Â«v:GAZEBO_MAJOR_VERSIONÂ» 1)
+Â«f:setÂ» (Â«v:GAZEBO_MINOR_VERSIONÂ» 2)
+Â«f:setÂ» (Â«v:GAZEBO_PATCH_VERSIONÂ» 6)
 
-«f:set» («v:GAZEBO_VERSION» «D:${»«v:GAZEBO_MAJOR_VERSION»«D:}».«D:${»«v:GAZEBO_MINOR_VERSION»«D:}»)
-«f:set» («v:GAZEBO_VERSION_FULL» «D:${»«v:GAZEBO_MAJOR_VERSION»«D:}».«D:${»«v:GAZEBO_MINOR_VERSION»«D:}».«D:${»«v:GAZEBO_PATCH_VERSION»«D:}»)
+Â«f:setÂ» (Â«v:GAZEBO_VERSIONÂ» Â«D:${Â»Â«v:GAZEBO_MAJOR_VERSIONÂ»Â«D:}Â».Â«D:${Â»Â«v:GAZEBO_MINOR_VERSIONÂ»Â«D:}Â»)
+Â«f:setÂ» (Â«v:GAZEBO_VERSION_FULLÂ» Â«D:${Â»Â«v:GAZEBO_MAJOR_VERSIONÂ»Â«D:}Â».Â«D:${Â»Â«v:GAZEBO_MINOR_VERSIONÂ»Â«D:}Â».Â«D:${Â»Â«v:GAZEBO_PATCH_VERSIONÂ»Â«D:}Â»)
 
-«f:message» («t:STATUS» «s:"${«v:PROJECT_NAME»} version ${«v:GAZEBO_VERSION_FULL»}"»)
+Â«f:messageÂ» (Â«t:STATUSÂ» Â«s:"${Â«v:PROJECT_NAMEÂ»} version ${Â«v:GAZEBO_VERSION_FULLÂ»}"Â»)
 
-«f:set» («v:gazebo_cmake_dir» «D:${»«v:PROJECT_SOURCE_DIR»«D:}»/cmake «t:CACHE» PATH «s:"Location of CMake scripts"»)
+Â«f:setÂ» (Â«v:gazebo_cmake_dirÂ» Â«D:${Â»Â«v:PROJECT_SOURCE_DIRÂ»Â«D:}Â»/cmake Â«t:CACHEÂ» PATH Â«s:"Location of CMake scripts"Â»)
 
-«x:########################################
+Â«x:########################################
 # Package Creation: 
-»«k:include» («D:${»«v:gazebo_cmake_dir»«D:}»/gazebo_cpack.cmake)
-«f:set» («v:CPACK_PACKAGE_VERSION» «s:"${«v:GAZEBO_VERSION_FULL»}"»)
-«f:set» («v:CPACK_PACKAGE_VERSION_MAJOR» «s:"${«v:GAZEBO_MAJOR_VERSION»}"»)
-«f:set» («v:CPACK_PACKAGE_VERSION_MINOR» «s:"${«v:GAZEBO_MINOR_VERSION»}"»)
-«f:set» («v:CPACK_PACKAGE_VERSION_PATCH» «s:"${«v:GAZEBO_PATCH_VERSION»}"»)
+Â»Â«k:includeÂ» (Â«D:${Â»Â«v:gazebo_cmake_dirÂ»Â«D:}Â»/gazebo_cpack.cmake)
+Â«f:setÂ» (Â«v:CPACK_PACKAGE_VERSIONÂ» Â«s:"${Â«v:GAZEBO_VERSION_FULLÂ»}"Â»)
+Â«f:setÂ» (Â«v:CPACK_PACKAGE_VERSION_MAJORÂ» Â«s:"${Â«v:GAZEBO_MAJOR_VERSIONÂ»}"Â»)
+Â«f:setÂ» (Â«v:CPACK_PACKAGE_VERSION_MINORÂ» Â«s:"${Â«v:GAZEBO_MINOR_VERSIONÂ»}"Â»)
+Â«f:setÂ» (Â«v:CPACK_PACKAGE_VERSION_PATCHÂ» Â«s:"${Â«v:GAZEBO_PATCH_VERSIONÂ»}"Â»)
 
-«k:if» («v:CPACK_GENERATOR»)
-  «f:message»(«t:STATUS» «s:"Found CPack generators: ${«v:CPACK_GENERATOR»}"»)
+Â«k:ifÂ» (Â«v:CPACK_GENERATORÂ»)
+  Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"Found CPack generators: ${Â«v:CPACK_GENERATORÂ»}"Â»)
 
-  «f:configure_file»(«s:"${«v:gazebo_cmake_dir»}/cpack_options.cmake.in"» «D:${»«v:GAZEBO_CPACK_CFG_FILE»«D:}» «t:@ONLY»)
-  «f:set»(«v:CPACK_PROJECT_CONFIG_FILE» «D:${»«v:GAZEBO_CPACK_CFG_FILE»«D:}»)
-  «k:include» (CPack)
-«k:endif»()
+  Â«f:configure_fileÂ»(Â«s:"${Â«v:gazebo_cmake_dirÂ»}/cpack_options.cmake.in"Â» Â«D:${Â»Â«v:GAZEBO_CPACK_CFG_FILEÂ»Â«D:}Â» Â«t:@ONLYÂ»)
+  Â«f:setÂ»(Â«v:CPACK_PROJECT_CONFIG_FILEÂ» Â«D:${Â»Â«v:GAZEBO_CPACK_CFG_FILEÂ»Â«D:}Â»)
+  Â«k:includeÂ» (CPack)
+Â«k:endifÂ»()
 
-«x:# If we're configuring only to package source, stop here
-»«k:if» («v:PACKAGE_SOURCE_ONLY»)
-  «f:message»(«t:WARNING» «s:"Configuration was done in PACKAGE_SOURCE_ONLY mode.  You can build a tarball (make package_source), but nothing else."»)
-  «k:return»()
-«k:endif»()
+Â«x:# If we're configuring only to package source, stop here
+Â»Â«k:ifÂ» (Â«v:PACKAGE_SOURCE_ONLYÂ»)
+  Â«f:messageÂ»(Â«t:WARNINGÂ» Â«s:"Configuration was done in PACKAGE_SOURCE_ONLY mode.  You can build a tarball (make package_source), but nothing else."Â»)
+  Â«k:returnÂ»()
+Â«k:endifÂ»()
 
-«x:# Documentation
-»«f:add_subdirectory»(doc)
+Â«x:# Documentation
+Â»Â«f:add_subdirectoryÂ»(doc)
 
-«x:# If we're configuring only to build docs, stop here
-»«k:if» («v:DOC_ONLY»)
-  «f:message»(«t:WARNING» «s:"Configuration was done in DOC_ONLY mode.  You can build documentation (make doc), but nothing else."»)
-  «k:return»()
-«k:endif»()
+Â«x:# If we're configuring only to build docs, stop here
+Â»Â«k:ifÂ» (Â«v:DOC_ONLYÂ»)
+  Â«f:messageÂ»(Â«t:WARNINGÂ» Â«s:"Configuration was done in DOC_ONLY mode.  You can build documentation (make doc), but nothing else."Â»)
+  Â«k:returnÂ»()
+Â«k:endifÂ»()
 
-«f:enable_testing»()
+Â«f:enable_testingÂ»()
 
-«x:# with -fPIC
-»«k:if»(«v:UNIX» «t:AND» «t:NOT» «v:WIN32»)
-  «f:set» («v:CMAKE_INSTALL_PREFIX» «s:"/usr"» «t:CACHE» «t:STRING» «s:"Install Prefix"»)
- «f:find_program»(«v:CMAKE_UNAME» uname /bin /usr/bin /usr/local/bin )
- «k:if»(«v:CMAKE_UNAME»)
-   «f:exec_program»(uname «t:ARGS» -m «t:OUTPUT_VARIABLE» CMAKE_SYSTEM_PROCESSOR)
-   «f:set»(«v:CMAKE_SYSTEM_PROCESSOR» «D:${»«v:CMAKE_SYSTEM_PROCESSOR»«D:}» «t:CACHE» «t:INTERNAL»
-     «s:"processor type (i386 and x86_64)"»)
-   «k:if»(«v:CMAKE_SYSTEM_PROCESSOR» «t:MATCHES» «s:"x86_64"»)
-     «f:ADD_DEFINITIONS»(-fPIC)
-   «k:endif»(«v:CMAKE_SYSTEM_PROCESSOR» «t:MATCHES» «s:"x86_64"»)
- «k:endif»(«v:CMAKE_UNAME»)
-«k:endif»()
+Â«x:# with -fPIC
+Â»Â«k:ifÂ»(Â«v:UNIXÂ» Â«t:ANDÂ» Â«t:NOTÂ» Â«v:WIN32Â»)
+  Â«f:setÂ» (Â«v:CMAKE_INSTALL_PREFIXÂ» Â«s:"/usr"Â» Â«t:CACHEÂ» Â«t:STRINGÂ» Â«s:"Install Prefix"Â»)
+ Â«f:find_programÂ»(Â«v:CMAKE_UNAMEÂ» uname /bin /usr/bin /usr/local/bin )
+ Â«k:ifÂ»(Â«v:CMAKE_UNAMEÂ»)
+   Â«f:exec_programÂ»(uname Â«t:ARGSÂ» -m Â«t:OUTPUT_VARIABLEÂ» CMAKE_SYSTEM_PROCESSOR)
+   Â«f:setÂ»(Â«v:CMAKE_SYSTEM_PROCESSORÂ» Â«D:${Â»Â«v:CMAKE_SYSTEM_PROCESSORÂ»Â«D:}Â» Â«t:CACHEÂ» Â«t:INTERNALÂ»
+     Â«s:"processor type (i386 and x86_64)"Â»)
+   Â«k:ifÂ»(Â«v:CMAKE_SYSTEM_PROCESSORÂ» Â«t:MATCHESÂ» Â«s:"x86_64"Â»)
+     Â«f:ADD_DEFINITIONSÂ»(-fPIC)
+   Â«k:endifÂ»(Â«v:CMAKE_SYSTEM_PROCESSORÂ» Â«t:MATCHESÂ» Â«s:"x86_64"Â»)
+ Â«k:endifÂ»(Â«v:CMAKE_UNAMEÂ»)
+Â«k:endifÂ»()
 
-«f:set» («v:CMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE» «c:ON»)
+Â«f:setÂ» (Â«v:CMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFOREÂ» Â«c:ONÂ»)
 
 
-«x:# developer's option to cache PKG_CONFIG_PATH and
+Â«x:# developer's option to cache PKG_CONFIG_PATH and
 # LD_LIBRARY_PATH for local installs
-»«k:if»(«v:PKG_CONFIG_PATH»)
-  «f:set» («v:ENV»«D:{»«c:PKG_CONFIG_PATH»«D:}» «D:${»«v:PKG_CONFIG_PATH»«D:}»:«D:$»«v:ENV»«D:{»«c:PKG_CONFIG_PATH»«D:}»)
-«k:endif»()
-«k:if»(«v:LD_LIBRARY_PATH»)
-  «f:set» («v:ENV»«D:{»«c:LD_LIBRARY_PATH»«D:}» «D:${»«v:LD_LIBRARY_PATH»«D:}»:«D:$»«v:ENV»«D:{»«c:LD_LIBRARY_PATH»«D:}»)
-«k:endif»()
+Â»Â«k:ifÂ»(Â«v:PKG_CONFIG_PATHÂ»)
+  Â«f:setÂ» (Â«v:ENVÂ»Â«D:{Â»Â«c:PKG_CONFIG_PATHÂ»Â«D:}Â» Â«D:${Â»Â«v:PKG_CONFIG_PATHÂ»Â«D:}Â»:Â«D:$Â»Â«v:ENVÂ»Â«D:{Â»Â«c:PKG_CONFIG_PATHÂ»Â«D:}Â»)
+Â«k:endifÂ»()
+Â«k:ifÂ»(Â«v:LD_LIBRARY_PATHÂ»)
+  Â«f:setÂ» (Â«v:ENVÂ»Â«D:{Â»Â«c:LD_LIBRARY_PATHÂ»Â«D:}Â» Â«D:${Â»Â«v:LD_LIBRARY_PATHÂ»Â«D:}Â»:Â«D:$Â»Â«v:ENVÂ»Â«D:{Â»Â«c:LD_LIBRARY_PATHÂ»Â«D:}Â»)
+Â«k:endifÂ»()
 
 
-«f:set» («v:INCLUDE_INSTALL_DIR» «s:"include/gazebo-${«v:GAZEBO_VERSION»}/gazebo"») 
-«f:set» («v:LIB_INSTALL_DIR» «s:"lib"» «t:CACHE» «t:STRING» «s:"Installation directory for libraries (relative to CMAKE_INSTALL_PREFIX)"») 
-«f:set» («v:BIN_INSTALL_DIR» «s:"bin"» «t:CACHE» «t:STRING» «s:"Installation directory for binaries (relative to CMAKE_INSTALL_PREFIX)"») 
+Â«f:setÂ» (Â«v:INCLUDE_INSTALL_DIRÂ» Â«s:"include/gazebo-${Â«v:GAZEBO_VERSIONÂ»}/gazebo"Â») 
+Â«f:setÂ» (Â«v:LIB_INSTALL_DIRÂ» Â«s:"lib"Â» Â«t:CACHEÂ» Â«t:STRINGÂ» Â«s:"Installation directory for libraries (relative to CMAKE_INSTALL_PREFIX)"Â») 
+Â«f:setÂ» (Â«v:BIN_INSTALL_DIRÂ» Â«s:"bin"Â» Â«t:CACHEÂ» Â«t:STRINGÂ» Â«s:"Installation directory for binaries (relative to CMAKE_INSTALL_PREFIX)"Â») 
 
 
-«f:set» («v:USE_FULL_RPATH» «c:OFF» «t:CACHE» «t:BOOL» «s:"Set to true to enable full rpath"»)
+Â«f:setÂ» (Â«v:USE_FULL_RPATHÂ» Â«c:OFFÂ» Â«t:CACHEÂ» Â«t:BOOLÂ» Â«s:"Set to true to enable full rpath"Â»)
 
-«k:if» («v:USE_FULL_RPATH»)
-  «x:# use, i.e. don't skip the full RPATH for the build tree
-»  «f:set»(«v:CMAKE_SKIP_BUILD_RPATH»  «c:FALSE»)
+Â«k:ifÂ» (Â«v:USE_FULL_RPATHÂ»)
+  Â«x:# use, i.e. don't skip the full RPATH for the build tree
+Â»  Â«f:setÂ»(Â«v:CMAKE_SKIP_BUILD_RPATHÂ»  Â«c:FALSEÂ»)
   
-  «x:# when building, don't use the install RPATH already
-»  «x:# (but later on when installing)
-»  «f:set»(«v:CMAKE_BUILD_WITH_INSTALL_RPATH» «c:FALSE») 
+  Â«x:# when building, don't use the install RPATH already
+Â»  Â«x:# (but later on when installing)
+Â»  Â«f:setÂ»(Â«v:CMAKE_BUILD_WITH_INSTALL_RPATHÂ» Â«c:FALSEÂ») 
   
-  «f:set»(«v:CMAKE_INSTALL_RPATH» «s:"${«v:CMAKE_INSTALL_PREFIX»}/${«v:LIB_INSTALL_DIR»}"»)
+  Â«f:setÂ»(Â«v:CMAKE_INSTALL_RPATHÂ» Â«s:"${Â«v:CMAKE_INSTALL_PREFIXÂ»}/${Â«v:LIB_INSTALL_DIRÂ»}"Â»)
   
-  «x:# add the automatically determined parts of the RPATH
-»  «x:# which point to directories outside the build tree to the install RPATH
-»  «f:set»(«v:CMAKE_INSTALL_RPATH_USE_LINK_PATH» «c:TRUE»)
+  Â«x:# add the automatically determined parts of the RPATH
+Â»  Â«x:# which point to directories outside the build tree to the install RPATH
+Â»  Â«f:setÂ»(Â«v:CMAKE_INSTALL_RPATH_USE_LINK_PATHÂ» Â«c:TRUEÂ»)
   
-  «x:# the RPATH to be used when installing, but only if its not a system directory
-»  «f:list»(«t:FIND» «v:CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES» «s:"${«v:CMAKE_INSTALL_PREFIX»}/${«v:LIB_INSTALL_DIR»}"» «v:isSystemDir»)
-  «k:if»(«s:"${«v:isSystemDir»}"» «t:STREQUAL» «s:"-1"»)
-    «f:set»(«v:CMAKE_INSTALL_RPATH» «s:"${«v:CMAKE_INSTALL_PREFIX»}/${«v:LIB_INSTALL_DIR»}"»)
-  «k:endif»(«s:"${«v:isSystemDir»}"» «t:STREQUAL» «s:"-1"»)
-«k:endif»()
+  Â«x:# the RPATH to be used when installing, but only if its not a system directory
+Â»  Â«f:listÂ»(Â«t:FINDÂ» Â«v:CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIESÂ» Â«s:"${Â«v:CMAKE_INSTALL_PREFIXÂ»}/${Â«v:LIB_INSTALL_DIRÂ»}"Â» Â«v:isSystemDirÂ»)
+  Â«k:ifÂ»(Â«s:"${Â«v:isSystemDirÂ»}"Â» Â«t:STREQUALÂ» Â«s:"-1"Â»)
+    Â«f:setÂ»(Â«v:CMAKE_INSTALL_RPATHÂ» Â«s:"${Â«v:CMAKE_INSTALL_PREFIXÂ»}/${Â«v:LIB_INSTALL_DIRÂ»}"Â»)
+  Â«k:endifÂ»(Â«s:"${Â«v:isSystemDirÂ»}"Â» Â«t:STREQUALÂ» Â«s:"-1"Â»)
+Â«k:endifÂ»()
 
-«f:set» («v:BUILD_GAZEBO» «c:ON» «t:CACHE» «t:INTERNAL» «s:"Build Gazebo"» «t:FORCE»)
-«f:set» («v:build_errors» «s:""» «t:CACHE» «t:INTERNAL» «s:"build errors"» «t:FORCE»)
-«f:set» («v:build_warnings» «s:""» «t:CACHE» «t:INTERNAL» «s:"build warnings"» «t:FORCE»)
+Â«f:setÂ» (Â«v:BUILD_GAZEBOÂ» Â«c:ONÂ» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"Build Gazebo"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:build_errorsÂ» Â«s:""Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"build errors"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:build_warningsÂ» Â«s:""Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"build warnings"Â» Â«t:FORCEÂ»)
 
 
-«f:set» («v:MIN_OGRE_VERSION» 1.7.1 «t:CACHE» «t:INTERNAL» «s:"Ogre version requirement"» «t:FORCE»)
-«f:set» («v:MIN_BOOST_VERSION» 1.40.0 «t:CACHE» «t:INTERNAL» «s:"Boost min version requirement"» «t:FORCE»)
+Â«f:setÂ» (Â«v:MIN_OGRE_VERSIONÂ» 1.7.1 Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"Ogre version requirement"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:MIN_BOOST_VERSIONÂ» 1.40.0 Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"Boost min version requirement"Â» Â«t:FORCEÂ»)
 
-«f:set» («v:FREEIMAGE_MAJOR_VERSION» 3 «t:CACHE» «t:INTERNAL» «s:"FreeImage major version requirement"» «t:FORCE»)
-«f:set» («v:FREEIMAGE_MINOR_VERSION» 9 «t:CACHE» «t:INTERNAL» «s:"FreeImage minor version requirement"» «t:FORCE»)
-«f:set» («v:MIN_FREEIMAGE_VERSION» «D:${»«v:FREEIMAGE_MAJOR_VERSION»«D:}».«D:${»«v:FREEIMAGE_MINOR_VERSION»«D:}».0 «t:CACHE» «t:INTERNAL» «s:"FreeImage version requirement"» «t:FORCE»)
+Â«f:setÂ» (Â«v:FREEIMAGE_MAJOR_VERSIONÂ» 3 Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"FreeImage major version requirement"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:FREEIMAGE_MINOR_VERSIONÂ» 9 Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"FreeImage minor version requirement"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:MIN_FREEIMAGE_VERSIONÂ» Â«D:${Â»Â«v:FREEIMAGE_MAJOR_VERSIONÂ»Â«D:}Â».Â«D:${Â»Â«v:FREEIMAGE_MINOR_VERSIONÂ»Â«D:}Â».0 Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"FreeImage version requirement"Â» Â«t:FORCEÂ»)
 
-«k:include» («D:${»«v:gazebo_cmake_dir»«D:}»/DissectVersion.cmake)
+Â«k:includeÂ» (Â«D:${Â»Â«v:gazebo_cmake_dirÂ»Â«D:}Â»/DissectVersion.cmake)
 
-«x:#####################################
+Â«x:#####################################
 # Build type cflags
-»«f:set» («v:CMAKE_C_FLAGS_ALL» «s:" -Wall -Wextra -Wno-long-long -Wno-unused-value -Wno-unused-value -Wno-unused-value -Wno-unused-value -Wfloat-equal -Wshadow -Winit-self -Wswitch-default -Wmissing-include-dirs -pedantic"» «t:CACHE» «t:INTERNAL» «s:"General C Flags"»)
+Â»Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_ALLÂ» Â«s:" -Wall -Wextra -Wno-long-long -Wno-unused-value -Wno-unused-value -Wno-unused-value -Wno-unused-value -Wfloat-equal -Wshadow -Winit-self -Wswitch-default -Wmissing-include-dirs -pedantic"Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"General C Flags"Â»)
 
 
-«x:#####################################
+Â«x:#####################################
 # Build type link flags
-»«f:set» («v:CMAKE_LINK_FLAGS_RELEASE» «s:" "» «t:CACHE» «t:INTERNAL» «s:"Link flags fro release"» «t:FORCE»)
-«f:set» («v:CMAKE_LINK_FLAGS_DEBUG» «s:" "» «t:CACHE» «t:INTERNAL» «s:"Link flags for debug"» «t:FORCE»)
-«f:set» («v:CMAKE_LINK_FLAGS_PROFILE» «s:" -pg"» «t:CACHE» «t:INTERNAL» «s:"Link flags for profile"» «t:FORCE»)
-«f:set» («v:CMAKE_LINK_FLAGS_CHECK» «s:" --coverage"» «t:CACHE» «t:INTERNAL» «s:"Link flags for static code checking"» «t:FORCE»)
+Â»Â«f:setÂ» (Â«v:CMAKE_LINK_FLAGS_RELEASEÂ» Â«s:" "Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"Link flags fro release"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:CMAKE_LINK_FLAGS_DEBUGÂ» Â«s:" "Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"Link flags for debug"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:CMAKE_LINK_FLAGS_PROFILEÂ» Â«s:" -pg"Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"Link flags for profile"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:CMAKE_LINK_FLAGS_CHECKÂ» Â«s:" --coverage"Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"Link flags for static code checking"Â» Â«t:FORCEÂ»)
 
-«f:message» («t:STATUS» «s:"\n\n====== Finding 3rd Party Packages ======"»)
-«k:include» («D:${»«v:gazebo_cmake_dir»«D:}»/SearchForStuff.cmake)
-«f:message» («t:STATUS» «s:"----------------------------------------\n"»)
+Â«f:messageÂ» (Â«t:STATUSÂ» Â«s:"\n\n====== Finding 3rd Party Packages ======"Â»)
+Â«k:includeÂ» (Â«D:${Â»Â«v:gazebo_cmake_dirÂ»Â«D:}Â»/SearchForStuff.cmake)
+Â«f:messageÂ» (Â«t:STATUSÂ» Â«s:"----------------------------------------\n"Â»)
 
-«k:if» («v:SSE2_FOUND»)
-  «f:set» («v:CMAKE_C_FLAGS_ALL» «s:"${«v:CMAKE_C_FLAGS_ALL»} -msse -msse2 -mfpmath=sse"»)
-«k:endif»()
-«k:if» («v:SSE3_FOUND»)
-  «f:set» («v:CMAKE_C_FLAGS_ALL» «s:"${«v:CMAKE_C_FLAGS_ALL»} -msse3"»)
-«k:endif»()
-«k:if» («v:SSSE3_FOUND»)
-  «f:set» («v:CMAKE_C_FLAGS_ALL» «s:"${«v:CMAKE_C_FLAGS_ALL»} -mssse3"»)
-«k:endif»()
+Â«k:ifÂ» (Â«v:SSE2_FOUNDÂ»)
+  Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_ALLÂ» Â«s:"${Â«v:CMAKE_C_FLAGS_ALLÂ»} -msse -msse2 -mfpmath=sse"Â»)
+Â«k:endifÂ»()
+Â«k:ifÂ» (Â«v:SSE3_FOUNDÂ»)
+  Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_ALLÂ» Â«s:"${Â«v:CMAKE_C_FLAGS_ALLÂ»} -msse3"Â»)
+Â«k:endifÂ»()
+Â«k:ifÂ» (Â«v:SSSE3_FOUNDÂ»)
+  Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_ALLÂ» Â«s:"${Â«v:CMAKE_C_FLAGS_ALLÂ»} -mssse3"Â»)
+Â«k:endifÂ»()
 
-«k:if» («v:ENABLE_SSE4»)
-  «f:message»(«t:STATUS» «s:"\nSSE4 will be enabled if system supports it.\n"»)
-  «k:if» («v:SSE4_1_FOUND»)
-    «f:set» («v:CMAKE_C_FLAGS_ALL» «s:"${«v:CMAKE_C_FLAGS_ALL»} -msse4.1"»)
-  «k:endif»()
-  «k:if» («v:SSE4_2_FOUND»)
-    «f:set» («v:CMAKE_C_FLAGS_ALL» «s:"${«v:CMAKE_C_FLAGS_ALL»} -msse4.2"»)
-  «k:endif»()
-«k:else»()
-  «f:message»(«t:STATUS» «s:"\nSSE4 disabled.\n"»)
-«k:endif»()
+Â«k:ifÂ» (Â«v:ENABLE_SSE4Â»)
+  Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"\nSSE4 will be enabled if system supports it.\n"Â»)
+  Â«k:ifÂ» (Â«v:SSE4_1_FOUNDÂ»)
+    Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_ALLÂ» Â«s:"${Â«v:CMAKE_C_FLAGS_ALLÂ»} -msse4.1"Â»)
+  Â«k:endifÂ»()
+  Â«k:ifÂ» (Â«v:SSE4_2_FOUNDÂ»)
+    Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_ALLÂ» Â«s:"${Â«v:CMAKE_C_FLAGS_ALLÂ»} -msse4.2"Â»)
+  Â«k:endifÂ»()
+Â«k:elseÂ»()
+  Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"\nSSE4 disabled.\n"Â»)
+Â«k:endifÂ»()
 
-«f:set» («v:CMAKE_C_FLAGS_RELEASE» «s:" -s -O2 -DNDEBUG ${«v:CMAKE_C_FLAGS_ALL»}"» «t:CACHE» «t:INTERNAL» «s:"C Flags for release"» «t:FORCE»)
-«f:set» («v:CMAKE_CXX_FLAGS_RELEASE» «D:${»«v:CMAKE_C_FLAGS_RELEASE»«D:}»)
+Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_RELEASEÂ» Â«s:" -s -O2 -DNDEBUG ${Â«v:CMAKE_C_FLAGS_ALLÂ»}"Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"C Flags for release"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:CMAKE_CXX_FLAGS_RELEASEÂ» Â«D:${Â»Â«v:CMAKE_C_FLAGS_RELEASEÂ»Â«D:}Â»)
 
-«f:set» («v:CMAKE_C_FLAGS_DEBUG» «s:" -ggdb3 ${«v:CMAKE_C_FLAGS_ALL»}"» «t:CACHE» «t:INTERNAL» «s:"C Flags for debug"» «t:FORCE»)
-«f:set» («v:CMAKE_CXX_FLAGS_DEBUG» «D:${»«v:CMAKE_C_FLAGS_DEBUG»«D:}»)
+Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_DEBUGÂ» Â«s:" -ggdb3 ${Â«v:CMAKE_C_FLAGS_ALLÂ»}"Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"C Flags for debug"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:CMAKE_CXX_FLAGS_DEBUGÂ» Â«D:${Â»Â«v:CMAKE_C_FLAGS_DEBUGÂ»Â«D:}Â»)
 
-«f:set» («v:CMAKE_C_FLAGS_PROFILE» «s:" -fno-omit-frame-pointer -g -pg ${«v:CMAKE_C_FLAGS_ALL»}"» «t:CACHE» «t:INTERNAL» «s:"C Flags for profile"» «t:FORCE»)
-«f:set» («v:CMAKE_CXX_FLAGS_PROFILE» «D:${»«v:CMAKE_C_FLAGS_PROFILE»«D:}»)
+Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_PROFILEÂ» Â«s:" -fno-omit-frame-pointer -g -pg ${Â«v:CMAKE_C_FLAGS_ALLÂ»}"Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"C Flags for profile"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:CMAKE_CXX_FLAGS_PROFILEÂ» Â«D:${Â»Â«v:CMAKE_C_FLAGS_PROFILEÂ»Â«D:}Â»)
 
-«f:set» («v:CMAKE_C_FLAGS_CHECK» «s:" -g -O0 -Wformat=2 --coverage -fno-inline ${«v:CMAKE_C_FLAGS_ALL»}"» «t:CACHE» «t:INTERNAL» «s:"C Flags for static code checking"» «t:FORCE»)
-«f:set» («v:CMAKE_CXX_FLAGS_CHECK» «s:"${«v:CMAKE_C_FLAGS_CHECK»} -fno-elide-constructors -fno-default-inline -fno-implicit-inline-templates"»)
+Â«f:setÂ» (Â«v:CMAKE_C_FLAGS_CHECKÂ» Â«s:" -g -O0 -Wformat=2 --coverage -fno-inline ${Â«v:CMAKE_C_FLAGS_ALLÂ»}"Â» Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"C Flags for static code checking"Â» Â«t:FORCEÂ»)
+Â«f:setÂ» (Â«v:CMAKE_CXX_FLAGS_CHECKÂ» Â«s:"${Â«v:CMAKE_C_FLAGS_CHECKÂ»} -fno-elide-constructors -fno-default-inline -fno-implicit-inline-templates"Â»)
 
-«x:#####################################
+Â«x:#####################################
 # Set the default build type
-»«k:if» («t:NOT» «v:CMAKE_BUILD_TYPE»)
-  «f:set» («v:CMAKE_BUILD_TYPE» «s:"RELEASE"» «t:CACHE» «t:STRING» 
-    «s:"Choose the type of build, options are: debug release profile check"» «t:FORCE»)
-«k:endif» («t:NOT» «v:CMAKE_BUILD_TYPE»)
-«f:string»(«t:TOUPPER» «D:${»«v:CMAKE_BUILD_TYPE»«D:}» «v:CMAKE_BUILD_TYPE»)
+Â»Â«k:ifÂ» (Â«t:NOTÂ» Â«v:CMAKE_BUILD_TYPEÂ»)
+  Â«f:setÂ» (Â«v:CMAKE_BUILD_TYPEÂ» Â«s:"RELEASE"Â» Â«t:CACHEÂ» Â«t:STRINGÂ» 
+    Â«s:"Choose the type of build, options are: debug release profile check"Â» Â«t:FORCEÂ»)
+Â«k:endifÂ» (Â«t:NOTÂ» Â«v:CMAKE_BUILD_TYPEÂ»)
+Â«f:stringÂ»(Â«t:TOUPPERÂ» Â«D:${Â»Â«v:CMAKE_BUILD_TYPEÂ»Â«D:}Â» Â«v:CMAKE_BUILD_TYPEÂ»)
 
-«x:#####################################
+Â«x:#####################################
 # Set all the global build flags
-»«f:set» («v:CMAKE_C_FLAGS» «s:"${«v:CMAKE_C_FLAGS_»${«v:CMAKE_BUILD_TYPE»}}"»)
-«f:set» («v:CMAKE_CXX_FLAGS» «s:"${«v:CMAKE_CXX_FLAGS_»${«v:CMAKE_BUILD_TYPE»}}"»)
-«f:set» («v:CMAKE_EXE_LINKER_FLAGS» «s:"${«v:CMAKE_LINK_FLAGS_»${«v:CMAKE_BUILD_TYPE»}}"»)
-«f:set» («v:CMAKE_SHARED_LINKER_FLAGS» «s:"${«v:CMAKE_LINK_FLAGS_»${«v:CMAKE_BUILD_TYPE»}}"»)
-«f:set» («v:CMAKE_MODULE_LINKER_FLAGS» «s:"${«v:CMAKE_LINK_FLAGS_»${«v:CMAKE_BUILD_TYPE»}}"»)
+Â»Â«f:setÂ» (Â«v:CMAKE_C_FLAGSÂ» Â«s:"${Â«v:CMAKE_C_FLAGS_Â»${Â«v:CMAKE_BUILD_TYPEÂ»}}"Â»)
+Â«f:setÂ» (Â«v:CMAKE_CXX_FLAGSÂ» Â«s:"${Â«v:CMAKE_CXX_FLAGS_Â»${Â«v:CMAKE_BUILD_TYPEÂ»}}"Â»)
+Â«f:setÂ» (Â«v:CMAKE_EXE_LINKER_FLAGSÂ» Â«s:"${Â«v:CMAKE_LINK_FLAGS_Â»${Â«v:CMAKE_BUILD_TYPEÂ»}}"Â»)
+Â«f:setÂ» (Â«v:CMAKE_SHARED_LINKER_FLAGSÂ» Â«s:"${Â«v:CMAKE_LINK_FLAGS_Â»${Â«v:CMAKE_BUILD_TYPEÂ»}}"Â»)
+Â«f:setÂ» (Â«v:CMAKE_MODULE_LINKER_FLAGSÂ» Â«s:"${Â«v:CMAKE_LINK_FLAGS_Â»${Â«v:CMAKE_BUILD_TYPEÂ»}}"Â»)
 
-«k:if» («s:"${«v:CMAKE_BUILD_TYPE»}"» «t:STREQUAL» «s:"PROFILE"»)
-  «f:set» («v:BUILD_TYPE_PROFILE» «c:TRUE»)
-«k:else»()
-  «f:set» («v:BUILD_TYPE_PROFILE» «c:FALSE»)
-«k:endif»()
+Â«k:ifÂ» (Â«s:"${Â«v:CMAKE_BUILD_TYPEÂ»}"Â» Â«t:STREQUALÂ» Â«s:"PROFILE"Â»)
+  Â«f:setÂ» (Â«v:BUILD_TYPE_PROFILEÂ» Â«c:TRUEÂ»)
+Â«k:elseÂ»()
+  Â«f:setÂ» (Â«v:BUILD_TYPE_PROFILEÂ» Â«c:FALSEÂ»)
+Â«k:endifÂ»()
 
-«k:if» («s:"${«v:CMAKE_BUILD_TYPE»}"» «t:STREQUAL» «s:"RELEASE"»)
-  «f:set» («v:BUILD_TYPE_RELEASE» «c:TRUE»)
-«k:else»()
-  «f:set» («v:BUILD_TYPE_RELEASE» «c:FALSE»)
-«k:endif»()
+Â«k:ifÂ» (Â«s:"${Â«v:CMAKE_BUILD_TYPEÂ»}"Â» Â«t:STREQUALÂ» Â«s:"RELEASE"Â»)
+  Â«f:setÂ» (Â«v:BUILD_TYPE_RELEASEÂ» Â«c:TRUEÂ»)
+Â«k:elseÂ»()
+  Â«f:setÂ» (Â«v:BUILD_TYPE_RELEASEÂ» Â«c:FALSEÂ»)
+Â«k:endifÂ»()
 
-«k:if» ( «s:"${«v:CMAKE_BUILD_TYPE»}"» «t:STREQUAL» «s:"DEBUG"»)
-  «f:set» («v:BUILD_TYPE_DEBUG» «c:TRUE»)
-«k:else»()
-  «f:set» («v:BUILD_TYPE_DEBUG» «c:FALSE»)
-«k:endif»()
+Â«k:ifÂ» ( Â«s:"${Â«v:CMAKE_BUILD_TYPEÂ»}"Â» Â«t:STREQUALÂ» Â«s:"DEBUG"Â»)
+  Â«f:setÂ» (Â«v:BUILD_TYPE_DEBUGÂ» Â«c:TRUEÂ»)
+Â«k:elseÂ»()
+  Â«f:setÂ» (Â«v:BUILD_TYPE_DEBUGÂ» Â«c:FALSEÂ»)
+Â«k:endifÂ»()
 
-«f:message» («t:STATUS» «s:"\n\n====== Configuring 3rd Party Packages ======"»)
-«f:add_subdirectory»(deps)
-«f:message» («t:STATUS» «s:"----------------------------------------\n"»)
+Â«f:messageÂ» (Â«t:STATUSÂ» Â«s:"\n\n====== Configuring 3rd Party Packages ======"Â»)
+Â«f:add_subdirectoryÂ»(deps)
+Â«f:messageÂ» (Â«t:STATUSÂ» Â«s:"----------------------------------------\n"Â»)
 
-«x:#################################################
+Â«x:#################################################
 # OS Specific initialization
-»«k:if» («v:UNIX»)
-  «f:gz_setup_unix»()
-«k:else» («v:WIN32»)
-  «f:gz_setup_windows»()
-«k:else» («v:APPLE»)
-  «f:gz_setup_apple»()
-«k:endif»()
+Â»Â«k:ifÂ» (Â«v:UNIXÂ»)
+  Â«f:gz_setup_unixÂ»()
+Â«k:elseÂ» (Â«v:WIN32Â»)
+  Â«f:gz_setup_windowsÂ»()
+Â«k:elseÂ» (Â«v:APPLEÂ»)
+  Â«f:gz_setup_appleÂ»()
+Â«k:endifÂ»()
 
-«x:#################################################
+Â«x:#################################################
 # Print warnings and errors
-»«k:if» ( «v:build_warnings» )
-  «f:message»(«t:STATUS» «s:"BUILD WARNINGS"»)
-  «k:foreach» («v:msg» «D:${»«v:build_warnings»«D:}»)
-    «f:message»(«t:STATUS» «D:${»«v:msg»«D:}»)
-  «k:endforeach» ()
-  «f:message»(«t:STATUS» «s:"END BUILD WARNINGS\n"»)
-«k:endif» («v:build_warnings»)
+Â»Â«k:ifÂ» ( Â«v:build_warningsÂ» )
+  Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"BUILD WARNINGS"Â»)
+  Â«k:foreachÂ» (Â«v:msgÂ» Â«D:${Â»Â«v:build_warningsÂ»Â«D:}Â»)
+    Â«f:messageÂ»(Â«t:STATUSÂ» Â«D:${Â»Â«v:msgÂ»Â«D:}Â»)
+  Â«k:endforeachÂ» ()
+  Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"END BUILD WARNINGS\n"Â»)
+Â«k:endifÂ» (Â«v:build_warningsÂ»)
 
-«x:########### Add uninstall target ###############
-»«f:configure_file»(
-  «s:"${«v:CMAKE_CURRENT_SOURCE_DIR»}/cmake/cmake_uninstall.cmake.in"»
-  «s:"${«v:CMAKE_CURRENT_BINARY_DIR»}/cmake/cmake_uninstall.cmake"»
-  IMMEDIATE «t:@ONLY»)
-«f:add_custom_target»(«c:uninstall»
-  «s:"${«v:CMAKE_COMMAND»}"» -P «s:"${«v:CMAKE_CURRENT_BINARY_DIR»}/cmake/cmake_uninstall.cmake"»)
+Â«x:########### Add uninstall target ###############
+Â»Â«f:configure_fileÂ»(
+  Â«s:"${Â«v:CMAKE_CURRENT_SOURCE_DIRÂ»}/cmake/cmake_uninstall.cmake.in"Â»
+  Â«s:"${Â«v:CMAKE_CURRENT_BINARY_DIRÂ»}/cmake/cmake_uninstall.cmake"Â»
+  IMMEDIATE Â«t:@ONLYÂ»)
+Â«f:add_custom_targetÂ»(Â«c:uninstallÂ»
+  Â«s:"${Â«v:CMAKE_COMMANDÂ»}"Â» -P Â«s:"${Â«v:CMAKE_CURRENT_BINARY_DIRÂ»}/cmake/cmake_uninstall.cmake"Â»)
 
-«k:if» («v:build_errors»)
-  «f:message»(«t:STATUS» «s:"BUILD ERRORS: These must be resolved before compiling."»)
-  «k:foreach» («v:msg» «D:${»«v:build_errors»«D:}»)
-    «f:message»(«t:STATUS» «D:${»«v:msg»«D:}»)
-  «k:endforeach» ()
-  «f:message»(«t:STATUS» «s:"END BUILD ERRORS\n"»)
-  «f:message» («t:FATAL_ERROR» «s:"Errors encountered in build. Please see the BUILD ERRORS above."»)
-«k:else» («v:build_errors»)
+Â«k:ifÂ» (Â«v:build_errorsÂ»)
+  Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"BUILD ERRORS: These must be resolved before compiling."Â»)
+  Â«k:foreachÂ» (Â«v:msgÂ» Â«D:${Â»Â«v:build_errorsÂ»Â«D:}Â»)
+    Â«f:messageÂ»(Â«t:STATUSÂ» Â«D:${Â»Â«v:msgÂ»Â«D:}Â»)
+  Â«k:endforeachÂ» ()
+  Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"END BUILD ERRORS\n"Â»)
+  Â«f:messageÂ» (Â«t:FATAL_ERRORÂ» Â«s:"Errors encountered in build. Please see the BUILD ERRORS above."Â»)
+Â«k:elseÂ» (Â«v:build_errorsÂ»)
 
-  «x:########################################
-»  «x:# Write the config.h file
-»  «f:configure_file» («D:${»«v:gazebo_cmake_dir»«D:}»/gazebo_config.h.in «D:${»«v:PROJECT_BINARY_DIR»«D:}»/gazebo/gazebo_config.h)
-  «f:gz_install_includes»(«s:""» «D:${»«v:PROJECT_BINARY_DIR»«D:}»/gazebo/gazebo_config.h)
+  Â«x:########################################
+Â»  Â«x:# Write the config.h file
+Â»  Â«f:configure_fileÂ» (Â«D:${Â»Â«v:gazebo_cmake_dirÂ»Â«D:}Â»/gazebo_config.h.in Â«D:${Â»Â«v:PROJECT_BINARY_DIRÂ»Â«D:}Â»/gazebo/gazebo_config.h)
+  Â«f:gz_install_includesÂ»(Â«s:""Â» Â«D:${Â»Â«v:PROJECT_BINARY_DIRÂ»Â«D:}Â»/gazebo/gazebo_config.h)
 
-  «f:configure_file»(«D:${»«v:CMAKE_SOURCE_DIR»«D:}»/cmake/setup.sh.in «D:${»«v:PROJECT_BINARY_DIR»«D:}»/setup.sh «t:@ONLY»)
-  «f:install»(«t:FILES» «D:${»«v:CMAKE_CURRENT_BINARY_DIR»«D:}»/setup.sh «t:DESTINATION» «D:${»«v:CMAKE_INSTALL_PREFIX»«D:}»/share/gazebo-«D:${»«v:GAZEBO_VERSION»«D:}»/)
+  Â«f:configure_fileÂ»(Â«D:${Â»Â«v:CMAKE_SOURCE_DIRÂ»Â«D:}Â»/cmake/setup.sh.in Â«D:${Â»Â«v:PROJECT_BINARY_DIRÂ»Â«D:}Â»/setup.sh Â«t:@ONLYÂ»)
+  Â«f:installÂ»(Â«t:FILESÂ» Â«D:${Â»Â«v:CMAKE_CURRENT_BINARY_DIRÂ»Â«D:}Â»/setup.sh Â«t:DESTINATIONÂ» Â«D:${Â»Â«v:CMAKE_INSTALL_PREFIXÂ»Â«D:}Â»/share/gazebo-Â«D:${Â»Â«v:GAZEBO_VERSIONÂ»Â«D:}Â»/)
  
-  «f:include_directories»(«D:${»«v:PROJECT_SOURCE_DIR»«D:}» «D:${»«v:PROJECT_BINARY_DIR»«D:}»)
+  Â«f:include_directoriesÂ»(Â«D:${Â»Â«v:PROJECT_SOURCE_DIRÂ»Â«D:}Â» Â«D:${Â»Â«v:PROJECT_BINARY_DIRÂ»Â«D:}Â»)
   
-  «f:message» («t:STATUS» «s:"C Flags:${«v:CMAKE_CXX_FLAGS»}"»)
-  «f:message» («t:STATUS» «s:"Build Type: ${«v:CMAKE_BUILD_TYPE»}"»)
-  «f:message» («t:STATUS» «s:"Install path: ${«v:CMAKE_INSTALL_PREFIX»}"»)
+  Â«f:messageÂ» (Â«t:STATUSÂ» Â«s:"C Flags:${Â«v:CMAKE_CXX_FLAGSÂ»}"Â»)
+  Â«f:messageÂ» (Â«t:STATUSÂ» Â«s:"Build Type: ${Â«v:CMAKE_BUILD_TYPEÂ»}"Â»)
+  Â«f:messageÂ» (Â«t:STATUSÂ» Â«s:"Install path: ${Â«v:CMAKE_INSTALL_PREFIXÂ»}"Â»)
  
 
-  «k:if» («v:BUILD_GAZEBO»)
-    «f:add_subdirectory»(gazebo)
-    «f:add_subdirectory»(sdf)
-    «f:add_subdirectory»(media)
-    «f:add_subdirectory»(test)
-    «f:add_subdirectory»(tools)
-    «f:add_subdirectory»(plugins)
-    «f:add_subdirectory»(interfaces)
-  «k:endif» («v:BUILD_GAZEBO»)
+  Â«k:ifÂ» (Â«v:BUILD_GAZEBOÂ»)
+    Â«f:add_subdirectoryÂ»(gazebo)
+    Â«f:add_subdirectoryÂ»(sdf)
+    Â«f:add_subdirectoryÂ»(media)
+    Â«f:add_subdirectoryÂ»(test)
+    Â«f:add_subdirectoryÂ»(tools)
+    Â«f:add_subdirectoryÂ»(plugins)
+    Â«f:add_subdirectoryÂ»(interfaces)
+  Â«k:endifÂ» (Â«v:BUILD_GAZEBOÂ»)
 
-  «x:########################################
-»  «x:# Make the package config files
-»  «f:set» («v:pkgconfig_files» gazebo_ode gazebo_transport gazebo)
+  Â«x:########################################
+Â»  Â«x:# Make the package config files
+Â»  Â«f:setÂ» (Â«v:pkgconfig_filesÂ» gazebo_ode gazebo_transport gazebo)
 
-  «k:foreach» («v:pkgconfig» «D:${»«v:pkgconfig_files»«D:}»)
-    «f:configure_file»(«D:${»«v:CMAKE_SOURCE_DIR»«D:}»/cmake/pkgconfig/«D:${»«v:pkgconfig»«D:}».in «D:${»«v:CMAKE_CURRENT_BINARY_DIR»«D:}»/cmake/pkgconfig/«D:${»«v:pkgconfig»«D:}».pc «t:@ONLY»)
-    «f:install»(«t:FILES» «D:${»«v:CMAKE_CURRENT_BINARY_DIR»«D:}»/cmake/pkgconfig/«D:${»«v:pkgconfig»«D:}».pc «t:DESTINATION» «D:${»«v:LIB_INSTALL_DIR»«D:}»/pkgconfig «t:COMPONENT» pkgconfig)
-  «k:endforeach»()
+  Â«k:foreachÂ» (Â«v:pkgconfigÂ» Â«D:${Â»Â«v:pkgconfig_filesÂ»Â«D:}Â»)
+    Â«f:configure_fileÂ»(Â«D:${Â»Â«v:CMAKE_SOURCE_DIRÂ»Â«D:}Â»/cmake/pkgconfig/Â«D:${Â»Â«v:pkgconfigÂ»Â«D:}Â».in Â«D:${Â»Â«v:CMAKE_CURRENT_BINARY_DIRÂ»Â«D:}Â»/cmake/pkgconfig/Â«D:${Â»Â«v:pkgconfigÂ»Â«D:}Â».pc Â«t:@ONLYÂ»)
+    Â«f:installÂ»(Â«t:FILESÂ» Â«D:${Â»Â«v:CMAKE_CURRENT_BINARY_DIRÂ»Â«D:}Â»/cmake/pkgconfig/Â«D:${Â»Â«v:pkgconfigÂ»Â«D:}Â».pc Â«t:DESTINATIONÂ» Â«D:${Â»Â«v:LIB_INSTALL_DIRÂ»Â«D:}Â»/pkgconfig Â«t:COMPONENTÂ» pkgconfig)
+  Â«k:endforeachÂ»()
 
-  «x:########################################
-»  «x:# If present, load platform-specific build hooks.  This system is used,
-»  «x:# for example, by the Ubuntu overlay (in the gazebo-release repo), to
-»  «x:# arrange for installation of Ubuntu-specific application-launching
-»  «x:# configuration.
-»  «k:if» («t:EXISTS» «D:${»«v:PROJECT_SOURCE_DIR»«D:}»/cmake/packager-hooks/CMakeLists.txt)
-    «f:message»(«t:STATUS» «s:"Loading packager build hooks from cmake/packager-hooks"»)
-    «f:add_subdirectory»(cmake/packager-hooks)
-  «k:endif»()
+  Â«x:########################################
+Â»  Â«x:# If present, load platform-specific build hooks.  This system is used,
+Â»  Â«x:# for example, by the Ubuntu overlay (in the gazebo-release repo), to
+Â»  Â«x:# arrange for installation of Ubuntu-specific application-launching
+Â»  Â«x:# configuration.
+Â»  Â«k:ifÂ» (Â«t:EXISTSÂ» Â«D:${Â»Â«v:PROJECT_SOURCE_DIRÂ»Â«D:}Â»/cmake/packager-hooks/CMakeLists.txt)
+    Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"Loading packager build hooks from cmake/packager-hooks"Â»)
+    Â«f:add_subdirectoryÂ»(cmake/packager-hooks)
+  Â«k:endifÂ»()
 
-  «f:message»(«t:STATUS» «s:"Configuration successful. Type make to compile gazebo"»)
-«k:endif»(«v:build_errors»)
+  Â«f:messageÂ»(Â«t:STATUSÂ» Â«s:"Configuration successful. Type make to compile gazebo"Â»)
+Â«k:endifÂ»(Â«v:build_errorsÂ»)

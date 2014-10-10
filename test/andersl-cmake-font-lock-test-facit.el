@@ -33,13 +33,7 @@
 
 (require 'faceup)
 
-(defvar andersl-cmake-font-lock-test-facit-file-name load-file-name
-  "The file name of this file.")
-
-(defun andersl-cmake-font-lock-test-facit-file-name ()
-  "The filename of this source file."
-  (or andersl-cmake-font-lock-test-facit-file-name
-      (symbol-file 'andersl-cmake-font-lock-test-facit-file-name)))
+(defvar andersl-cmake-font-lock-test-dir (faceup-this-file-directory))
 
 (defun andersl-cmake-font-lock-test-facit (dir)
   "Test that `dir'/CMakeLists.txt is fontifies as the .faceup file describes.
@@ -47,16 +41,13 @@
 `dir' is interpreted as relative to this source directory."
   (faceup-test-font-lock-file 'cmake-mode
                               (concat
-                               (file-name-directory
-                                (andersl-cmake-font-lock-test-facit-file-name))
+                               andersl-cmake-font-lock-test-dir
                                dir
                                "/CMakeLists.txt")))
-
 (faceup-defexplainer andersl-cmake-font-lock-test-facit)
 
 
 (ert-deftest andersl-cmake-font-lock-file-test ()
-  (require 'faceup)
   (should (andersl-cmake-font-lock-test-facit "facit/grantlee"))
   (should (andersl-cmake-font-lock-test-facit "facit/libarchive"))
   (should (andersl-cmake-font-lock-test-facit "facit/opencollada"))
@@ -66,4 +57,6 @@
   (should (andersl-cmake-font-lock-test-facit "facit/openscenegraph"))
   (should (andersl-cmake-font-lock-test-facit "facit/additions")))
 
-;; cmake-font-lock-test-facit.el ends here.
+(provide 'andersl-cmake-font-lock-test-facit)
+
+;; andersl-cmake-font-lock-test-facit.el ends here.

@@ -35,14 +35,7 @@
 
 (defun andersl-cmake-font-lock-test (faceup)
   (faceup-test-font-lock-string 'cmake-mode faceup))
-
-(defun andersl-cmake-font-lock-test-explain (file)
-  (let ((faceup-test-explain t))
-    (andersl-cmake-font-lock-test file)))
-
-(put 'andersl-cmake-font-lock-test
-     'ert-explainer
-     'andersl-cmake-font-lock-test-explain)
+(faceup-defexplainer andersl-cmake-font-lock-test)
 
 (ert-deftest andersl-cmake-font-lock-primitives ()
   ;; --------------------
@@ -131,110 +124,110 @@
 
 (ert-deftest andersl-cmake-font-lock ()
   (should (andersl-cmake-font-lock-test
-           "«f:mark_as_advanced»(«v:allan» «v:sune»)"))
+           "Â«f:mark_as_advancedÂ»(Â«v:allanÂ» Â«v:suneÂ»)"))
   (should (andersl-cmake-font-lock-test
-           "«f:mark_as_advanced»(«t:FORCE» «v:allan» «v:sune»)"))
+           "Â«f:mark_as_advancedÂ»(Â«t:FORCEÂ» Â«v:allanÂ» Â«v:suneÂ»)"))
   (should (andersl-cmake-font-lock-test
-           "«f:mark_as_advanced»(«t:CLEAR» «v:allan» «v:sune»)"))
+           "Â«f:mark_as_advancedÂ»(Â«t:CLEARÂ» Â«v:allanÂ» Â«v:suneÂ»)"))
   (should (andersl-cmake-font-lock-test
-           "«f:mark_as_advanced»(«v:sune» «t:CLEAR» «v:allan» «v:sune»)"))
+           "Â«f:mark_as_advancedÂ»(Â«v:suneÂ» Â«t:CLEARÂ» Â«v:allanÂ» Â«v:suneÂ»)"))
   ;; --------------------
   ;; get_directory_property -- keywords in the middle of argument list.
   (should (andersl-cmake-font-lock-test
-           "«f:get_directory_property»(«v:var» «c:prop»)"))
+           "Â«f:get_directory_propertyÂ»(Â«v:varÂ» Â«c:propÂ»)"))
   (should (andersl-cmake-font-lock-test
-           "«f:get_directory_property»(«v:var» «t:DIRECTORY» dir «c:prop»)"))
+           "Â«f:get_directory_propertyÂ»(Â«v:varÂ» Â«t:DIRECTORYÂ» dir Â«c:propÂ»)"))
   (should (andersl-cmake-font-lock-test
-           "«f:get_directory_property»(«v:var» «t:DEFINITION» «v:var»)"))
+           "Â«f:get_directory_propertyÂ»(Â«v:varÂ» Â«t:DEFINITIONÂ» Â«v:varÂ»)"))
   (should (andersl-cmake-font-lock-test
-           (concat "«f:get_directory_property»("
-                   "«v:var» «t:DIRECTORY» dir «t:DEFINITION» «v:var»)")))
+           (concat "Â«f:get_directory_propertyÂ»("
+                   "Â«v:varÂ» Â«t:DIRECTORYÂ» dir Â«t:DEFINITIONÂ» Â«v:varÂ»)")))
   ;; --------------------
   ;; set_directory_properties -- repeat with more than one parameter.
   (should (andersl-cmake-font-lock-test
-           (concat "«f:set_directory_properties»("
-                   "«t:PROPERTIES» «c:prop» value)")))
+           (concat "Â«f:set_directory_propertiesÂ»("
+                   "Â«t:PROPERTIESÂ» Â«c:propÂ» value)")))
   (should (andersl-cmake-font-lock-test
-           (concat "«f:set_directory_properties»("
-                   "«t:PROPERTIES» «c:prop» value «c:prop» value)")))
+           (concat "Â«f:set_directory_propertiesÂ»("
+                   "Â«t:PROPERTIESÂ» Â«c:propÂ» value Â«c:propÂ» value)")))
   (should (andersl-cmake-font-lock-test
-           (concat "«f:set_directory_properties»("
-                   "«t:PROPERTIES» «c:prop» value «c:prop» "
-                   "value «c:prop» value)")))
+           (concat "Â«f:set_directory_propertiesÂ»("
+                   "Â«t:PROPERTIESÂ» Â«c:propÂ» value Â«c:propÂ» "
+                   "value Â«c:propÂ» value)")))
 
 
   ;; --------------------
   ;; ${...} constructs
   ;;
   (should (andersl-cmake-font-lock-test
-           "«f:foo»(«D:${»«v:var»«D:}»)"))
+           "Â«f:fooÂ»(Â«D:${Â»Â«v:varÂ»Â«D:}Â»)"))
   (should (andersl-cmake-font-lock-test
-           "«f:foo»(«D:${${»«v:var»«D:}}»)"))
+           "Â«f:fooÂ»(Â«D:${${Â»Â«v:varÂ»Â«D:}}Â»)"))
   (should (andersl-cmake-font-lock-test
-           "«f:foo»(«D:${»«v:prefix»«D:${»«v:var»«D:}}»)"))
+           "Â«f:fooÂ»(Â«D:${Â»Â«v:prefixÂ»Â«D:${Â»Â«v:varÂ»Â«D:}}Â»)"))
   (should (andersl-cmake-font-lock-test
-           "«f:foo»(«D:${»«v:prefix»«D:${»«v:var»«D:}»«v:suffix»«D:}»)"))
+           "Â«f:fooÂ»(Â«D:${Â»Â«v:prefixÂ»Â«D:${Â»Â«v:varÂ»Â«D:}Â»Â«v:suffixÂ»Â«D:}Â»)"))
 
   ;; Verify that arguments with type is fontified even though parts of
   ;; it contain a ${...} construct.
   (should (andersl-cmake-font-lock-test
-           "«f:set»(«D:${»«v:var»«D:}»«v:_tail» x)"))
+           "Â«f:setÂ»(Â«D:${Â»Â«v:varÂ»Â«D:}Â»Â«v:_tailÂ» x)"))
   ;; Identifiers may not contain a "."
   (should (andersl-cmake-font-lock-test
-           "«f:set»(«D:${»«v:var»«D:}».tail x)"))
+           "Â«f:setÂ»(Â«D:${Â»Â«v:varÂ»Â«D:}Â».tail x)"))
   (should (andersl-cmake-font-lock-test
-           "«f:set»(«D:${»«v:prefix»«D:${»«v:var»«D:}»«v:suffix»«D:}»«v:_tail» x)"))
+           "Â«f:setÂ»(Â«D:${Â»Â«v:prefixÂ»Â«D:${Â»Â«v:varÂ»Â«D:}Â»Â«v:suffixÂ»Â«D:}Â»Â«v:_tailÂ» x)"))
 
   ;; --------------------
   ;; Malformed identifiers
   ;;
 
   (should (andersl-cmake-font-lock-test
-           "«f:set»(«v:var» 1"))
+           "Â«f:setÂ»(Â«v:varÂ» 1"))
   (should (andersl-cmake-font-lock-test
-           "«f:set»(1 1"))
+           "Â«f:setÂ»(1 1"))
   (should (andersl-cmake-font-lock-test
-           "«f:set»(«D:${»«v:var»«D:}» 1"))
+           "Â«f:setÂ»(Â«D:${Â»Â«v:varÂ»Â«D:}Â» 1"))
   (should (andersl-cmake-font-lock-test
-           "«f:set»(«D:${»«v:var»«D:}»«v:_suffix» 1"))
+           "Â«f:setÂ»(Â«D:${Â»Â«v:varÂ»Â«D:}Â»Â«v:_suffixÂ» 1"))
   (should (andersl-cmake-font-lock-test
-           "«f:set»(«D:${»«v:var»«D:}».suffix 1"))
+           "Â«f:setÂ»(Â«D:${Â»Â«v:varÂ»Â«D:}Â».suffix 1"))
 
   ;; --------------------
   ;; Repeat
   (should (andersl-cmake-font-lock-test
-           "«f:string»(«t:ASCII» 1 2 3 4 5 «v:allan»"))
+           "Â«f:stringÂ»(Â«t:ASCIIÂ» 1 2 3 4 5 Â«v:allanÂ»"))
 
   (let ((andersl-cmake-font-lock-function-keywords-alist
          (cons '("test" . ("ALPHA"))
                andersl-cmake-font-lock-function-keywords-alist)))
-    (should (andersl-cmake-font-lock-test "«f:test»(«t:ALPHA»)"))
+    (should (andersl-cmake-font-lock-test "Â«f:testÂ»(Â«t:ALPHAÂ»)"))
     (let ((andersl-cmake-font-lock-function-signatures
            (cons '("test" (:var))
                  andersl-cmake-font-lock-function-signatures)))
-      (should (andersl-cmake-font-lock-test "«f:test»(«v:ALPHA»)")))
+      (should (andersl-cmake-font-lock-test "Â«f:testÂ»(Â«v:ALPHAÂ»)")))
     (let ((andersl-cmake-font-lock-function-signatures
            (cons '("test" (:var :repeat :prop))
                  andersl-cmake-font-lock-function-signatures)))
-      (should (andersl-cmake-font-lock-test "«f:test»(«v:ALPHA»)"))
-      (should (andersl-cmake-font-lock-test "«f:test»(«v:ALPHA» «t:ALPHA»)"))
+      (should (andersl-cmake-font-lock-test "Â«f:testÂ»(Â«v:ALPHAÂ»)"))
+      (should (andersl-cmake-font-lock-test "Â«f:testÂ»(Â«v:ALPHAÂ» Â«t:ALPHAÂ»)"))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:ALPHA» «c:one»)"))
+               "Â«f:testÂ»(Â«v:ALPHAÂ» Â«c:oneÂ»)"))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:ALPHA» «c:one» «c:two» «c:three»)"))
+               "Â«f:testÂ»(Â«v:ALPHAÂ» Â«c:oneÂ» Â«c:twoÂ» Â«c:threeÂ»)"))
     (let ((andersl-cmake-font-lock-function-signatures
            (cons '("test" (:var) (("ALPHA" :repeat :prop :var)))
                  andersl-cmake-font-lock-function-signatures)))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:ALPHA» «t:ALPHA» «c:one» «c:two» «v:three»)"))))
+               "Â«f:testÂ»(Â«v:ALPHAÂ» Â«t:ALPHAÂ» Â«c:oneÂ» Â«c:twoÂ» Â«v:threeÂ»)"))))
     (let ((andersl-cmake-font-lock-function-signatures
            (cons '("test" (:var) (("ALPHA" :repeat (:prop nil) :var)))
                  andersl-cmake-font-lock-function-signatures)))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:ALPHA» «t:ALPHA» «c:one» two «v:three»)"))
+               "Â«f:testÂ»(Â«v:ALPHAÂ» Â«t:ALPHAÂ» Â«c:oneÂ» two Â«v:threeÂ»)"))
       (should
        (andersl-cmake-font-lock-test
-        "«f:test»(«v:ALPHA» «t:ALPHA» «c:one» two «c:three» «v:four»)")))
+        "Â«f:testÂ»(Â«v:ALPHAÂ» Â«t:ALPHAÂ» Â«c:oneÂ» two Â«c:threeÂ» Â«v:fourÂ»)")))
 
     ;; --------------------
     ;; Test optional.
@@ -243,32 +236,32 @@
                    (("ALPHA" :prop)))
                  andersl-cmake-font-lock-function-signatures)))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:var»)"))
+               "Â«f:testÂ»(Â«v:varÂ»)"))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:var» «v:var»)"))
+               "Â«f:testÂ»(Â«v:varÂ» Â«v:varÂ»)"))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:var» «v:var» «v:var»)"))
+               "Â«f:testÂ»(Â«v:varÂ» Â«v:varÂ» Â«v:varÂ»)"))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:var» «v:var» «v:var» var)"))
+               "Â«f:testÂ»(Â«v:varÂ» Â«v:varÂ» Â«v:varÂ» var)"))
       ;; Keyword in var location.
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:ALPHA» «v:var» «v:var» var)"))
+               "Â«f:testÂ»(Â«v:ALPHAÂ» Â«v:varÂ» Â«v:varÂ» var)"))
       ;; Keyword in optional location
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:var» «t:ALPHA» «c:prop»)"))
+               "Â«f:testÂ»(Â«v:varÂ» Â«t:ALPHAÂ» Â«c:propÂ»)"))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:var» «v:var» «t:ALPHA» «c:prop»)"))
+               "Â«f:testÂ»(Â«v:varÂ» Â«v:varÂ» Â«t:ALPHAÂ» Â«c:propÂ»)"))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:var» «v:var» «v:var» «t:ALPHA» «c:prop»)"))
+               "Â«f:testÂ»(Â«v:varÂ» Â«v:varÂ» Â«v:varÂ» Â«t:ALPHAÂ» Â«c:propÂ»)"))
       (should (andersl-cmake-font-lock-test
-               "«f:test»(«v:var» «v:var» «v:var» other «t:ALPHA» «c:prop»)"))))
+               "Â«f:testÂ»(Â«v:varÂ» Â«v:varÂ» Â«v:varÂ» other Â«t:ALPHAÂ» Â«c:propÂ»)"))))
 
   ;; --------------------
   ;; Keyword case
   (should (andersl-cmake-font-lock-test
-           "«f:string»(tolower one two)"))
+           "Â«f:stringÂ»(tolower one two)"))
   (should (andersl-cmake-font-lock-test
-           "«f:string»(«t:TOLOWER» one «v:two»)"))
+           "Â«f:stringÂ»(Â«t:TOLOWERÂ» one Â«v:twoÂ»)"))
 
   ;; --------------------
   ;; Out of place keywords.
@@ -278,14 +271,15 @@
   ;; no way of saying that there should be no more keywords, so it
   ;; fontifies the last argument as a new keyword.
   (should (andersl-cmake-font-lock-test
-           "«f:string»(«t:SUBSTRING» MATCH MATCH MATCH «v:MATCH» «t:MATCH»")))
+           "Â«f:stringÂ»(Â«t:SUBSTRINGÂ» MATCH MATCH MATCH Â«v:MATCHÂ» Â«t:MATCHÂ»")))
 
 (ert-deftest andersl-cmake-font-lock-bugs ()
   :expected-result :failed
   ;; Need to tell the parser that keywords are only allowed at the start.
   (should (andersl-cmake-font-lock-test
-           "«f:message»(«t:STATUS» STATUS STATUS STATUS)"))
+           "Â«f:messageÂ»(Â«t:STATUSÂ» STATUS STATUS STATUS)"))
   )
 
+(provide 'andersl-cmake-font-lock-test-simple)
 
 ;;; andersl-cmake-font-lock-test-simple.el ends here

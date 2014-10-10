@@ -1,669 +1,669 @@
-«x:#
+Â«x:#
 #
-»«f:PROJECT»(libarchive C)
-«x:#
-»«f:CMAKE_MINIMUM_REQUIRED»(«t:VERSION» 2.6.3 «t:FATAL_ERROR»)
-«f:SET»(«v:CMAKE_MODULE_PATH» «s:"${«v:CMAKE_CURRENT_SOURCE_DIR»}/build/cmake"»)
-«k:if»(«t:NOT» «v:CMAKE_RUNTIME_OUTPUT_DIRECTORY»)
-  «f:set»(«v:CMAKE_RUNTIME_OUTPUT_DIRECTORY» «D:${»«v:libarchive_BINARY_DIR»«D:}»/bin)
-«k:endif»()
+Â»Â«f:PROJECTÂ»(libarchive C)
+Â«x:#
+Â»Â«f:CMAKE_MINIMUM_REQUIREDÂ»(Â«t:VERSIONÂ» 2.6.3 Â«t:FATAL_ERRORÂ»)
+Â«f:SETÂ»(Â«v:CMAKE_MODULE_PATHÂ» Â«s:"${Â«v:CMAKE_CURRENT_SOURCE_DIRÂ»}/build/cmake"Â»)
+Â«k:ifÂ»(Â«t:NOTÂ» Â«v:CMAKE_RUNTIME_OUTPUT_DIRECTORYÂ»)
+  Â«f:setÂ»(Â«v:CMAKE_RUNTIME_OUTPUT_DIRECTORYÂ» Â«D:${Â»Â«v:libarchive_BINARY_DIRÂ»Â«D:}Â»/bin)
+Â«k:endifÂ»()
 
-«x:#
+Â«x:#
 # Version - read from 'version' file.
 #
-»«f:FILE»(«t:STRINGS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/build/version «v:_version»)
-«f:STRING»(«t:REGEX» «t:REPLACE»
- «s:"^([0-9])[0-9][0-9][0-9][0-9][0-9][0-9][a-z]?$"» «s:"\\1"» «v:_major» «D:${»«v:_version»«D:}»)
-«f:STRING»(«t:REGEX» «t:REPLACE»
- «s:"^[0-9]([0-9][0-9][0-9])[0-9][0-9][0-9][a-z]?$"» «s:"\\1"» «v:_minor» «D:${»«v:_version»«D:}»)
-«f:STRING»(«t:REGEX» «t:REPLACE»
- «s:"^[0-9][0-9][0-9][0-9]([0-9][0-9][0-9])[a-z]?$"» «s:"\\1"» «v:_revision» «D:${»«v:_version»«D:}»)
-«f:STRING»(«t:REGEX» «t:REPLACE»
- «s:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9]([a-z]?)$"» «s:"\\1"» «v:_quality» «D:${»«v:_version»«D:}»)
-«f:SET»(«v:_version_number» «D:${»«v:_major»«D:}${»«v:_minor»«D:}${»«v:_revision»«D:}»)
-«f:STRING»(«t:REGEX» «t:REPLACE» «s:"[0]*([^0][0-9]*)$"» «s:"\\1"» «v:_minor» «D:${»«v:_minor»«D:}»)
-«f:STRING»(«t:REGEX» «t:REPLACE» «s:"[0]*([^0][0-9]*)$"» «s:"\\1"» «v:_revision» «D:${»«v:_revision»«D:}»)
-«x:#
-»«f:SET»(«v:VERSION»                    «s:"${«v:_major»}.${«v:_minor»}.${«v:_revision»}${«v:_quality»}"»)
-«f:SET»(«v:BSDCPIO_VERSION_STRING»     «s:"${«v:VERSION»}"»)
-«f:SET»(«v:BSDTAR_VERSION_STRING»      «s:"${«v:VERSION»}"»)
-«f:SET»(«v:LIBARCHIVE_VERSION_NUMBER»  «s:"${«v:_version_number»}"»)
-«f:SET»(«v:LIBARCHIVE_VERSION_STRING»  «s:"${«v:VERSION»}"»)
-«x:# Shared library number
-»«f:SET»(«v:SOVERSION»                   8)
+Â»Â«f:FILEÂ»(Â«t:STRINGSÂ» Â«D:${Â»Â«v:CMAKE_CURRENT_SOURCE_DIRÂ»Â«D:}Â»/build/version Â«v:_versionÂ»)
+Â«f:STRINGÂ»(Â«t:REGEXÂ» Â«t:REPLACEÂ»
+ Â«s:"^([0-9])[0-9][0-9][0-9][0-9][0-9][0-9][a-z]?$"Â» Â«s:"\\1"Â» Â«v:_majorÂ» Â«D:${Â»Â«v:_versionÂ»Â«D:}Â»)
+Â«f:STRINGÂ»(Â«t:REGEXÂ» Â«t:REPLACEÂ»
+ Â«s:"^[0-9]([0-9][0-9][0-9])[0-9][0-9][0-9][a-z]?$"Â» Â«s:"\\1"Â» Â«v:_minorÂ» Â«D:${Â»Â«v:_versionÂ»Â«D:}Â»)
+Â«f:STRINGÂ»(Â«t:REGEXÂ» Â«t:REPLACEÂ»
+ Â«s:"^[0-9][0-9][0-9][0-9]([0-9][0-9][0-9])[a-z]?$"Â» Â«s:"\\1"Â» Â«v:_revisionÂ» Â«D:${Â»Â«v:_versionÂ»Â«D:}Â»)
+Â«f:STRINGÂ»(Â«t:REGEXÂ» Â«t:REPLACEÂ»
+ Â«s:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9]([a-z]?)$"Â» Â«s:"\\1"Â» Â«v:_qualityÂ» Â«D:${Â»Â«v:_versionÂ»Â«D:}Â»)
+Â«f:SETÂ»(Â«v:_version_numberÂ» Â«D:${Â»Â«v:_majorÂ»Â«D:}${Â»Â«v:_minorÂ»Â«D:}${Â»Â«v:_revisionÂ»Â«D:}Â»)
+Â«f:STRINGÂ»(Â«t:REGEXÂ» Â«t:REPLACEÂ» Â«s:"[0]*([^0][0-9]*)$"Â» Â«s:"\\1"Â» Â«v:_minorÂ» Â«D:${Â»Â«v:_minorÂ»Â«D:}Â»)
+Â«f:STRINGÂ»(Â«t:REGEXÂ» Â«t:REPLACEÂ» Â«s:"[0]*([^0][0-9]*)$"Â» Â«s:"\\1"Â» Â«v:_revisionÂ» Â«D:${Â»Â«v:_revisionÂ»Â«D:}Â»)
+Â«x:#
+Â»Â«f:SETÂ»(Â«v:VERSIONÂ»                    Â«s:"${Â«v:_majorÂ»}.${Â«v:_minorÂ»}.${Â«v:_revisionÂ»}${Â«v:_qualityÂ»}"Â»)
+Â«f:SETÂ»(Â«v:BSDCPIO_VERSION_STRINGÂ»     Â«s:"${Â«v:VERSIONÂ»}"Â»)
+Â«f:SETÂ»(Â«v:BSDTAR_VERSION_STRINGÂ»      Â«s:"${Â«v:VERSIONÂ»}"Â»)
+Â«f:SETÂ»(Â«v:LIBARCHIVE_VERSION_NUMBERÂ»  Â«s:"${Â«v:_version_numberÂ»}"Â»)
+Â«f:SETÂ»(Â«v:LIBARCHIVE_VERSION_STRINGÂ»  Â«s:"${Â«v:VERSIONÂ»}"Â»)
+Â«x:# Shared library number
+Â»Â«f:SETÂ»(Â«v:SOVERSIONÂ»                   8)
 
-«x:# Enable CTest/CDash support
-»«k:include»(CTest)
+Â«x:# Enable CTest/CDash support
+Â»Â«k:includeÂ»(CTest)
 
-«x:# Provide ADD_TEST_28 macro to approximate CMake 2.8 ADD_TEST(NAME).
+Â«x:# Provide ADD_TEST_28 macro to approximate CMake 2.8 ADD_TEST(NAME).
 # TODO: Require CMake 2.8 and drop this workaround (perhaps late 2010).
-»«k:INCLUDE»(AddTest28)
+Â»Â«k:INCLUDEÂ»(AddTest28)
 
-«f:OPTION»(«v:ENABLE_OPENSSL» «s:"Enable use of OpenSSL"» «c:ON»)
-«f:OPTION»(«v:ENABLE_TAR» «s:"Enable tar building"» «c:ON»)
-«f:OPTION»(«v:ENABLE_TAR_SHARED» «s:"Enable dynamic build of tar"» «c:OFF»)
-«f:OPTION»(«v:ENABLE_CPIO» «s:"Enable cpio building"» «c:ON»)
-«f:OPTION»(«v:ENABLE_CPIO_SHARED» «s:"Enable dynamic build of cpio"» «c:OFF»)
-«f:OPTION»(«v:ENABLE_XATTR» «s:"Enable extended attribute support"» «c:ON»)
-«f:OPTION»(«v:ENABLE_ACL» «s:"Enable ACL support"» «c:ON»)
-«f:OPTION»(«v:ENABLE_TEST» «s:"Enable unit and regression tests"» «c:ON»)
+Â«f:OPTIONÂ»(Â«v:ENABLE_OPENSSLÂ» Â«s:"Enable use of OpenSSL"Â» Â«c:ONÂ»)
+Â«f:OPTIONÂ»(Â«v:ENABLE_TARÂ» Â«s:"Enable tar building"Â» Â«c:ONÂ»)
+Â«f:OPTIONÂ»(Â«v:ENABLE_TAR_SHAREDÂ» Â«s:"Enable dynamic build of tar"Â» Â«c:OFFÂ»)
+Â«f:OPTIONÂ»(Â«v:ENABLE_CPIOÂ» Â«s:"Enable cpio building"Â» Â«c:ONÂ»)
+Â«f:OPTIONÂ»(Â«v:ENABLE_CPIO_SHAREDÂ» Â«s:"Enable dynamic build of cpio"Â» Â«c:OFFÂ»)
+Â«f:OPTIONÂ»(Â«v:ENABLE_XATTRÂ» Â«s:"Enable extended attribute support"Â» Â«c:ONÂ»)
+Â«f:OPTIONÂ»(Â«v:ENABLE_ACLÂ» Â«s:"Enable ACL support"Â» Â«c:ONÂ»)
+Â«f:OPTIONÂ»(Â«v:ENABLE_TESTÂ» Â«s:"Enable unit and regression tests"Â» Â«c:ONÂ»)
 
-«k:IF»(«v:ENABLE_TEST»)
-	«f:ENABLE_TESTING»()
-«k:ENDIF»(«v:ENABLE_TEST»)
-«k:IF»(«v:WIN32» «t:AND» «t:NOT» «v:CYGWIN»)
-  «x:# Currently, dynamic build only.
-»  «f:SET»(«v:ENABLE_TAR_SHARED» «c:ON»)
-  «f:SET»(«v:ENABLE_CPIO_SHARED» «c:ON»)
-«k:ENDIF»(«v:WIN32» «t:AND» «t:NOT» «v:CYGWIN»)
+Â«k:IFÂ»(Â«v:ENABLE_TESTÂ»)
+	Â«f:ENABLE_TESTINGÂ»()
+Â«k:ENDIFÂ»(Â«v:ENABLE_TESTÂ»)
+Â«k:IFÂ»(Â«v:WIN32Â» Â«t:ANDÂ» Â«t:NOTÂ» Â«v:CYGWINÂ»)
+  Â«x:# Currently, dynamic build only.
+Â»  Â«f:SETÂ»(Â«v:ENABLE_TAR_SHAREDÂ» Â«c:ONÂ»)
+  Â«f:SETÂ»(Â«v:ENABLE_CPIO_SHAREDÂ» Â«c:ONÂ»)
+Â«k:ENDIFÂ»(Â«v:WIN32Â» Â«t:ANDÂ» Â«t:NOTÂ» Â«v:CYGWINÂ»)
 
-«k:IF»(«v:WIN32»)
-  «f:SET»(«v:_WIN32_WINNT» 0x0500 «t:CACHE» «t:INTERNAL» «s:"Setting _WIN32_WINNT to 0x0500 for Windows 2000 APIs"»)
-  «f:SET»(«v:WINVER» 0x0500 «t:CACHE» «t:INTERNAL» «s:"Setting WINVER to 0x0500 for Windows 2000 APIs"»)
-«k:ENDIF»(«v:WIN32»)
+Â«k:IFÂ»(Â«v:WIN32Â»)
+  Â«f:SETÂ»(Â«v:_WIN32_WINNTÂ» 0x0500 Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"Setting _WIN32_WINNT to 0x0500 for Windows 2000 APIs"Â»)
+  Â«f:SETÂ»(Â«v:WINVERÂ» 0x0500 Â«t:CACHEÂ» Â«t:INTERNALÂ» Â«s:"Setting WINVER to 0x0500 for Windows 2000 APIs"Â»)
+Â«k:ENDIFÂ»(Â«v:WIN32Â»)
 
-«x:#
-»«k:INCLUDE»(CheckCSourceRuns)
-«k:INCLUDE»(CheckFileOffsetBits)
-«k:INCLUDE»(CheckFuncs)
-«k:INCLUDE»(CheckHeaderDirent)
-«k:INCLUDE»(CheckIncludeFile)
-«k:INCLUDE»(CheckIncludeFiles)
-«k:INCLUDE»(CheckLibraryExists)
-«k:INCLUDE»(CheckStructMember)
-«k:INCLUDE»(CheckSymbolExists)
-«k:INCLUDE»(CheckTypeExists)
-«k:INCLUDE»(CheckTypeSize)
+Â«x:#
+Â»Â«k:INCLUDEÂ»(CheckCSourceRuns)
+Â«k:INCLUDEÂ»(CheckFileOffsetBits)
+Â«k:INCLUDEÂ»(CheckFuncs)
+Â«k:INCLUDEÂ»(CheckHeaderDirent)
+Â«k:INCLUDEÂ»(CheckIncludeFile)
+Â«k:INCLUDEÂ»(CheckIncludeFiles)
+Â«k:INCLUDEÂ»(CheckLibraryExists)
+Â«k:INCLUDEÂ»(CheckStructMember)
+Â«k:INCLUDEÂ»(CheckSymbolExists)
+Â«k:INCLUDEÂ»(CheckTypeExists)
+Â«k:INCLUDEÂ»(CheckTypeSize)
 
-«x:#
+Â«x:#
 # Generate list.h
 #
-»«k:MACRO» («f:GENERATE_LIST_H» «v:_listfile» «v:_cmlist» «v:__list_sources»)
-  «f:SET»(«v:_argv» «D:${»«v:ARGV»«D:}»)
-  «x:# Remove _listfile and _cmlist from _argv
-»  «f:LIST»(«t:REMOVE_AT» «v:_argv» 0 1)
-  «k:IF» («t:NOT» «t:EXISTS» «s:"${«v:_listfile»}"» «t:OR»
-     «D:${»«v:_cmlist»«D:}» «t:IS_NEWER_THAN» «s:"${«v:_listfile»}"»)
+Â»Â«k:MACROÂ» (Â«f:GENERATE_LIST_HÂ» Â«v:_listfileÂ» Â«v:_cmlistÂ» Â«v:__list_sourcesÂ»)
+  Â«f:SETÂ»(Â«v:_argvÂ» Â«D:${Â»Â«v:ARGVÂ»Â«D:}Â»)
+  Â«x:# Remove _listfile and _cmlist from _argv
+Â»  Â«f:LISTÂ»(Â«t:REMOVE_ATÂ» Â«v:_argvÂ» 0 1)
+  Â«k:IFÂ» (Â«t:NOTÂ» Â«t:EXISTSÂ» Â«s:"${Â«v:_listfileÂ»}"Â» Â«t:ORÂ»
+     Â«D:${Â»Â«v:_cmlistÂ»Â«D:}Â» Â«t:IS_NEWER_THANÂ» Â«s:"${Â«v:_listfileÂ»}"Â»)
 
-    «f:MESSAGE»(«t:STATUS» «s:"Generating ${«v:_listfile»}"»)
-    «f:FILE»(«t:WRITE» «D:${»«v:_listfile»«D:}» «s:""»)
-    «k:FOREACH» («v:testfile» «D:${»«v:_argv»«D:}»)
-      «k:IF» («v:testfile» «t:MATCHES» «s:"^test_[^/]+[.]c$"»)
-        «f:FILE»(«t:STRINGS» «D:${»«v:testfile»«D:}» «v:testvar» «t:REGEX» «s:"^DEFINE_TEST"»)
-        «k:FOREACH» («v:deftest» «D:${»«v:testvar»«D:}»)
-          «f:FILE»(«t:APPEND» «D:${»«v:_listfile»«D:}» «s:"${«v:deftest»}\n"»)
-        «k:ENDFOREACH» («v:deftest»)
-      «k:ENDIF» («v:testfile» «t:MATCHES» «s:"^test_[^/]+[.]c$"»)
-    «k:ENDFOREACH» («v:testfile»)
+    Â«f:MESSAGEÂ»(Â«t:STATUSÂ» Â«s:"Generating ${Â«v:_listfileÂ»}"Â»)
+    Â«f:FILEÂ»(Â«t:WRITEÂ» Â«D:${Â»Â«v:_listfileÂ»Â«D:}Â» Â«s:""Â»)
+    Â«k:FOREACHÂ» (Â«v:testfileÂ» Â«D:${Â»Â«v:_argvÂ»Â«D:}Â»)
+      Â«k:IFÂ» (Â«v:testfileÂ» Â«t:MATCHESÂ» Â«s:"^test_[^/]+[.]c$"Â»)
+        Â«f:FILEÂ»(Â«t:STRINGSÂ» Â«D:${Â»Â«v:testfileÂ»Â«D:}Â» Â«v:testvarÂ» Â«t:REGEXÂ» Â«s:"^DEFINE_TEST"Â»)
+        Â«k:FOREACHÂ» (Â«v:deftestÂ» Â«D:${Â»Â«v:testvarÂ»Â«D:}Â»)
+          Â«f:FILEÂ»(Â«t:APPENDÂ» Â«D:${Â»Â«v:_listfileÂ»Â«D:}Â» Â«s:"${Â«v:deftestÂ»}\n"Â»)
+        Â«k:ENDFOREACHÂ» (Â«v:deftestÂ»)
+      Â«k:ENDIFÂ» (Â«v:testfileÂ» Â«t:MATCHESÂ» Â«s:"^test_[^/]+[.]c$"Â»)
+    Â«k:ENDFOREACHÂ» (Â«v:testfileÂ»)
 
-  «k:ENDIF» («t:NOT» «t:EXISTS» «s:"${«v:_listfile»}"» «t:OR»
-     «D:${»«v:_cmlist»«D:}» «t:IS_NEWER_THAN» «s:"${«v:_listfile»}"»)
-«k:ENDMACRO» («f:GENERATE_LIST_H»)
-«x:#
+  Â«k:ENDIFÂ» (Â«t:NOTÂ» Â«t:EXISTSÂ» Â«s:"${Â«v:_listfileÂ»}"Â» Â«t:ORÂ»
+     Â«D:${Â»Â«v:_cmlistÂ»Â«D:}Â» Â«t:IS_NEWER_THANÂ» Â«s:"${Â«v:_listfileÂ»}"Â»)
+Â«k:ENDMACROÂ» (Â«f:GENERATE_LIST_HÂ»)
+Â«x:#
 # Generate installation rules for man pages.
 #
-»«k:MACRO» («f:INSTALL_MAN» «v:__mans»)
-  «k:FOREACH» («v:_man» «D:${»«v:ARGV»«D:}»)
-    «f:STRING»(«t:REGEX» «t:REPLACE» «s:"^.+[.]([1-9])"» «s:"\\1"» «v:_mansect» «D:${»«v:_man»«D:}»)
-    «f:INSTALL»(«t:FILES» «D:${»«v:_man»«D:}» «t:DESTINATION» «s:"share/man/man${«v:_mansect»}"»)
-  «k:ENDFOREACH» («v:_man»)
-«k:ENDMACRO» («f:INSTALL_MAN» «v:__mans»)
+Â»Â«k:MACROÂ» (Â«f:INSTALL_MANÂ» Â«v:__mansÂ»)
+  Â«k:FOREACHÂ» (Â«v:_manÂ» Â«D:${Â»Â«v:ARGVÂ»Â«D:}Â»)
+    Â«f:STRINGÂ»(Â«t:REGEXÂ» Â«t:REPLACEÂ» Â«s:"^.+[.]([1-9])"Â» Â«s:"\\1"Â» Â«v:_mansectÂ» Â«D:${Â»Â«v:_manÂ»Â«D:}Â»)
+    Â«f:INSTALLÂ»(Â«t:FILESÂ» Â«D:${Â»Â«v:_manÂ»Â«D:}Â» Â«t:DESTINATIONÂ» Â«s:"share/man/man${Â«v:_mansectÂ»}"Â»)
+  Â«k:ENDFOREACHÂ» (Â«v:_manÂ»)
+Â«k:ENDMACROÂ» (Â«f:INSTALL_MANÂ» Â«v:__mansÂ»)
 
-«x:#
+Â«x:#
 # Check compress/decompress libraries
 #
-»«k:IF»(«v:WIN32» «t:AND» «t:NOT» «v:CMAKE_CL_64» «t:AND» «t:NOT» «v:CYGWIN»)
-  «x:# GnuWin32 is only for Win32, not Win64.
-»  «f:SET»(«v:__GNUWIN32PATH» «s:"C:/Program Files/GnuWin32"»)
-«k:ENDIF»(«v:WIN32» «t:AND» «t:NOT» «v:CMAKE_CL_64» «t:AND» «t:NOT» «v:CYGWIN»)
-«k:IF»(«t:DEFINED» «v:__GNUWIN32PATH» «t:AND» «t:EXISTS» «s:"${«v:__GNUWIN32PATH»}"»)
-  «x:# You have to add a path availabel DLL file into PATH environment variable.
-»  «x:# Maybe DLL path is "C:/Program Files/GnuWin32/bin".
-»  «x:# The zlib and the bzip2 Setup program have installed programs and DLLs into
-»  «x:# "C:/Program Files/GnuWin32" by default.
-»  «x:# This is convenience setting for Windows.
-»  «f:SET»(«v:CMAKE_PREFIX_PATH» «D:${»«v:__GNUWIN32PATH»«D:}» $(CMAKE_PREFIX_PATH))
-  «x:#
-»  «x:# If you didn't use Setup program or installed into nonstandard path,
-»  «x:# cmake cannot find out your zlib or bzip2 libraries and include files,
-»  «x:# you should execute cmake with  -DCMAKE_PREFIX_PATH option.
-»  «x:#   e.g.
-»  «x:#     cmake -DCMAKE_PREFIX_PATH=<your-GnuWin32-path> <path-to-source>
-»  «x:#
-»  «x:# If compiling error occured in zconf.h, You may need patch to zconf.h.
-»  «x:#--- zconf.h.orig	2005-07-21 00:40:26.000000000
-»  «x:#+++ zconf.h	2009-01-19 11:39:10.093750000
-»  «x:#@@ -286,7 +286,7 @@
-»  «x:# 
-»  «x:# #if 1           /* HAVE_UNISTD_H -- this line is updated by ./configure */
-»  «x:# #  include <sys/types.h> /* for off_t */
-»  «x:#-#  include <unistd.h>    /* for SEEK_* and off_t */
-»  «x:#+#  include <stdio.h>    /* for SEEK_* and off_t */
-»  «x:# #  ifdef VMS
-»  «x:# #    include <unixio.h>   /* for off_t */
-»  «x:# #  endif
-»«k:ENDIF»(«t:DEFINED» «v:__GNUWIN32PATH» «t:AND» «t:EXISTS» «s:"${«v:__GNUWIN32PATH»}"»)
+Â»Â«k:IFÂ»(Â«v:WIN32Â» Â«t:ANDÂ» Â«t:NOTÂ» Â«v:CMAKE_CL_64Â» Â«t:ANDÂ» Â«t:NOTÂ» Â«v:CYGWINÂ»)
+  Â«x:# GnuWin32 is only for Win32, not Win64.
+Â»  Â«f:SETÂ»(Â«v:__GNUWIN32PATHÂ» Â«s:"C:/Program Files/GnuWin32"Â»)
+Â«k:ENDIFÂ»(Â«v:WIN32Â» Â«t:ANDÂ» Â«t:NOTÂ» Â«v:CMAKE_CL_64Â» Â«t:ANDÂ» Â«t:NOTÂ» Â«v:CYGWINÂ»)
+Â«k:IFÂ»(Â«t:DEFINEDÂ» Â«v:__GNUWIN32PATHÂ» Â«t:ANDÂ» Â«t:EXISTSÂ» Â«s:"${Â«v:__GNUWIN32PATHÂ»}"Â»)
+  Â«x:# You have to add a path availabel DLL file into PATH environment variable.
+Â»  Â«x:# Maybe DLL path is "C:/Program Files/GnuWin32/bin".
+Â»  Â«x:# The zlib and the bzip2 Setup program have installed programs and DLLs into
+Â»  Â«x:# "C:/Program Files/GnuWin32" by default.
+Â»  Â«x:# This is convenience setting for Windows.
+Â»  Â«f:SETÂ»(Â«v:CMAKE_PREFIX_PATHÂ» Â«D:${Â»Â«v:__GNUWIN32PATHÂ»Â«D:}Â» $(CMAKE_PREFIX_PATH))
+  Â«x:#
+Â»  Â«x:# If you didn't use Setup program or installed into nonstandard path,
+Â»  Â«x:# cmake cannot find out your zlib or bzip2 libraries and include files,
+Â»  Â«x:# you should execute cmake with  -DCMAKE_PREFIX_PATH option.
+Â»  Â«x:#   e.g.
+Â»  Â«x:#     cmake -DCMAKE_PREFIX_PATH=<your-GnuWin32-path> <path-to-source>
+Â»  Â«x:#
+Â»  Â«x:# If compiling error occured in zconf.h, You may need patch to zconf.h.
+Â»  Â«x:#--- zconf.h.orig	2005-07-21 00:40:26.000000000
+Â»  Â«x:#+++ zconf.h	2009-01-19 11:39:10.093750000
+Â»  Â«x:#@@ -286,7 +286,7 @@
+Â»  Â«x:# 
+Â»  Â«x:# #if 1           /* HAVE_UNISTD_H -- this line is updated by ./configure */
+Â»  Â«x:# #  include <sys/types.h> /* for off_t */
+Â»  Â«x:#-#  include <unistd.h>    /* for SEEK_* and off_t */
+Â»  Â«x:#+#  include <stdio.h>    /* for SEEK_* and off_t */
+Â»  Â«x:# #  ifdef VMS
+Â»  Â«x:# #    include <unixio.h>   /* for off_t */
+Â»  Â«x:# #  endif
+Â»Â«k:ENDIFÂ»(Â«t:DEFINEDÂ» Â«v:__GNUWIN32PATHÂ» Â«t:ANDÂ» Â«t:EXISTSÂ» Â«s:"${Â«v:__GNUWIN32PATHÂ»}"Â»)
 
-«f:SET»(«v:ADDITIONAL_LIBS» «s:""»)
-«x:#
+Â«f:SETÂ»(Â«v:ADDITIONAL_LIBSÂ» Â«s:""Â»)
+Â«x:#
 # Find ZLIB
 #
-»«f:FIND_PACKAGE»(ZLIB)
-«k:IF»(«v:ZLIB_FOUND»)
-  «f:SET»(«v:HAVE_LIBZ» 1)
-  «f:SET»(«v:HAVE_ZLIB_H» 1)
-  «f:INCLUDE_DIRECTORIES»(«D:${»«v:ZLIB_INCLUDE_DIR»«D:}»)
-  «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:ZLIB_LIBRARIES»«D:}»)
-«k:ENDIF»(«v:ZLIB_FOUND»)
-«f:MARK_AS_ADVANCED»(«t:CLEAR» «v:ZLIB_INCLUDE_DIR»)
-«f:MARK_AS_ADVANCED»(«t:CLEAR» «v:ZLIB_LIBRARY»)
-«x:#
+Â»Â«f:FIND_PACKAGEÂ»(ZLIB)
+Â«k:IFÂ»(Â«v:ZLIB_FOUNDÂ»)
+  Â«f:SETÂ»(Â«v:HAVE_LIBZÂ» 1)
+  Â«f:SETÂ»(Â«v:HAVE_ZLIB_HÂ» 1)
+  Â«f:INCLUDE_DIRECTORIESÂ»(Â«D:${Â»Â«v:ZLIB_INCLUDE_DIRÂ»Â«D:}Â»)
+  Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:ZLIB_LIBRARIESÂ»Â«D:}Â»)
+Â«k:ENDIFÂ»(Â«v:ZLIB_FOUNDÂ»)
+Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:ZLIB_INCLUDE_DIRÂ»)
+Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:ZLIB_LIBRARYÂ»)
+Â«x:#
 # Find BZip2
 #
-»«f:FIND_PACKAGE»(BZip2)
-«k:IF»(«v:BZIP2_FOUND»)
-  «f:SET»(«v:HAVE_LIBBZ2» 1)
-  «f:SET»(«v:HAVE_BZLIB_H» 1)
-  «f:INCLUDE_DIRECTORIES»(«D:${»«v:BZIP2_INCLUDE_DIR»«D:}»)
-  «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:BZIP2_LIBRARIES»«D:}»)
-«k:ENDIF»(«v:BZIP2_FOUND»)
-«f:MARK_AS_ADVANCED»(«t:CLEAR» «v:BZIP2_INCLUDE_DIR»)
-«f:MARK_AS_ADVANCED»(«t:CLEAR» «v:BZIP2_LIBRARY»)
-«x:#
+Â»Â«f:FIND_PACKAGEÂ»(BZip2)
+Â«k:IFÂ»(Â«v:BZIP2_FOUNDÂ»)
+  Â«f:SETÂ»(Â«v:HAVE_LIBBZ2Â» 1)
+  Â«f:SETÂ»(Â«v:HAVE_BZLIB_HÂ» 1)
+  Â«f:INCLUDE_DIRECTORIESÂ»(Â«D:${Â»Â«v:BZIP2_INCLUDE_DIRÂ»Â«D:}Â»)
+  Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:BZIP2_LIBRARIESÂ»Â«D:}Â»)
+Â«k:ENDIFÂ»(Â«v:BZIP2_FOUNDÂ»)
+Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:BZIP2_INCLUDE_DIRÂ»)
+Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:BZIP2_LIBRARYÂ»)
+Â«x:#
 # Find LZMA
 #
-»«f:FIND_PACKAGE»(LZMA)
-«k:IF»(«v:LZMA_FOUND»)
-  «f:SET»(«v:HAVE_LIBLZMA» 1)
-  «f:SET»(«v:HAVE_LZMA_H» 1)
-  «f:INCLUDE_DIRECTORIES»(«D:${»«v:LZMA_INCLUDE_DIR»«D:}»)
-  «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:LZMA_LIBRARIES»«D:}»)
-  «f:MARK_AS_ADVANCED»(«t:CLEAR» «v:LZMA_INCLUDE_DIR»)
-  «f:MARK_AS_ADVANCED»(«t:CLEAR» «v:LZMA_LIBRARY»)
-«k:ELSEIF»(«v:LZMADEC_FOUND»)
-  «f:SET»(«v:HAVE_LIBLZMADEC» 1)
-  «f:SET»(«v:HAVE_LZMADEC_H» 1)
-  «f:INCLUDE_DIRECTORIES»(«D:${»«v:LZMADEC_INCLUDE_DIR»«D:}»)
-  «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:LZMADEC_LIBRARIES»«D:}»)
-  «f:MARK_AS_ADVANCED»(«t:CLEAR» «v:LZMADEC_INCLUDE_DIR»)
-  «f:MARK_AS_ADVANCED»(«t:CLEAR» «v:LZMADEC_LIBRARY»)
-«k:ELSE»(«v:LZMA_FOUND»)
-  «f:MARK_AS_ADVANCED»(«t:CLEAR» «v:LZMA_INCLUDE_DIR»)
-  «f:MARK_AS_ADVANCED»(«t:CLEAR» «v:LZMA_LIBRARY»)
-«k:ENDIF»(«v:LZMA_FOUND»)
+Â»Â«f:FIND_PACKAGEÂ»(LZMA)
+Â«k:IFÂ»(Â«v:LZMA_FOUNDÂ»)
+  Â«f:SETÂ»(Â«v:HAVE_LIBLZMAÂ» 1)
+  Â«f:SETÂ»(Â«v:HAVE_LZMA_HÂ» 1)
+  Â«f:INCLUDE_DIRECTORIESÂ»(Â«D:${Â»Â«v:LZMA_INCLUDE_DIRÂ»Â«D:}Â»)
+  Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:LZMA_LIBRARIESÂ»Â«D:}Â»)
+  Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:LZMA_INCLUDE_DIRÂ»)
+  Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:LZMA_LIBRARYÂ»)
+Â«k:ELSEIFÂ»(Â«v:LZMADEC_FOUNDÂ»)
+  Â«f:SETÂ»(Â«v:HAVE_LIBLZMADECÂ» 1)
+  Â«f:SETÂ»(Â«v:HAVE_LZMADEC_HÂ» 1)
+  Â«f:INCLUDE_DIRECTORIESÂ»(Â«D:${Â»Â«v:LZMADEC_INCLUDE_DIRÂ»Â«D:}Â»)
+  Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:LZMADEC_LIBRARIESÂ»Â«D:}Â»)
+  Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:LZMADEC_INCLUDE_DIRÂ»)
+  Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:LZMADEC_LIBRARYÂ»)
+Â«k:ELSEÂ»(Â«v:LZMA_FOUNDÂ»)
+  Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:LZMA_INCLUDE_DIRÂ»)
+  Â«f:MARK_AS_ADVANCEDÂ»(Â«t:CLEARÂ» Â«v:LZMA_LIBRARYÂ»)
+Â«k:ENDIFÂ»(Â«v:LZMA_FOUNDÂ»)
 
-«x:#
+Â«x:#
 # Check headers
 #
-»«f:CHECK_HEADER_DIRENT»()
+Â»Â«f:CHECK_HEADER_DIRENTÂ»()
 
-«f:SET»(«v:INCLUDES» «s:""»)
-«k:MACRO» («f:LA_CHECK_INCLUDE_FILE» «v:header» «v:var»)
-      «f:CHECK_INCLUDE_FILES»(«s:"${«v:INCLUDES»};${«v:header»}"» «D:${»«v:var»«D:}»)
-      «k:IF» («D:${»«v:var»«D:}»)
-      	 «f:SET»(«v:INCLUDES» «D:${»«v:INCLUDES»«D:}» «D:${»«v:header»«D:}»)
-      «k:ENDIF» («D:${»«v:var»«D:}»)
-«k:ENDMACRO» («f:LA_CHECK_INCLUDE_FILE»)
+Â«f:SETÂ»(Â«v:INCLUDESÂ» Â«s:""Â»)
+Â«k:MACROÂ» (Â«f:LA_CHECK_INCLUDE_FILEÂ» Â«v:headerÂ» Â«v:varÂ»)
+      Â«f:CHECK_INCLUDE_FILESÂ»(Â«s:"${Â«v:INCLUDESÂ»};${Â«v:headerÂ»}"Â» Â«D:${Â»Â«v:varÂ»Â«D:}Â»)
+      Â«k:IFÂ» (Â«D:${Â»Â«v:varÂ»Â«D:}Â»)
+      	 Â«f:SETÂ»(Â«v:INCLUDESÂ» Â«D:${Â»Â«v:INCLUDESÂ»Â«D:}Â» Â«D:${Â»Â«v:headerÂ»Â«D:}Â»)
+      Â«k:ENDIFÂ» (Â«D:${Â»Â«v:varÂ»Â«D:}Â»)
+Â«k:ENDMACROÂ» (Â«f:LA_CHECK_INCLUDE_FILEÂ»)
 
-«x:# Few headers that must precede other headers
+Â«x:# Few headers that must precede other headers
 # Must precede sys/extattr.h on FreeBSD
-»«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/types.h"» HAVE_SYS_TYPES_H)
+Â»Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/types.h"Â» HAVE_SYS_TYPES_H)
 
-«x:# Alphabetize the rest unless there's a compelling reason
-»«f:LA_CHECK_INCLUDE_FILE»(«s:"acl/libacl.h"» HAVE_ACL_LIBACL_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"attr/xattr.h"» HAVE_ATTR_XATTR_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"ctype.h"» HAVE_CTYPE_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"direct.h"» HAVE_DIRECT_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"dlfcn.h"» HAVE_DLFCN_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"errno.h"» HAVE_ERRNO_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"ext2fs/ext2_fs.h"» HAVE_EXT2FS_EXT2_FS_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"fcntl.h"» HAVE_FCNTL_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"grp.h"» HAVE_GRP_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"inttypes.h"» HAVE_INTTYPES_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"io.h"» HAVE_IO_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"langinfo.h"» HAVE_LANGINFO_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"limits.h"» HAVE_LIMITS_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"linux/fs.h"» HAVE_LINUX_FS_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"locale.h"» HAVE_LOCALE_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"memory.h"» HAVE_MEMORY_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"paths.h"» HAVE_PATHS_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"poll.h"» HAVE_POLL_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"process.h"» HAVE_PROCESS_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"pwd.h"» HAVE_PWD_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"regex.h"» HAVE_REGEX_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"signal.h"» HAVE_SIGNAL_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"stdarg.h"» HAVE_STDARG_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"stdint.h"» HAVE_STDINT_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"stdlib.h"» HAVE_STDLIB_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"string.h"» HAVE_STRING_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"strings.h"» HAVE_STRINGS_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/acl.h"» HAVE_SYS_ACL_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/cdefs.h"» HAVE_SYS_CDEFS_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/extattr.h"» HAVE_SYS_EXTATTR_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/ioctl.h"» HAVE_SYS_IOCTL_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/mkdev.h"» HAVE_SYS_MKDEV_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/param.h"» HAVE_SYS_PARAM_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/poll.h"» HAVE_SYS_POLL_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/select.h"» HAVE_SYS_SELECT_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/stat.h"» HAVE_SYS_STAT_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/time.h"» HAVE_SYS_TIME_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/utime.h"» HAVE_SYS_UTIME_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sys/wait.h"» HAVE_SYS_WAIT_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"time.h"» HAVE_TIME_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"unistd.h"» HAVE_UNISTD_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"utime.h"» HAVE_UTIME_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"wchar.h"» HAVE_WCHAR_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"wctype.h"» HAVE_WCTYPE_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"windows.h"» HAVE_WINDOWS_H)
+Â«x:# Alphabetize the rest unless there's a compelling reason
+Â»Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"acl/libacl.h"Â» HAVE_ACL_LIBACL_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"attr/xattr.h"Â» HAVE_ATTR_XATTR_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"ctype.h"Â» HAVE_CTYPE_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"direct.h"Â» HAVE_DIRECT_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"dlfcn.h"Â» HAVE_DLFCN_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"errno.h"Â» HAVE_ERRNO_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"ext2fs/ext2_fs.h"Â» HAVE_EXT2FS_EXT2_FS_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"fcntl.h"Â» HAVE_FCNTL_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"grp.h"Â» HAVE_GRP_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"inttypes.h"Â» HAVE_INTTYPES_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"io.h"Â» HAVE_IO_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"langinfo.h"Â» HAVE_LANGINFO_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"limits.h"Â» HAVE_LIMITS_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"linux/fs.h"Â» HAVE_LINUX_FS_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"locale.h"Â» HAVE_LOCALE_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"memory.h"Â» HAVE_MEMORY_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"paths.h"Â» HAVE_PATHS_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"poll.h"Â» HAVE_POLL_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"process.h"Â» HAVE_PROCESS_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"pwd.h"Â» HAVE_PWD_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"regex.h"Â» HAVE_REGEX_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"signal.h"Â» HAVE_SIGNAL_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"stdarg.h"Â» HAVE_STDARG_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"stdint.h"Â» HAVE_STDINT_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"stdlib.h"Â» HAVE_STDLIB_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"string.h"Â» HAVE_STRING_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"strings.h"Â» HAVE_STRINGS_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/acl.h"Â» HAVE_SYS_ACL_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/cdefs.h"Â» HAVE_SYS_CDEFS_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/extattr.h"Â» HAVE_SYS_EXTATTR_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/ioctl.h"Â» HAVE_SYS_IOCTL_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/mkdev.h"Â» HAVE_SYS_MKDEV_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/param.h"Â» HAVE_SYS_PARAM_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/poll.h"Â» HAVE_SYS_POLL_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/select.h"Â» HAVE_SYS_SELECT_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/stat.h"Â» HAVE_SYS_STAT_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/time.h"Â» HAVE_SYS_TIME_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/utime.h"Â» HAVE_SYS_UTIME_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sys/wait.h"Â» HAVE_SYS_WAIT_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"time.h"Â» HAVE_TIME_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"unistd.h"Â» HAVE_UNISTD_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"utime.h"Â» HAVE_UTIME_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"wchar.h"Â» HAVE_WCHAR_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"wctype.h"Â» HAVE_WCTYPE_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"windows.h"Â» HAVE_WINDOWS_H)
 
 
-«x:#
+Â«x:#
 # Some headers require extra includes when they're available.
 #
-»
-«x:#
+Â»
+Â«x:#
 # Find OpenSSL
 #
-»«k:IF»(«v:ENABLE_OPENSSL»)
-  «f:FIND_PACKAGE»(OpenSSL)
-«k:ELSE»()
-  «f:SET»(«v:OPENSSL_FOUND» 0)
-«k:ENDIF»()
-«k:IF»(«v:OPENSSL_FOUND»)
-  «f:INCLUDE_DIRECTORIES»(«D:${»«v:OPENSSL_INCLUDE_DIR»«D:}»)
-  «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:OPENSSL_LIBRARIES»«D:}»)
-«k:ELSE»()
-  «x:# Block OpenSSL checks and override cached results.
-»  «f:SET»(«v:HAVE_OPENSSL_MD5_H» 0)
-  «f:SET»(«v:HAVE_OPENSSL_RIPEMD_H» 0)
-  «f:SET»(«v:HAVE_OPENSSL_SHA_H» 0)
-  «f:SET»(«v:HAVE_OPENSSL_SHA256_INIT» 0)
-  «f:SET»(«v:HAVE_OPENSSL_SHA384_INIT» 0)
-  «f:SET»(«v:HAVE_OPENSSL_SHA512_INIT» 0)
-«k:ENDIF»()
-«x:#
+Â»Â«k:IFÂ»(Â«v:ENABLE_OPENSSLÂ»)
+  Â«f:FIND_PACKAGEÂ»(OpenSSL)
+Â«k:ELSEÂ»()
+  Â«f:SETÂ»(Â«v:OPENSSL_FOUNDÂ» 0)
+Â«k:ENDIFÂ»()
+Â«k:IFÂ»(Â«v:OPENSSL_FOUNDÂ»)
+  Â«f:INCLUDE_DIRECTORIESÂ»(Â«D:${Â»Â«v:OPENSSL_INCLUDE_DIRÂ»Â«D:}Â»)
+  Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:OPENSSL_LIBRARIESÂ»Â«D:}Â»)
+Â«k:ELSEÂ»()
+  Â«x:# Block OpenSSL checks and override cached results.
+Â»  Â«f:SETÂ»(Â«v:HAVE_OPENSSL_MD5_HÂ» 0)
+  Â«f:SETÂ»(Â«v:HAVE_OPENSSL_RIPEMD_HÂ» 0)
+  Â«f:SETÂ»(Â«v:HAVE_OPENSSL_SHA_HÂ» 0)
+  Â«f:SETÂ»(Â«v:HAVE_OPENSSL_SHA256_INITÂ» 0)
+  Â«f:SETÂ»(Â«v:HAVE_OPENSSL_SHA384_INITÂ» 0)
+  Â«f:SETÂ»(Â«v:HAVE_OPENSSL_SHA512_INITÂ» 0)
+Â«k:ENDIFÂ»()
+Â«x:#
 # Check MD5/RMD160/SHA headers
 #
-»«f:LA_CHECK_INCLUDE_FILE»(«s:"md5.h"» HAVE_MD5_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"openssl/md5.h"» HAVE_OPENSSL_MD5_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"openssl/ripemd.h"» HAVE_OPENSSL_RIPEMD_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"openssl/sha.h"» HAVE_OPENSSL_SHA_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"ripemd.h"» HAVE_RIPEMD_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"rmd160.h"» HAVE_RMD160_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sha.h"» HAVE_SHA_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sha1.h"» HAVE_SHA1_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sha2.h"» HAVE_SHA2_H)
-«f:LA_CHECK_INCLUDE_FILE»(«s:"sha256.h"» HAVE_SHA256_H)
+Â»Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"md5.h"Â» HAVE_MD5_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"openssl/md5.h"Â» HAVE_OPENSSL_MD5_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"openssl/ripemd.h"Â» HAVE_OPENSSL_RIPEMD_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"openssl/sha.h"Â» HAVE_OPENSSL_SHA_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"ripemd.h"Â» HAVE_RIPEMD_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"rmd160.h"Â» HAVE_RMD160_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sha.h"Â» HAVE_SHA_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sha1.h"Â» HAVE_SHA1_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sha2.h"Â» HAVE_SHA2_H)
+Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"sha256.h"Â» HAVE_SHA256_H)
 
-«x:#
+Â«x:#
 # Find MD5/RMD160/SHA library
 #
-»«f:FIND_LIBRARY»(«v:CRYPTO_LIBRARY» «t:NAMES» crypto)
-«k:IF»(«v:CRYPTO_LIBRARY»)
-  «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:CRYPTO_LIBRARY»«D:}»)
-«k:ELSE»(«v:CRYPTO_LIBRARY»)
-  «k:IF»(«t:NOT» «v:OPENSSL_FOUND»)
-    «f:FIND_LIBRARY»(«v:MD_LIBRARY» «t:NAMES» md)
-    «k:IF»(«v:MD_LIBRARY»)
-      «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:MD_LIBRARY»«D:}»)
-    «k:ENDIF»(«v:MD_LIBRARY»)
-  «k:ENDIF»(«t:NOT» «v:OPENSSL_FOUND»)
-«k:ENDIF»(«v:CRYPTO_LIBRARY»)
-«x:#
+Â»Â«f:FIND_LIBRARYÂ»(Â«v:CRYPTO_LIBRARYÂ» Â«t:NAMESÂ» crypto)
+Â«k:IFÂ»(Â«v:CRYPTO_LIBRARYÂ»)
+  Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:CRYPTO_LIBRARYÂ»Â«D:}Â»)
+Â«k:ELSEÂ»(Â«v:CRYPTO_LIBRARYÂ»)
+  Â«k:IFÂ»(Â«t:NOTÂ» Â«v:OPENSSL_FOUNDÂ»)
+    Â«f:FIND_LIBRARYÂ»(Â«v:MD_LIBRARYÂ» Â«t:NAMESÂ» md)
+    Â«k:IFÂ»(Â«v:MD_LIBRARYÂ»)
+      Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:MD_LIBRARYÂ»Â«D:}Â»)
+    Â«k:ENDIFÂ»(Â«v:MD_LIBRARYÂ»)
+  Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:OPENSSL_FOUNDÂ»)
+Â«k:ENDIFÂ»(Â«v:CRYPTO_LIBRARYÂ»)
+Â«x:#
 # Check MD5/RMD160/SHA functions
 #
-»«f:SET»(«v:CMAKE_REQUIRED_LIBRARIES» «D:${»«v:ADDITIONAL_LIBS»«D:}»)
-«k:IF»(«v:HAVE_MD5_H»)
-  «f:CHECK_SYMBOL_EXISTS»(MD5Init			«s:"md5.h"»		HAVE_MD5INIT)
-«k:ENDIF»(«v:HAVE_MD5_H»)
-«k:IF»(«v:HAVE_RMD160_H»)
-  «f:CHECK_SYMBOL_EXISTS»(RMD160Init		«s:"rmd160.h"»	HAVE_RMD160INIT)
-«k:ENDIF»(«v:HAVE_RMD160_H»)
-«k:IF»(«v:HAVE_SHA2_H»)
-  «f:CHECK_SYMBOL_EXISTS»(SHA256Init		«s:"sha2.h"»	HAVE_SHA256INIT)
-  «f:CHECK_SYMBOL_EXISTS»(SHA384Init		«s:"sha2.h"»	HAVE_SHA384INIT)
-  «f:CHECK_SYMBOL_EXISTS»(SHA512Init		«s:"sha2.h"»	HAVE_SHA512INIT)
-  «f:CHECK_SYMBOL_EXISTS»(SHA256_Init		«s:"sha2.h"»	HAVE_SHA256_INIT)
-  «f:CHECK_SYMBOL_EXISTS»(SHA384_Init		«s:"sha2.h"»	HAVE_SHA384_INIT)
-  «f:CHECK_SYMBOL_EXISTS»(SHA512_Init		«s:"sha2.h"»	HAVE_SHA512_INIT)
-«k:ELSEIF»(«v:HAVE_OPENSSL_SHA_H»)
-  «f:CHECK_SYMBOL_EXISTS»(SHA256_Init		«s:"openssl/sha.h"»	HAVE_OPENSSL_SHA256_INIT)
-  «f:CHECK_SYMBOL_EXISTS»(SHA384_Init		«s:"openssl/sha.h"»	HAVE_OPENSSL_SHA384_INIT)
-  «f:CHECK_SYMBOL_EXISTS»(SHA512_Init		«s:"openssl/sha.h"»	HAVE_OPENSSL_SHA512_INIT)
-«k:ENDIF»()
-«f:SET»(«v:CMAKE_REQUIRED_LIBRARIES» «s:""»)
+Â»Â«f:SETÂ»(Â«v:CMAKE_REQUIRED_LIBRARIESÂ» Â«D:${Â»Â«v:ADDITIONAL_LIBSÂ»Â«D:}Â»)
+Â«k:IFÂ»(Â«v:HAVE_MD5_HÂ»)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(MD5Init			Â«s:"md5.h"Â»		HAVE_MD5INIT)
+Â«k:ENDIFÂ»(Â«v:HAVE_MD5_HÂ»)
+Â«k:IFÂ»(Â«v:HAVE_RMD160_HÂ»)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(RMD160Init		Â«s:"rmd160.h"Â»	HAVE_RMD160INIT)
+Â«k:ENDIFÂ»(Â«v:HAVE_RMD160_HÂ»)
+Â«k:IFÂ»(Â«v:HAVE_SHA2_HÂ»)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(SHA256Init		Â«s:"sha2.h"Â»	HAVE_SHA256INIT)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(SHA384Init		Â«s:"sha2.h"Â»	HAVE_SHA384INIT)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(SHA512Init		Â«s:"sha2.h"Â»	HAVE_SHA512INIT)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(SHA256_Init		Â«s:"sha2.h"Â»	HAVE_SHA256_INIT)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(SHA384_Init		Â«s:"sha2.h"Â»	HAVE_SHA384_INIT)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(SHA512_Init		Â«s:"sha2.h"Â»	HAVE_SHA512_INIT)
+Â«k:ELSEIFÂ»(Â«v:HAVE_OPENSSL_SHA_HÂ»)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(SHA256_Init		Â«s:"openssl/sha.h"Â»	HAVE_OPENSSL_SHA256_INIT)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(SHA384_Init		Â«s:"openssl/sha.h"Â»	HAVE_OPENSSL_SHA384_INIT)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(SHA512_Init		Â«s:"openssl/sha.h"Â»	HAVE_OPENSSL_SHA512_INIT)
+Â«k:ENDIFÂ»()
+Â«f:SETÂ»(Â«v:CMAKE_REQUIRED_LIBRARIESÂ» Â«s:""Â»)
 
-«x:#
+Â«x:#
 # Find Libxml2
 #
-»«f:FIND_PACKAGE»(LibXml2)
-«k:IF»(«v:LIBXML2_FOUND»)
-  «f:INCLUDE_DIRECTORIES»(«D:${»«v:LIBXML2_INCLUDE_DIR»«D:}»)
-  «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:LIBXML2_LIBRARIES»«D:}»)
-  «f:SET»(«v:HAVE_LIBXML2» 1)
-  «x:# libxml2's include files use iconv.h
-»  «x:# We need a directory path of iconv.h so that it won't fail to check
-»  «x:# "libxml/xmlreader.h".
-»  «f:FIND_PATH»(«v:ICONV_INCLUDE_DIR» iconv.h)
-  «f:INCLUDE_DIRECTORIES»(«D:${»«v:ICONV_INCLUDE_DIR»«D:}»)
-  «f:SET»(«v:CMAKE_REQUIRED_INCLUDES» «D:${»«v:ICONV_INCLUDE_DIR»«D:}» «D:${»«v:LIBXML2_INCLUDE_DIR»«D:}»)
-  «f:CHECK_INCLUDE_FILES»(«s:"libxml/xmlreader.h"» HAVE_LIBXML_XMLREADER_H)
-  «f:SET»(«v:CMAKE_REQUIRED_INCLUDES» «s:""»)
-«k:ELSE»(«v:LIBXML2_FOUND»)
-  «x:#
-»  «x:# Find Expat
-»  «x:#
-»  «f:FIND_PACKAGE»(EXPAT)
-  «k:IF»(«v:EXPAT_FOUND»)
-    «f:INCLUDE_DIRECTORIES»(«D:${»«v:EXPAT_INCLUDE_DIR»«D:}»)
-    «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:EXPAT_LIBRARIES»«D:}»)
-    «f:SET»(«v:HAVE_LIBEXPAT» 1)
-    «f:LA_CHECK_INCLUDE_FILE»(«s:"expat.h"» HAVE_EXPAT_H)
-  «k:ENDIF»(«v:EXPAT_FOUND»)
-«k:ENDIF»(«v:LIBXML2_FOUND»)
+Â»Â«f:FIND_PACKAGEÂ»(LibXml2)
+Â«k:IFÂ»(Â«v:LIBXML2_FOUNDÂ»)
+  Â«f:INCLUDE_DIRECTORIESÂ»(Â«D:${Â»Â«v:LIBXML2_INCLUDE_DIRÂ»Â«D:}Â»)
+  Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:LIBXML2_LIBRARIESÂ»Â«D:}Â»)
+  Â«f:SETÂ»(Â«v:HAVE_LIBXML2Â» 1)
+  Â«x:# libxml2's include files use iconv.h
+Â»  Â«x:# We need a directory path of iconv.h so that it won't fail to check
+Â»  Â«x:# "libxml/xmlreader.h".
+Â»  Â«f:FIND_PATHÂ»(Â«v:ICONV_INCLUDE_DIRÂ» iconv.h)
+  Â«f:INCLUDE_DIRECTORIESÂ»(Â«D:${Â»Â«v:ICONV_INCLUDE_DIRÂ»Â«D:}Â»)
+  Â«f:SETÂ»(Â«v:CMAKE_REQUIRED_INCLUDESÂ» Â«D:${Â»Â«v:ICONV_INCLUDE_DIRÂ»Â«D:}Â» Â«D:${Â»Â«v:LIBXML2_INCLUDE_DIRÂ»Â«D:}Â»)
+  Â«f:CHECK_INCLUDE_FILESÂ»(Â«s:"libxml/xmlreader.h"Â» HAVE_LIBXML_XMLREADER_H)
+  Â«f:SETÂ»(Â«v:CMAKE_REQUIRED_INCLUDESÂ» Â«s:""Â»)
+Â«k:ELSEÂ»(Â«v:LIBXML2_FOUNDÂ»)
+  Â«x:#
+Â»  Â«x:# Find Expat
+Â»  Â«x:#
+Â»  Â«f:FIND_PACKAGEÂ»(EXPAT)
+  Â«k:IFÂ»(Â«v:EXPAT_FOUNDÂ»)
+    Â«f:INCLUDE_DIRECTORIESÂ»(Â«D:${Â»Â«v:EXPAT_INCLUDE_DIRÂ»Â«D:}Â»)
+    Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:EXPAT_LIBRARIESÂ»Â«D:}Â»)
+    Â«f:SETÂ»(Â«v:HAVE_LIBEXPATÂ» 1)
+    Â«f:LA_CHECK_INCLUDE_FILEÂ»(Â«s:"expat.h"Â» HAVE_EXPAT_H)
+  Â«k:ENDIFÂ»(Â«v:EXPAT_FOUNDÂ»)
+Â«k:ENDIFÂ»(Â«v:LIBXML2_FOUNDÂ»)
 
-«x:#
+Â«x:#
 # Check functions
 #
-»«f:CHECK_SYMBOL_EXISTS»(CreateHardLinkA «s:"windows.h"» HAVE_CREATEHARDLINKA)
-«f:CHECK_SYMBOL_EXISTS»(CreateHardLinkW «s:"windows.h"» HAVE_CREATEHARDLINKW)
-«f:CHECK_SYMBOL_EXISTS»(_CrtSetReportMode «s:"crtdbg.h"» HAVE__CrtSetReportMode)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(chflags HAVE_CHFLAGS)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(chown HAVE_CHOWN)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(chroot HAVE_CHROOT)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(fchdir HAVE_FCHDIR)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(fchflags HAVE_FCHFLAGS)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(fchmod HAVE_FCHMOD)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(fchown HAVE_FCHOWN)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(fcntl HAVE_FCNTL)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(fork HAVE_FORK)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(fstat HAVE_FSTAT)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(ftruncate HAVE_FTRUNCATE)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(futimens HAVE_FUTIMENS)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(futimes HAVE_FUTIMES)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(geteuid HAVE_GETEUID)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(getpid HAVE_GETPID)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(lchflags HAVE_LCHFLAGS)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(lchmod HAVE_LCHMOD)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(lchown HAVE_LCHOWN)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(link HAVE_LINK)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(lstat HAVE_LSTAT)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(lutimes HAVE_LUTIMES)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(memmove HAVE_MEMMOVE)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(mkdir HAVE_MKDIR)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(mkfifo HAVE_MKFIFO)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(mknod HAVE_MKNOD)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(nl_langinfo HAVE_NL_LANGINFO)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(pipe HAVE_PIPE)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(poll HAVE_POLL)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(readlink HAVE_READLINK)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(select HAVE_SELECT)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(setenv HAVE_SETENV)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(setlocale HAVE_SETLOCALE)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(sigaction HAVE_SIGACTION)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(strchr HAVE_STRCHR)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(strdup HAVE_STRDUP)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(strerror HAVE_STRERROR)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(strncpy_s HAVE_STRNCPY_S)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(strrchr HAVE_STRRCHR)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(symlink HAVE_SYMLINK)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(timegm HAVE_TIMEGM)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(tzset HAVE_TZSET)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(unsetenv HAVE_UNSETENV)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(utime HAVE_UTIME)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(utimes HAVE_UTIMES)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(utimensat HAVE_UTIMENSAT)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(vfork HAVE_VFORK)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(wcrtomb HAVE_WCRTOMB)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(wcscpy HAVE_WCSCPY)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(wcslen HAVE_WCSLEN)
-«f:CHECK_FUNCTION_EXISTS_GLIBC»(wctomb HAVE_WCTOMB)
-«f:CHECK_SYMBOL_EXISTS»(wmemcmp «s:"wchar.h"» HAVE_WMEMCMP)
-«f:CHECK_SYMBOL_EXISTS»(wmemcpy «s:"wchar.h"» HAVE_WMEMCPY)
+Â»Â«f:CHECK_SYMBOL_EXISTSÂ»(CreateHardLinkA Â«s:"windows.h"Â» HAVE_CREATEHARDLINKA)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(CreateHardLinkW Â«s:"windows.h"Â» HAVE_CREATEHARDLINKW)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(_CrtSetReportMode Â«s:"crtdbg.h"Â» HAVE__CrtSetReportMode)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(chflags HAVE_CHFLAGS)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(chown HAVE_CHOWN)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(chroot HAVE_CHROOT)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(fchdir HAVE_FCHDIR)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(fchflags HAVE_FCHFLAGS)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(fchmod HAVE_FCHMOD)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(fchown HAVE_FCHOWN)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(fcntl HAVE_FCNTL)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(fork HAVE_FORK)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(fstat HAVE_FSTAT)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(ftruncate HAVE_FTRUNCATE)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(futimens HAVE_FUTIMENS)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(futimes HAVE_FUTIMES)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(geteuid HAVE_GETEUID)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(getpid HAVE_GETPID)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(lchflags HAVE_LCHFLAGS)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(lchmod HAVE_LCHMOD)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(lchown HAVE_LCHOWN)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(link HAVE_LINK)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(lstat HAVE_LSTAT)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(lutimes HAVE_LUTIMES)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(memmove HAVE_MEMMOVE)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(mkdir HAVE_MKDIR)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(mkfifo HAVE_MKFIFO)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(mknod HAVE_MKNOD)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(nl_langinfo HAVE_NL_LANGINFO)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(pipe HAVE_PIPE)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(poll HAVE_POLL)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(readlink HAVE_READLINK)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(select HAVE_SELECT)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(setenv HAVE_SETENV)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(setlocale HAVE_SETLOCALE)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(sigaction HAVE_SIGACTION)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(strchr HAVE_STRCHR)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(strdup HAVE_STRDUP)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(strerror HAVE_STRERROR)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(strncpy_s HAVE_STRNCPY_S)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(strrchr HAVE_STRRCHR)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(symlink HAVE_SYMLINK)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(timegm HAVE_TIMEGM)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(tzset HAVE_TZSET)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(unsetenv HAVE_UNSETENV)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(utime HAVE_UTIME)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(utimes HAVE_UTIMES)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(utimensat HAVE_UTIMENSAT)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(vfork HAVE_VFORK)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(wcrtomb HAVE_WCRTOMB)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(wcscpy HAVE_WCSCPY)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(wcslen HAVE_WCSLEN)
+Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(wctomb HAVE_WCTOMB)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(wmemcmp Â«s:"wchar.h"Â» HAVE_WMEMCMP)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(wmemcpy Â«s:"wchar.h"Â» HAVE_WMEMCPY)
 
-«f:SET»(«v:CMAKE_REQUIRED_LIBRARIES» «s:""»)
-«f:CHECK_SYMBOL_EXISTS»(fseeko           «s:"stdio.h"»    HAVE_FSEEKO)
-«f:CHECK_SYMBOL_EXISTS»(strerror_r       «s:"string.h"»   HAVE_STRERROR_R)
-«f:CHECK_SYMBOL_EXISTS»(strftime         «s:"time.h"»     HAVE_STRFTIME)
-«f:CHECK_SYMBOL_EXISTS»(vprintf          «s:"stdio.h"»    HAVE_VPRINTF)
-«f:CHECK_SYMBOL_EXISTS»(cygwin_conv_path «s:"sys/cygwin.h"» HAVE_CYGWIN_CONV_PATH)
+Â«f:SETÂ»(Â«v:CMAKE_REQUIRED_LIBRARIESÂ» Â«s:""Â»)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(fseeko           Â«s:"stdio.h"Â»    HAVE_FSEEKO)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(strerror_r       Â«s:"string.h"Â»   HAVE_STRERROR_R)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(strftime         Â«s:"time.h"Â»     HAVE_STRFTIME)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(vprintf          Â«s:"stdio.h"Â»    HAVE_VPRINTF)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(cygwin_conv_path Â«s:"sys/cygwin.h"Â» HAVE_CYGWIN_CONV_PATH)
 
-«f:CHECK_SYMBOL_EXISTS»(major            «s:"sys/mkdev.h"»     MAJOR_IN_MKDEV)
-«f:CHECK_SYMBOL_EXISTS»(major            «s:"sys/sysmacros.h"» MAJOR_IN_SYSMACROS)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(major            Â«s:"sys/mkdev.h"Â»     MAJOR_IN_MKDEV)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(major            Â«s:"sys/sysmacros.h"Â» MAJOR_IN_SYSMACROS)
 
-«k:IF»(«v:HAVE_STRERROR_R»)
-  «f:SET»(«v:HAVE_DECL_STRERROR_R» 1)
-«k:ENDIF»(«v:HAVE_STRERROR_R»)
+Â«k:IFÂ»(Â«v:HAVE_STRERROR_RÂ»)
+  Â«f:SETÂ»(Â«v:HAVE_DECL_STRERROR_RÂ» 1)
+Â«k:ENDIFÂ»(Â«v:HAVE_STRERROR_RÂ»)
 
-«x:#
+Â«x:#
 # Check defines
 #
-»«f:SET»(«v:headers» «s:"limits.h"»)
-«k:IF»(«v:HAVE_STDINT_H»)
-  «f:LIST»(«t:APPEND» «v:headers» «s:"stdint.h"»)
-«k:ENDIF»(«v:HAVE_STDINT_H»)
-«k:IF»(«v:HAVE_INTTYPES_H»)
-  «f:LIST»(«t:APPEND» «v:headers» «s:"inttypes.h"»)
-«k:ENDIF»(«v:HAVE_INTTYPES_H»)
-«f:CHECK_SYMBOL_EXISTS»(EFTYPE           «s:"errno.h"»    HAVE_EFTYPE)
-«f:CHECK_SYMBOL_EXISTS»(EILSEQ           «s:"errno.h"»    HAVE_EILSEQ)
-«f:CHECK_SYMBOL_EXISTS»(D_MD_ORDER       «s:"langinfo.h"» HAVE_D_MD_ORDER)
-«f:CHECK_SYMBOL_EXISTS»(optarg           «s:"unistd.h"»   HAVE_DECL_OPTARG)
-«f:CHECK_SYMBOL_EXISTS»(optind           «s:"unistd.h"»   HAVE_DECL_OPTIND)
-«f:CHECK_SYMBOL_EXISTS»(INT64_MAX        «s:"${«v:headers»}"» HAVE_DECL_INT64_MAX)
-«f:CHECK_SYMBOL_EXISTS»(INT64_MIN        «s:"${«v:headers»}"» HAVE_DECL_INT64_MIN)
-«f:CHECK_SYMBOL_EXISTS»(UINT32_MAX       «s:"${«v:headers»}"» HAVE_DECL_UINT32_MAX)
-«f:CHECK_SYMBOL_EXISTS»(UINT64_MAX       «s:"${«v:headers»}"» HAVE_DECL_UINT64_MAX)
-«f:CHECK_SYMBOL_EXISTS»(SIZE_MAX         «s:"${«v:headers»}"» HAVE_DECL_SIZE_MAX)
-«f:CHECK_SYMBOL_EXISTS»(SSIZE_MAX        «s:"limits.h"»   HAVE_DECL_SSIZE_MAX)
+Â»Â«f:SETÂ»(Â«v:headersÂ» Â«s:"limits.h"Â»)
+Â«k:IFÂ»(Â«v:HAVE_STDINT_HÂ»)
+  Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:headersÂ» Â«s:"stdint.h"Â»)
+Â«k:ENDIFÂ»(Â«v:HAVE_STDINT_HÂ»)
+Â«k:IFÂ»(Â«v:HAVE_INTTYPES_HÂ»)
+  Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:headersÂ» Â«s:"inttypes.h"Â»)
+Â«k:ENDIFÂ»(Â«v:HAVE_INTTYPES_HÂ»)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(EFTYPE           Â«s:"errno.h"Â»    HAVE_EFTYPE)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(EILSEQ           Â«s:"errno.h"Â»    HAVE_EILSEQ)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(D_MD_ORDER       Â«s:"langinfo.h"Â» HAVE_D_MD_ORDER)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(optarg           Â«s:"unistd.h"Â»   HAVE_DECL_OPTARG)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(optind           Â«s:"unistd.h"Â»   HAVE_DECL_OPTIND)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(INT64_MAX        Â«s:"${Â«v:headersÂ»}"Â» HAVE_DECL_INT64_MAX)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(INT64_MIN        Â«s:"${Â«v:headersÂ»}"Â» HAVE_DECL_INT64_MIN)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(UINT32_MAX       Â«s:"${Â«v:headersÂ»}"Â» HAVE_DECL_UINT32_MAX)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(UINT64_MAX       Â«s:"${Â«v:headersÂ»}"Â» HAVE_DECL_UINT64_MAX)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(SIZE_MAX         Â«s:"${Â«v:headersÂ»}"Â» HAVE_DECL_SIZE_MAX)
+Â«f:CHECK_SYMBOL_EXISTSÂ»(SSIZE_MAX        Â«s:"limits.h"Â»   HAVE_DECL_SSIZE_MAX)
 
-«x:#
+Â«x:#
 # Check struct members
 #
 # Check for birthtime in struct stat
-»«f:CHECK_STRUCT_MEMBER»(«s:"struct stat"» st_birthtime
-    «s:"sys/types.h;sys/stat.h"» HAVE_STRUCT_STAT_ST_BIRTHTIME)
+Â»Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct stat"Â» st_birthtime
+    Â«s:"sys/types.h;sys/stat.h"Â» HAVE_STRUCT_STAT_ST_BIRTHTIME)
 
-«x:# Check for high-resolution timestamps in struct stat
-»«f:CHECK_STRUCT_MEMBER»(«s:"struct stat"» st_birthtimespec.tv_nsec
-    «s:"sys/types.h;sys/stat.h"» HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC)
-«f:CHECK_STRUCT_MEMBER»(«s:"struct stat"» st_mtimespec.tv_nsec
-    «s:"sys/types.h;sys/stat.h"» HAVE_STRUCT_STAT_ST_MTIMESPEC_TV_NSEC)
-«f:CHECK_STRUCT_MEMBER»(«s:"struct stat"» st_mtim.tv_nsec
-    «s:"sys/types.h;sys/stat.h"» HAVE_STRUCT_STAT_ST_MTIM_TV_NSEC)
-«f:CHECK_STRUCT_MEMBER»(«s:"struct stat"» st_mtime_n
-    «s:"sys/types.h;sys/stat.h"» HAVE_STRUCT_STAT_ST_MTIME_N)
-«f:CHECK_STRUCT_MEMBER»(«s:"struct stat"» st_umtime
-    «s:"sys/types.h;sys/stat.h"» HAVE_STRUCT_STAT_ST_UMTIME)
-«f:CHECK_STRUCT_MEMBER»(«s:"struct stat"» st_mtime_usec
-    «s:"sys/types.h;sys/stat.h"» HAVE_STRUCT_STAT_ST_MTIME_USEC)
-«x:# Check for block size support in struct stat
-»«f:CHECK_STRUCT_MEMBER»(«s:"struct stat"» st_blksize
-    «s:"sys/types.h;sys/stat.h"» HAVE_STRUCT_STAT_ST_BLKSIZE)
-«x:# Check for st_flags in struct stat (BSD fflags)
-»«f:CHECK_STRUCT_MEMBER»(«s:"struct stat"» st_flags
-    «s:"sys/types.h;sys/stat.h"» HAVE_STRUCT_STAT_ST_FLAGS)
-«x:#
+Â«x:# Check for high-resolution timestamps in struct stat
+Â»Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct stat"Â» st_birthtimespec.tv_nsec
+    Â«s:"sys/types.h;sys/stat.h"Â» HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC)
+Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct stat"Â» st_mtimespec.tv_nsec
+    Â«s:"sys/types.h;sys/stat.h"Â» HAVE_STRUCT_STAT_ST_MTIMESPEC_TV_NSEC)
+Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct stat"Â» st_mtim.tv_nsec
+    Â«s:"sys/types.h;sys/stat.h"Â» HAVE_STRUCT_STAT_ST_MTIM_TV_NSEC)
+Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct stat"Â» st_mtime_n
+    Â«s:"sys/types.h;sys/stat.h"Â» HAVE_STRUCT_STAT_ST_MTIME_N)
+Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct stat"Â» st_umtime
+    Â«s:"sys/types.h;sys/stat.h"Â» HAVE_STRUCT_STAT_ST_UMTIME)
+Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct stat"Â» st_mtime_usec
+    Â«s:"sys/types.h;sys/stat.h"Â» HAVE_STRUCT_STAT_ST_MTIME_USEC)
+Â«x:# Check for block size support in struct stat
+Â»Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct stat"Â» st_blksize
+    Â«s:"sys/types.h;sys/stat.h"Â» HAVE_STRUCT_STAT_ST_BLKSIZE)
+Â«x:# Check for st_flags in struct stat (BSD fflags)
+Â»Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct stat"Â» st_flags
+    Â«s:"sys/types.h;sys/stat.h"Â» HAVE_STRUCT_STAT_ST_FLAGS)
+Â«x:#
 #
-»«f:CHECK_STRUCT_MEMBER»(«s:"struct tm"» tm_sec
-    «s:"sys/types.h;sys/time.h;time.h"» TIME_WITH_SYS_TIME)
+Â»Â«f:CHECK_STRUCT_MEMBERÂ»(Â«s:"struct tm"Â» tm_sec
+    Â«s:"sys/types.h;sys/time.h;time.h"Â» TIME_WITH_SYS_TIME)
 
-«x:#
+Â«x:#
 # Check for integer types
 #
 # XXX There must be a way to make this simpler <sigh> XXXX
 #
-»«f:CHECK_TYPE_SIZE»(«s:"long long int"»            LONG_LONG_INT)
-«f:CHECK_TYPE_SIZE»(«s:"unsigned long long"»       UNSIGNED_LONG_LONG)
-«f:CHECK_TYPE_SIZE»(«s:"unsigned long long int"»   UNSIGNED_LONG_LONG_INT)
+Â»Â«f:CHECK_TYPE_SIZEÂ»(Â«s:"long long int"Â»            LONG_LONG_INT)
+Â«f:CHECK_TYPE_SIZEÂ»(Â«s:"unsigned long long"Â»       UNSIGNED_LONG_LONG)
+Â«f:CHECK_TYPE_SIZEÂ»(Â«s:"unsigned long long int"Â»   UNSIGNED_LONG_LONG_INT)
 
-«x:#
-»«f:CHECK_TYPE_SIZE»(dev_t       DEV_T)
-«k:IF»(«t:NOT» «v:HAVE_DEV_T»)
-  «k:IF»(«v:MSVC»)
-    «f:SET»(«v:dev_t» «s:"unsigned int"»)
-  «k:ENDIF»(«v:MSVC»)
-«k:ENDIF»(«t:NOT» «v:HAVE_DEV_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(gid_t       GID_T)
-«k:IF»(«t:NOT» «v:HAVE_GID_T»)
-  «k:IF»(«v:WIN32»)
-    «f:SET»(«v:gid_t» «s:"short"»)
-  «k:ELSE»(«v:WIN32»)
-    «f:SET»(«v:gid_t» «s:"unsigned int"»)
-  «k:ENDIF»(«v:WIN32»)
-«k:ENDIF»(«t:NOT» «v:HAVE_GID_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(id_t        ID_T)
-«k:IF»(«t:NOT» «v:HAVE_ID_T»)
-  «k:IF»(«v:WIN32»)
-    «f:SET»(«v:id_t» «s:"short"»)
-  «k:ELSE»(«v:WIN32»)
-    «f:SET»(«v:id_t» «s:"unsigned int"»)
-  «k:ENDIF»(«v:WIN32»)
-«k:ENDIF»(«t:NOT» «v:HAVE_ID_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(int32_t    INT32_T)
-«k:IF»(«t:NOT» «v:HAVE_INT32_T»)
-  «f:SET»(«v:int32_t» «s:"int"»)
-«k:ENDIF»(«t:NOT» «v:HAVE_INT32_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(int64_t     INT64_T)
-«k:IF»(«t:NOT» «v:HAVE_INT64_T»)
-  «k:IF»(«v:WIN32»)
-    «f:SET»(«v:int64_t» __int64)
-  «k:ENDIF»(«v:WIN32»)
-«k:ENDIF»(«t:NOT» «v:HAVE_INT64_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(intmax_t    INTMAX_T)
-«k:IF»(«t:NOT» «v:HAVE_INTMAX_T»)
-  «f:SET»(«v:intmax_t» «s:"int64_t"»)
-«k:ENDIF»(«t:NOT» «v:HAVE_INTMAX_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(mode_t      MODE_T)
-«k:IF»(«t:NOT» «v:HAVE_MODE_T»)
-  «k:IF»(«v:WIN32»)
-    «f:SET»(«v:mode_t» «s:"unsigned short"»)
-  «k:ELSE»(«v:WIN32»)
-    «f:SET»(«v:mode_t» «s:"int"»)
-  «k:ENDIF»(«v:WIN32»)
-«k:ENDIF»(«t:NOT» «v:HAVE_MODE_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(off_t       OFF_T)
-«k:IF»(«t:NOT» «v:HAVE_OFF_T»)
-  «f:SET»(«v:off_t» «s:"__int64"»)
-«k:ENDIF»(«t:NOT» «v:HAVE_OFF_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(size_t      SIZE_T)
-«k:IF»(«t:NOT» «v:HAVE_SIZE_T»)
-  «k:IF»(«s:"${«v:CMAKE_SIZEOF_VOID_P»}"» «t:EQUAL» 8)
-    «f:SET»(«v:size_t» «s:"uint64_t"»)
-  «k:ELSE»(«s:"${«v:CMAKE_SIZEOF_VOID_P»}"» «t:EQUAL» 8)
-    «f:SET»(«v:size_t»   «s:"uint32_t"»)
-  «k:ENDIF»(«s:"${«v:CMAKE_SIZEOF_VOID_P»}"» «t:EQUAL» 8)
-«k:ENDIF»(«t:NOT» «v:HAVE_SIZE_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(ssize_t     SSIZE_T)
-«k:IF»(«t:NOT» «v:HAVE_SSIZE_T»)
-  «k:IF»(«s:"${«v:CMAKE_SIZEOF_VOID_P»}"» «t:EQUAL» 8)
-    «f:SET»(«v:ssize_t» «s:"int64_t"»)
-  «k:ELSE»(«s:"${«v:CMAKE_SIZEOF_VOID_P»}"» «t:EQUAL» 8)
-    «f:SET»(«v:ssize_t» «s:"long"»)
-  «k:ENDIF»(«s:"${«v:CMAKE_SIZEOF_VOID_P»}"» «t:EQUAL» 8)
-«k:ENDIF»(«t:NOT» «v:HAVE_SSIZE_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(uid_t       UID_T)
-«k:IF»(«t:NOT» «v:HAVE_UID_T»)
-  «k:IF»(«v:WIN32»)
-    «f:SET»(«v:uid_t» «s:"short"»)
-  «k:ELSE»(«v:WIN32»)
-    «f:SET»(«v:uid_t» «s:"unsigned int"»)
-  «k:ENDIF»(«v:WIN32»)
-«k:ENDIF»(«t:NOT» «v:HAVE_UID_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(pid_t       PID_T)
-«k:IF»(«t:NOT» «v:HAVE_PID_T»)
-  «k:IF»(«v:WIN32»)
-    «f:SET»(«v:pid_t» «s:"int"»)
-  «k:ELSE»(«v:WIN32»)
-    «f:MESSAGE»(«t:FATAL_ERROR» «s:"pid_t doesn't exist on this platform?"»)
-  «k:ENDIF»(«v:WIN32»)
-«k:ENDIF»(«t:NOT» «v:HAVE_PID_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(uint16_t    UINT16_T)
-«k:IF»(«t:NOT» «v:HAVE_UINT16_T»)
-  «f:SET»(«v:uint16_t» «s:"unsigned short"»)
-«k:ENDIF»(«t:NOT» «v:HAVE_UINT16_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(uint32_t    UINT32_T)
-«k:IF»(«t:NOT» «v:HAVE_UINT32_T»)
-  «f:SET»(«v:uint32_t» «s:"unsigned int"»)
-«k:ENDIF»(«t:NOT» «v:HAVE_UINT32_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(uint64_t    UINT64_T)
-«k:IF»(«t:NOT» «v:HAVE_UINT64_T»)
-  «k:IF»(«v:WIN32»)
-    «f:SET»(«v:uint64_t» «s:"unsigned __int64"»)
-  «k:ENDIF»(«v:WIN32»)
-«k:ENDIF»(«t:NOT» «v:HAVE_UINT64_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(uintmax_t   UINTMAX_T)
-«k:IF»(«t:NOT» «v:HAVE_UINTMAX_T»)
-  «f:SET»(«v:uintmax_t» «s:"uint64_t"»)
-«k:ENDIF»(«t:NOT» «v:HAVE_UINTMAX_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(intptr_t   INTPTR_T)
-«k:IF»(«t:NOT» «v:HAVE_INTPTR_T»)
-  «k:IF»(«s:"${«v:CMAKE_SIZEOF_VOID_P»}"» «t:EQUAL» 8)
-    «f:SET»(«v:intptr_t» «s:"int64_t"»)
-  «k:ELSE»()
-    «f:SET»(«v:intptr_t» «s:"int32_t"»)
-  «k:ENDIF»()
-«k:ENDIF»(«t:NOT» «v:HAVE_INTPTR_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(uintptr_t   UINTPTR_T)
-«k:IF»(«t:NOT» «v:HAVE_UINTPTR_T»)
-  «k:IF»(«s:"${«v:CMAKE_SIZEOF_VOID_P»}"» «t:EQUAL» 8)
-    «f:SET»(«v:uintptr_t» «s:"uint64_t"»)
-  «k:ELSE»()
-    «f:SET»(«v:uintptr_t» «s:"uint32_t"»)
-  «k:ENDIF»()
-«k:ENDIF»(«t:NOT» «v:HAVE_UINTPTR_T»)
-«x:#
-»«f:CHECK_TYPE_SIZE»(wchar_t     SIZEOF_WCHAR_T)
-«k:IF»(«v:HAVE_SIZEOF_WCHAR_T»)
-  «f:SET»(«v:HAVE_WCHAR_T» 1)
-«k:ENDIF»(«v:HAVE_SIZEOF_WCHAR_T»)
-«x:#
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(dev_t       DEV_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_DEV_TÂ»)
+  Â«k:IFÂ»(Â«v:MSVCÂ»)
+    Â«f:SETÂ»(Â«v:dev_tÂ» Â«s:"unsigned int"Â»)
+  Â«k:ENDIFÂ»(Â«v:MSVCÂ»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_DEV_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(gid_t       GID_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_GID_TÂ»)
+  Â«k:IFÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:gid_tÂ» Â«s:"short"Â»)
+  Â«k:ELSEÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:gid_tÂ» Â«s:"unsigned int"Â»)
+  Â«k:ENDIFÂ»(Â«v:WIN32Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_GID_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(id_t        ID_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_ID_TÂ»)
+  Â«k:IFÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:id_tÂ» Â«s:"short"Â»)
+  Â«k:ELSEÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:id_tÂ» Â«s:"unsigned int"Â»)
+  Â«k:ENDIFÂ»(Â«v:WIN32Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_ID_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(int32_t    INT32_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_INT32_TÂ»)
+  Â«f:SETÂ»(Â«v:int32_tÂ» Â«s:"int"Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_INT32_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(int64_t     INT64_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_INT64_TÂ»)
+  Â«k:IFÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:int64_tÂ» __int64)
+  Â«k:ENDIFÂ»(Â«v:WIN32Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_INT64_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(intmax_t    INTMAX_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_INTMAX_TÂ»)
+  Â«f:SETÂ»(Â«v:intmax_tÂ» Â«s:"int64_t"Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_INTMAX_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(mode_t      MODE_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_MODE_TÂ»)
+  Â«k:IFÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:mode_tÂ» Â«s:"unsigned short"Â»)
+  Â«k:ELSEÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:mode_tÂ» Â«s:"int"Â»)
+  Â«k:ENDIFÂ»(Â«v:WIN32Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_MODE_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(off_t       OFF_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_OFF_TÂ»)
+  Â«f:SETÂ»(Â«v:off_tÂ» Â«s:"__int64"Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_OFF_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(size_t      SIZE_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_SIZE_TÂ»)
+  Â«k:IFÂ»(Â«s:"${Â«v:CMAKE_SIZEOF_VOID_PÂ»}"Â» Â«t:EQUALÂ» 8)
+    Â«f:SETÂ»(Â«v:size_tÂ» Â«s:"uint64_t"Â»)
+  Â«k:ELSEÂ»(Â«s:"${Â«v:CMAKE_SIZEOF_VOID_PÂ»}"Â» Â«t:EQUALÂ» 8)
+    Â«f:SETÂ»(Â«v:size_tÂ»   Â«s:"uint32_t"Â»)
+  Â«k:ENDIFÂ»(Â«s:"${Â«v:CMAKE_SIZEOF_VOID_PÂ»}"Â» Â«t:EQUALÂ» 8)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_SIZE_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(ssize_t     SSIZE_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_SSIZE_TÂ»)
+  Â«k:IFÂ»(Â«s:"${Â«v:CMAKE_SIZEOF_VOID_PÂ»}"Â» Â«t:EQUALÂ» 8)
+    Â«f:SETÂ»(Â«v:ssize_tÂ» Â«s:"int64_t"Â»)
+  Â«k:ELSEÂ»(Â«s:"${Â«v:CMAKE_SIZEOF_VOID_PÂ»}"Â» Â«t:EQUALÂ» 8)
+    Â«f:SETÂ»(Â«v:ssize_tÂ» Â«s:"long"Â»)
+  Â«k:ENDIFÂ»(Â«s:"${Â«v:CMAKE_SIZEOF_VOID_PÂ»}"Â» Â«t:EQUALÂ» 8)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_SSIZE_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(uid_t       UID_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_UID_TÂ»)
+  Â«k:IFÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:uid_tÂ» Â«s:"short"Â»)
+  Â«k:ELSEÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:uid_tÂ» Â«s:"unsigned int"Â»)
+  Â«k:ENDIFÂ»(Â«v:WIN32Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_UID_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(pid_t       PID_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_PID_TÂ»)
+  Â«k:IFÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:pid_tÂ» Â«s:"int"Â»)
+  Â«k:ELSEÂ»(Â«v:WIN32Â»)
+    Â«f:MESSAGEÂ»(Â«t:FATAL_ERRORÂ» Â«s:"pid_t doesn't exist on this platform?"Â»)
+  Â«k:ENDIFÂ»(Â«v:WIN32Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_PID_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(uint16_t    UINT16_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINT16_TÂ»)
+  Â«f:SETÂ»(Â«v:uint16_tÂ» Â«s:"unsigned short"Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINT16_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(uint32_t    UINT32_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINT32_TÂ»)
+  Â«f:SETÂ»(Â«v:uint32_tÂ» Â«s:"unsigned int"Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINT32_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(uint64_t    UINT64_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINT64_TÂ»)
+  Â«k:IFÂ»(Â«v:WIN32Â»)
+    Â«f:SETÂ»(Â«v:uint64_tÂ» Â«s:"unsigned __int64"Â»)
+  Â«k:ENDIFÂ»(Â«v:WIN32Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINT64_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(uintmax_t   UINTMAX_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINTMAX_TÂ»)
+  Â«f:SETÂ»(Â«v:uintmax_tÂ» Â«s:"uint64_t"Â»)
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINTMAX_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(intptr_t   INTPTR_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_INTPTR_TÂ»)
+  Â«k:IFÂ»(Â«s:"${Â«v:CMAKE_SIZEOF_VOID_PÂ»}"Â» Â«t:EQUALÂ» 8)
+    Â«f:SETÂ»(Â«v:intptr_tÂ» Â«s:"int64_t"Â»)
+  Â«k:ELSEÂ»()
+    Â«f:SETÂ»(Â«v:intptr_tÂ» Â«s:"int32_t"Â»)
+  Â«k:ENDIFÂ»()
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_INTPTR_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(uintptr_t   UINTPTR_T)
+Â«k:IFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINTPTR_TÂ»)
+  Â«k:IFÂ»(Â«s:"${Â«v:CMAKE_SIZEOF_VOID_PÂ»}"Â» Â«t:EQUALÂ» 8)
+    Â«f:SETÂ»(Â«v:uintptr_tÂ» Â«s:"uint64_t"Â»)
+  Â«k:ELSEÂ»()
+    Â«f:SETÂ»(Â«v:uintptr_tÂ» Â«s:"uint32_t"Â»)
+  Â«k:ENDIFÂ»()
+Â«k:ENDIFÂ»(Â«t:NOTÂ» Â«v:HAVE_UINTPTR_TÂ»)
+Â«x:#
+Â»Â«f:CHECK_TYPE_SIZEÂ»(wchar_t     SIZEOF_WCHAR_T)
+Â«k:IFÂ»(Â«v:HAVE_SIZEOF_WCHAR_TÂ»)
+  Â«f:SETÂ»(Â«v:HAVE_WCHAR_TÂ» 1)
+Â«k:ENDIFÂ»(Â«v:HAVE_SIZEOF_WCHAR_TÂ»)
+Â«x:#
 # Check if _FILE_OFFSET_BITS macro needed for large files
 #
-»«f:CHECK_FILE_OFFSET_BITS»()
+Â»Â«f:CHECK_FILE_OFFSET_BITSÂ»()
 
 
 
-«x:#
+Â«x:#
 # Check for Extended Attribute libraries, headers, and functions
 #
-»«k:IF»(«v:ENABLE_XATTR»)
-  «f:LA_CHECK_INCLUDE_FILE»(attr/xattr.h     HAVE_ATTR_XATTR_H)
-  «f:LA_CHECK_INCLUDE_FILE»(sys/xattr.h      HAVE_SYS_XATTR_H)
-  «f:CHECK_LIBRARY_EXISTS»(attr «s:"setxattr"» «s:""» HAVE_ATTR_LIB)
-  «k:IF»(«v:HAVE_ATTR_LIB»)
-    «f:SET»(«v:CMAKE_REQUIRED_LIBRARIES» «s:"attr"»)
-  «k:ENDIF»(«v:HAVE_ATTR_LIB»)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(extattr_get_file HAVE_EXTATTR_GET_FILE)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(extattr_list_file HAVE_EXTATTR_LIST_FILE)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(extattr_set_fd HAVE_EXTATTR_SET_FD)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(extattr_set_file HAVE_EXTATTR_SET_FILE)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(fsetxattr HAVE_FSETXATTR)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(getxattr HAVE_GETXATTR)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(lgetxattr HAVE_LGETXATTR)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(listxattr HAVE_LISTXATTR)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(llistxattr HAVE_LLISTXATTR)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(lsetxattr HAVE_LSETXATTR)
-«k:ENDIF»(«v:ENABLE_XATTR»)
+Â»Â«k:IFÂ»(Â«v:ENABLE_XATTRÂ»)
+  Â«f:LA_CHECK_INCLUDE_FILEÂ»(attr/xattr.h     HAVE_ATTR_XATTR_H)
+  Â«f:LA_CHECK_INCLUDE_FILEÂ»(sys/xattr.h      HAVE_SYS_XATTR_H)
+  Â«f:CHECK_LIBRARY_EXISTSÂ»(attr Â«s:"setxattr"Â» Â«s:""Â» HAVE_ATTR_LIB)
+  Â«k:IFÂ»(Â«v:HAVE_ATTR_LIBÂ»)
+    Â«f:SETÂ»(Â«v:CMAKE_REQUIRED_LIBRARIESÂ» Â«s:"attr"Â»)
+  Â«k:ENDIFÂ»(Â«v:HAVE_ATTR_LIBÂ»)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(extattr_get_file HAVE_EXTATTR_GET_FILE)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(extattr_list_file HAVE_EXTATTR_LIST_FILE)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(extattr_set_fd HAVE_EXTATTR_SET_FD)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(extattr_set_file HAVE_EXTATTR_SET_FILE)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(fsetxattr HAVE_FSETXATTR)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(getxattr HAVE_GETXATTR)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(lgetxattr HAVE_LGETXATTR)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(listxattr HAVE_LISTXATTR)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(llistxattr HAVE_LLISTXATTR)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(lsetxattr HAVE_LSETXATTR)
+Â«k:ENDIFÂ»(Â«v:ENABLE_XATTRÂ»)
 
-«x:#
+Â«x:#
 # Check for ACL libraries, headers, and functions
 #
 # The ACL support in libarchive is written against the POSIX1e draft,
@@ -671,77 +671,77 @@
 # platforms.  Worse, some systems have completely non-POSIX acl functions,
 # which makes the following checks rather more complex than I would like.
 #
-»«k:IF»(«v:ENABLE_ACL»)
-  «f:CHECK_LIBRARY_EXISTS»(acl «s:"acl_get_file"» «s:""» HAVE_ACL_LIB)
-  «k:IF»(«v:HAVE_ACL_LIB»)
-    «f:SET»(«v:CMAKE_REQUIRED_LIBRARIES» «s:"acl"»)
-    «f:FIND_LIBRARY»(«v:ACL_LIBRARY» «t:NAMES» acl)
-    «f:LIST»(«t:APPEND» «v:ADDITIONAL_LIBS» «D:${»«v:ACL_LIBRARY»«D:}»)
-  «k:ENDIF»(«v:HAVE_ACL_LIB»)
-  «x:#
-»  «f:CHECK_FUNCTION_EXISTS_GLIBC»(acl_create_entry HAVE_ACL_CREATE_ENTRY)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(acl_init HAVE_ACL_INIT)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(acl_set_fd HAVE_ACL_SET_FD)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(acl_set_fd_np HAVE_ACL_SET_FD_NP)
-  «f:CHECK_FUNCTION_EXISTS_GLIBC»(acl_set_file HAVE_ACL_SET_FILE)
-  «f:CHECK_TYPE_EXISTS»(acl_permset_t «s:"${«v:INCLUDES»}"»    HAVE_ACL_PERMSET_T)
+Â»Â«k:IFÂ»(Â«v:ENABLE_ACLÂ»)
+  Â«f:CHECK_LIBRARY_EXISTSÂ»(acl Â«s:"acl_get_file"Â» Â«s:""Â» HAVE_ACL_LIB)
+  Â«k:IFÂ»(Â«v:HAVE_ACL_LIBÂ»)
+    Â«f:SETÂ»(Â«v:CMAKE_REQUIRED_LIBRARIESÂ» Â«s:"acl"Â»)
+    Â«f:FIND_LIBRARYÂ»(Â«v:ACL_LIBRARYÂ» Â«t:NAMESÂ» acl)
+    Â«f:LISTÂ»(Â«t:APPENDÂ» Â«v:ADDITIONAL_LIBSÂ» Â«D:${Â»Â«v:ACL_LIBRARYÂ»Â«D:}Â»)
+  Â«k:ENDIFÂ»(Â«v:HAVE_ACL_LIBÂ»)
+  Â«x:#
+Â»  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(acl_create_entry HAVE_ACL_CREATE_ENTRY)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(acl_init HAVE_ACL_INIT)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(acl_set_fd HAVE_ACL_SET_FD)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(acl_set_fd_np HAVE_ACL_SET_FD_NP)
+  Â«f:CHECK_FUNCTION_EXISTS_GLIBCÂ»(acl_set_file HAVE_ACL_SET_FILE)
+  Â«f:CHECK_TYPE_EXISTSÂ»(acl_permset_t Â«s:"${Â«v:INCLUDESÂ»}"Â»    HAVE_ACL_PERMSET_T)
 
-  «x:# The "acl_get_perm()" function was omitted from the POSIX draft.
-»  «x:# (It's a pretty obvious oversight; otherwise, there's no way to
-»  «x:# test for specific permissions in a permset.)  Linux uses the obvious
-»  «x:# name, FreeBSD adds _np to mark it as "non-Posix extension."
-»  «x:# Test for both as a double-check that we really have POSIX-style ACL support.
-»  «f:CHECK_SYMBOL_EXISTS»(acl_get_perm «s:"${«v:INCLUDES»}"» HAVE_ACL_GET_PERM)
-  «f:CHECK_SYMBOL_EXISTS»(acl_get_perm_np «s:"${«v:INCLUDES»}"» HAVE_ACL_GET_PERM_NP)
-  «f:CHECK_SYMBOL_EXISTS»(acl_get_link «s:"${«v:INCLUDES»}"» HAVE_ACL_GET_LINK)
-  «f:CHECK_SYMBOL_EXISTS»(acl_get_link_np «s:"${«v:INCLUDES»}"» HAVE_ACL_GET_LINK_NP)
+  Â«x:# The "acl_get_perm()" function was omitted from the POSIX draft.
+Â»  Â«x:# (It's a pretty obvious oversight; otherwise, there's no way to
+Â»  Â«x:# test for specific permissions in a permset.)  Linux uses the obvious
+Â»  Â«x:# name, FreeBSD adds _np to mark it as "non-Posix extension."
+Â»  Â«x:# Test for both as a double-check that we really have POSIX-style ACL support.
+Â»  Â«f:CHECK_SYMBOL_EXISTSÂ»(acl_get_perm Â«s:"${Â«v:INCLUDESÂ»}"Â» HAVE_ACL_GET_PERM)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(acl_get_perm_np Â«s:"${Â«v:INCLUDESÂ»}"Â» HAVE_ACL_GET_PERM_NP)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(acl_get_link Â«s:"${Â«v:INCLUDESÂ»}"Â» HAVE_ACL_GET_LINK)
+  Â«f:CHECK_SYMBOL_EXISTSÂ»(acl_get_link_np Â«s:"${Â«v:INCLUDESÂ»}"Â» HAVE_ACL_GET_LINK_NP)
 
-  «x:# MacOS has an acl.h that isn't POSIX.  It can be detected by
-»  «x:# checking for ACL_USER
-»  «f:CHECK_SYMBOL_EXISTS»(ACL_USER «s:"${«v:INCLUDES»}"» HAVE_ACL_USER)
-«k:ENDIF»(«v:ENABLE_ACL»)
+  Â«x:# MacOS has an acl.h that isn't POSIX.  It can be detected by
+Â»  Â«x:# checking for ACL_USER
+Â»  Â«f:CHECK_SYMBOL_EXISTSÂ»(ACL_USER Â«s:"${Â«v:INCLUDESÂ»}"Â» HAVE_ACL_USER)
+Â«k:ENDIFÂ»(Â«v:ENABLE_ACLÂ»)
 
-«x:# Generate "config.h" from "build/cmake/config.h.in"
-»«f:CONFIGURE_FILE»(«D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/build/cmake/config.h.in
-	«D:${»«v:CMAKE_CURRENT_BINARY_DIR»«D:}»/config.h)
-«f:INCLUDE_DIRECTORIES»(«t:BEFORE» «D:${»«v:CMAKE_CURRENT_BINARY_DIR»«D:}»)
-«f:ADD_DEFINITIONS»(-D«c:HAVE_CONFIG_H»)
+Â«x:# Generate "config.h" from "build/cmake/config.h.in"
+Â»Â«f:CONFIGURE_FILEÂ»(Â«D:${Â»Â«v:CMAKE_CURRENT_SOURCE_DIRÂ»Â«D:}Â»/build/cmake/config.h.in
+	Â«D:${Â»Â«v:CMAKE_CURRENT_BINARY_DIRÂ»Â«D:}Â»/config.h)
+Â«f:INCLUDE_DIRECTORIESÂ»(Â«t:BEFOREÂ» Â«D:${Â»Â«v:CMAKE_CURRENT_BINARY_DIRÂ»Â«D:}Â»)
+Â«f:ADD_DEFINITIONSÂ»(-DÂ«c:HAVE_CONFIG_HÂ»)
 
-«x:#
+Â«x:#
 # Register installation of PDF documents.
 #
-»«k:IF»(«v:WIN32» «t:AND» «t:NOT» «v:CYGWIN»)
-  «x:#
-»  «x:# On Windows platform, It's better that we install PDF documents
-»  «x:# on one's computer.
-»  «x:# These PDF documents are available in the release package.
-»  «x:#
-»  «k:IF»(«t:EXISTS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/doc/pdf)
-    «f:INSTALL»(«t:DIRECTORY» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/doc/pdf
-            «t:DESTINATION» share/man
-            «t:FILES_MATCHING» «t:PATTERN» «s:"*.pdf"»
+Â»Â«k:IFÂ»(Â«v:WIN32Â» Â«t:ANDÂ» Â«t:NOTÂ» Â«v:CYGWINÂ»)
+  Â«x:#
+Â»  Â«x:# On Windows platform, It's better that we install PDF documents
+Â»  Â«x:# on one's computer.
+Â»  Â«x:# These PDF documents are available in the release package.
+Â»  Â«x:#
+Â»  Â«k:IFÂ»(Â«t:EXISTSÂ» Â«D:${Â»Â«v:CMAKE_CURRENT_SOURCE_DIRÂ»Â«D:}Â»/doc/pdf)
+    Â«f:INSTALLÂ»(Â«t:DIRECTORYÂ» Â«D:${Â»Â«v:CMAKE_CURRENT_SOURCE_DIRÂ»Â«D:}Â»/doc/pdf
+            Â«t:DESTINATIONÂ» share/man
+            Â«t:FILES_MATCHINGÂ» Â«t:PATTERNÂ» Â«s:"*.pdf"Â»
     )
-  «k:ENDIF»(«t:EXISTS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/doc/pdf)
-«k:ENDIF»(«v:WIN32» «t:AND» «t:NOT» «v:CYGWIN»)
-«x:#
+  Â«k:ENDIFÂ»(Â«t:EXISTSÂ» Â«D:${Â»Â«v:CMAKE_CURRENT_SOURCE_DIRÂ»Â«D:}Â»/doc/pdf)
+Â«k:ENDIFÂ»(Â«v:WIN32Â» Â«t:ANDÂ» Â«t:NOTÂ» Â«v:CYGWINÂ»)
+Â«x:#
 #
 #
-»«f:INCLUDE_DIRECTORIES»(«t:BEFORE» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/libarchive)
-«x:#
-»«k:IF»(«v:MSVC»)
-  «f:ADD_DEFINITIONS»(-D«c:_CRT_SECURE_NO_DEPRECATE»)
-«k:ENDIF»(«v:MSVC»)
-«x:# Especially for early development, we want to be a little
+Â»Â«f:INCLUDE_DIRECTORIESÂ»(Â«t:BEFOREÂ» Â«D:${Â»Â«v:CMAKE_CURRENT_SOURCE_DIRÂ»Â«D:}Â»/libarchive)
+Â«x:#
+Â»Â«k:IFÂ»(Â«v:MSVCÂ»)
+  Â«f:ADD_DEFINITIONSÂ»(-DÂ«c:_CRT_SECURE_NO_DEPRECATEÂ»)
+Â«k:ENDIFÂ»(Â«v:MSVCÂ»)
+Â«x:# Especially for early development, we want to be a little
 # aggressive about diagnosing build problems; this can get
 # relaxed somewhat in final shipping versions.
-»«k:IF» («s:"CMAKE_C_COMPILER_ID"» «t:MATCHES» «s:"^GNU$"»)
-  «f:ADD_DEFINITIONS»(-Wall -Werror)
-«k:ENDIF» («s:"CMAKE_C_COMPILER_ID"» «t:MATCHES» «s:"^GNU$"»)
+Â»Â«k:IFÂ» (Â«s:"CMAKE_C_COMPILER_ID"Â» Â«t:MATCHESÂ» Â«s:"^GNU$"Â»)
+  Â«f:ADD_DEFINITIONSÂ»(-Wall -Werror)
+Â«k:ENDIFÂ» (Â«s:"CMAKE_C_COMPILER_ID"Â» Â«t:MATCHESÂ» Â«s:"^GNU$"Â»)
 
-«k:IF»(«v:ENABLE_TEST»)
-«f:ADD_CUSTOM_TARGET»(«c:run_all_tests»)
-«k:ENDIF»(«v:ENABLE_TEST»)
+Â«k:IFÂ»(Â«v:ENABLE_TESTÂ»)
+Â«f:ADD_CUSTOM_TARGETÂ»(Â«c:run_all_testsÂ»)
+Â«k:ENDIFÂ»(Â«v:ENABLE_TESTÂ»)
 
-«f:add_subdirectory»(libarchive)
-«f:add_subdirectory»(tar)
-«f:add_subdirectory»(cpio)
+Â«f:add_subdirectoryÂ»(libarchive)
+Â«f:add_subdirectoryÂ»(tar)
+Â«f:add_subdirectoryÂ»(cpio)

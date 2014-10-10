@@ -1,4 +1,14 @@
-;; multicolumn-screenshot-setup.el --- prepare Emacs for screenshot.
+;; cmake-font-lock-screenshot-setup.el --- prepare Emacs for screenshot.
+
+;; Usage:
+;;
+;;   emacs -q -l cmake-font-lock-screenshot-setup.el
+;;
+;;   Take screenshot. OS X: Cmd-Shift-4 SPC click on window.
+
+(setq inhibit-startup-screen t)
+
+(blink-cursor-mode -1)
 
 (defvar cmake-font-lock-screenshot-setup-file-name
   (or load-file-name

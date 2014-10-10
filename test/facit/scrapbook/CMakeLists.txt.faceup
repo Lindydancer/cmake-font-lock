@@ -1,27 +1,33 @@
-«x:#
+Â«x:#
 # This file contains snippets of CMakeLists.txt files containing
 # uncommon constructs.
 #
-»
-«f:add_compiler_rt_static_runtime»(clang_rt.asan-«D:${»«v:arch»«D:}» «D:${»«v:arch»«D:}»
-      SOURCES «D:${»«v:ASAN_SOURCES»«D:}»
-              $<«c:TARGET_OBJECTS»:RTInterception.«D:${»«v:arch»«D:}»>
-              $<«c:TARGET_OBJECTS»:RTSanitizerCommon.«D:${»«v:arch»«D:}»>
-      CFLAGS «D:${»«v:ASAN_CFLAGS»«D:}»
-      DEFS «D:${»«v:ASAN_COMMON_DEFINITIONS»«D:}»)
+Â»
+Â«f:add_compiler_rt_static_runtimeÂ»(clang_rt.asan-Â«D:${Â»Â«v:archÂ»Â«D:}Â» Â«D:${Â»Â«v:archÂ»Â«D:}Â»
+      SOURCES Â«D:${Â»Â«v:ASAN_SOURCESÂ»Â«D:}Â»
+              $<Â«c:TARGET_OBJECTSÂ»:RTInterception.Â«D:${Â»Â«v:archÂ»Â«D:}Â»>
+              $<Â«c:TARGET_OBJECTSÂ»:RTSanitizerCommon.Â«D:${Â»Â«v:archÂ»Â«D:}Â»>
+      CFLAGS Â«D:${Â»Â«v:ASAN_CFLAGSÂ»Â«D:}Â»
+      DEFS Â«D:${Â»Â«v:ASAN_COMMON_DEFINITIONSÂ»Â«D:}Â»)
 
-«f:source_group»(alpha «t:FILES» test.c)
-«f:source_group»(alpha\\beta «t:FILES» test.c)
+Â«f:source_groupÂ»(alpha Â«t:FILESÂ» test.c)
+Â«f:source_groupÂ»(alpha\\beta Â«t:FILESÂ» test.c)
 
-«f:foo»(«D:{»«v:allan»«D:}»)
-«f:foo»(«D:${»«v:allan»«D:}»)
-«f:foo»(«D:$»«v:sune»«D:{»«c:allan»«D:}»)
+Â«x:# Target names may contain "."
+Â»Â«f:add_libraryÂ»(Â«c:fooÂ»     allan.c)
+Â«f:add_libraryÂ»(Â«c:foo.ENUÂ» allan.c)
+Â«f:set_target_propertiesÂ»(Â«c:foo.ENUÂ» Â«t:PROPERTIESÂ» Â«c:propÂ» value Â«c:prop2Â» value2)
+Â«f:set_target_propertiesÂ»(Â«c:fooÂ»     Â«t:PROPERTIESÂ» Â«c:propÂ» value Â«c:prop2Â» value2)
 
-«f:foo»(«D:$»«v:sune»«D:{${»«v:one»«D:}}»)
-«f:foo»(«D:$»«v:sune»«D:{»«c:nested»«D:${»«v:one»«D:}»«c:nested»«D:}»)
-«f:foo»(«D:$»«v:sune»«D:{$»«v:sune»«D:{»«c:one»«D:}}»)
-«f:foo»(«D:$»«v:sune»«D:{»«c:nested»«D:$»«v:sune»«D:{»«c:one»«D:}»«c:nested»«D:}»)
+Â«f:fooÂ»(Â«D:{Â»Â«v:allanÂ»Â«D:}Â»)
+Â«f:fooÂ»(Â«D:${Â»Â«v:allanÂ»Â«D:}Â»)
+Â«f:fooÂ»(Â«D:$Â»Â«v:suneÂ»Â«D:{Â»Â«c:allanÂ»Â«D:}Â»)
 
-«f:set»(«v:ENV»«D:{»«c:allan»«D:}» test «D:$»«v:ENV»«D:{»«c:foo»«D:}» «D:$»«v:nonstandard»«D:{»«c:allan»«D:}»)
+Â«f:fooÂ»(Â«D:$Â»Â«v:suneÂ»Â«D:{${Â»Â«v:oneÂ»Â«D:}}Â»)
+Â«f:fooÂ»(Â«D:$Â»Â«v:suneÂ»Â«D:{Â»Â«c:nestedÂ»Â«D:${Â»Â«v:oneÂ»Â«D:}Â»Â«c:nestedÂ»Â«D:}Â»)
+Â«f:fooÂ»(Â«D:$Â»Â«v:suneÂ»Â«D:{$Â»Â«v:suneÂ»Â«D:{Â»Â«c:oneÂ»Â«D:}}Â»)
+Â«f:fooÂ»(Â«D:$Â»Â«v:suneÂ»Â«D:{Â»Â«c:nestedÂ»Â«D:$Â»Â«v:suneÂ»Â«D:{Â»Â«c:oneÂ»Â«D:}Â»Â«c:nestedÂ»Â«D:}Â»)
 
-«f:set» («v:ENV»«D:{»«c:LD_LIBRARY_PATH»«D:}» «D:${»«v:LD_LIBRARY_PATH»«D:}»:«D:$»«v:ENV»«D:{»«c:LD_LIBRARY_PATH»«D:}»)
+Â«f:setÂ»(Â«v:ENVÂ»Â«D:{Â»Â«c:allanÂ»Â«D:}Â» test Â«D:$Â»Â«v:ENVÂ»Â«D:{Â»Â«c:fooÂ»Â«D:}Â» Â«D:$Â»Â«v:nonstandardÂ»Â«D:{Â»Â«c:allanÂ»Â«D:}Â»)
+
+Â«f:setÂ» (Â«v:ENVÂ»Â«D:{Â»Â«c:LD_LIBRARY_PATHÂ»Â«D:}Â» Â«D:${Â»Â«v:LD_LIBRARY_PATHÂ»Â«D:}Â»:Â«D:$Â»Â«v:ENVÂ»Â«D:{Â»Â«c:LD_LIBRARY_PATHÂ»Â«D:}Â»)

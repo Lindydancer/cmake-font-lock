@@ -40,3 +40,9 @@ try_compile(var bindir SOURCES src1 src2 COMPILE_DEFINITIONS DEF1 DEF2)
 try_compile(var bindir src COPY_FILE file COPY_FILE_ERROR var2)
 
 try_run(var1 var2 bindir srcdir COMPILE_DEFINITIONS DEF1 DEF2)
+
+#
+# Generator expressions
+#
+
+foo($<FOO:$<CONFIGURATION>>)

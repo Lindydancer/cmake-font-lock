@@ -1,11 +1,11 @@
 ;;; andersl-cmake-font-lock.el --- Syntax coloring support for CMake.
 
-;; Copyright (C) 2012-2013 Anders Lindgren
+;; Copyright (C) 2012-2014 Anders Lindgren
 
 ;; Author: Anders Lindgren
-;; Version: 0.0.4
+;; Keywords: faces, languages
 ;; Created: 2012-12-05
-;; Keywords: faces languages
+;; Version: 0.0.5
 ;; URL: https://github.com/Lindydancer/cmake-font-lock
 
 ;; This program is free software: you can redistribute it and/or modify
@@ -425,6 +425,7 @@
                                       "DIRECTORY"))
     ("get_filename_component"      . ("ABSOLUTE"
                                       "CACHE"
+                                      "DIRECTORY"
                                       "EXT"
                                       "NAME"
                                       "NAME_WE"
@@ -726,6 +727,7 @@ This is used to keep down the size of
     ("macro"                  (:func :repeat :var))
     ("mark_as_advanced"       (:repeat :var) (("CLEAR" :repeat :var)
                                               ("FORCE" :repeat :var)))
+    ("math"                   () (("EXPR" :var)))
     ("option"                 (:var))
     ("separate_arguments"     (:var))
     ("set"                    (:var))
@@ -811,6 +813,7 @@ Elements are fontified as specified by
 ;; Public functions
 ;;
 
+;;;###autoload
 (defun andersl-cmake-font-lock-activate ()
   "Activate advanced CMake colorization.
 
@@ -824,6 +827,12 @@ To activate this every time a CMake file is opened, use the following:
   (if (and font-lock-mode
            (fboundp 'font-lock-refresh-defaults))
       (font-lock-refresh-defaults)))
+
+
+;; This ensures that this package is enabled automatically when
+;; installed as a package (when cmake-mode is installed).
+
+;;;###autoload(add-hook 'cmake-mode-hook 'andersl-cmake-font-lock-activate)
 
 
 (defun andersl-cmake-font-lock-add-keywords (name keywords)
@@ -1409,7 +1418,7 @@ match."
       (cons (concat "\\<-D\\([a-z_][a-z0-9_]*\\)\\>")
             '(1 'font-lock-constant-face))
       ;; Expression generator $<name:...>
-      (cons (concat "\\$<\\(" id "\\)\\(:[^>]+\\)?>")
+      (cons (concat "\\$<\\(" id "\\)[:>]")
             '(1 'font-lock-constant-face))
       ;; Variables embedded in ${...} and $name{...} (where "name"
       ;; typically is ENV).

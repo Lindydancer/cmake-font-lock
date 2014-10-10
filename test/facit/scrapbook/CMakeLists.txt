@@ -13,6 +13,12 @@ add_compiler_rt_static_runtime(clang_rt.asan-${arch} ${arch}
 source_group(alpha FILES test.c)
 source_group(alpha\\beta FILES test.c)
 
+# Target names may contain "."
+add_library(foo     allan.c)
+add_library(foo.ENU allan.c)
+set_target_properties(foo.ENU PROPERTIES prop value prop2 value2)
+set_target_properties(foo     PROPERTIES prop value prop2 value2)
+
 foo({allan})
 foo(${allan})
 foo($sune{allan})
