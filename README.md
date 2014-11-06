@@ -1,7 +1,7 @@
-# andersl-cmake-font-lock - Syntax coloring support for CMake
+# cmake-font-lock - Advanced, type aware, highlight support for CMake
 
 *Author:* Anders Lindgren<br>
-*Version:* 0.0.5<br>
+*Version:* 0.1.0<br>
 *URL:* [https://github.com/Lindydancer/cmake-font-lock](https://github.com/Lindydancer/cmake-font-lock)<br>
 
 Advanced syntax coloring support for CMake scripts.
@@ -26,6 +26,22 @@ read, and also to write.
 This package is aware of all built-in CMake functions. In addition,
 it allows you to add function signatures for your own functions.
 
+## The following is colored
+
+* Function arguments are colored according to it's use, An argument
+  can be colored as a *keyword*, a *variable*, a *property*, or a
+  *target*. This package provides information on all built-in CMake
+  functions. Information on user-defined functions can be added.
+* All function names are colored, however, special functions like
+  `if`, `while`, `function`, and `include` are colored using a
+  different color.
+* The constants `true`, `false`, `yes`, `no`, `y`, `n`, `on`, and
+  `off`.
+* The constructs `${...}`, `$ENV{...}`, and `$<name:...>`.
+* In preprocessor definitions like `-DNAME`, `NAME` is colored.
+* Comments and quoted strings.
+
+
 ## Installation
 
 Place the file in a directory in Emacs' load path.
@@ -33,37 +49,14 @@ Place the file in a directory in Emacs' load path.
 Add the following lines to a suitable init file, like ~/.emacs, to
 enable this package:
 
-    (autoload 'andersl-cmake-font-lock-activate "andersl-cmake-font-lock" nil t)
-    (add-hook 'cmake-mode-hook 'andersl-cmake-font-lock-activate)
+    (autoload 'cmake-font-lock-activate "cmake-font-lock" nil t)
+    (add-hook 'cmake-mode-hook 'cmake-font-lock-activate)
 
 This package is designed to be used together with a major mode for
 editing CMake files. Once such package is `cmake-mode.el`
 distributed by Kitware, however this package is not dependent upon
 or associated with any specific CMake major mode. (Note that the
 Kitware package contains rudimentary syntax coloring support.)
-
-## What is colored
-
-* Comments and quoted strings.
-* Special functions like `if`, `while`, `function`, and `include`
-  are colored as font-lock *keywords* (not to be confused with
-  keywords in the CMake sense).
-* Other function name are colored as, well, *functions*.
-* The arguments of functions are colored according to the type, as
-  specified by the function *signature*. The built-in signatures
-  can color an arguments as a *variable*, a *function*, a
-  *property*, a *target*, a *policy*, and finally a CMake keyword
-  is colored as a *type*.
-* The constants `true`, `false`, `yes`, `no`, `y`, `n`, `on`, and
-  `off` are colored as *constants*.
-* `${...}` constructs are fontified as *variables*. Nested
-  constructs are supported.
-* For `$ENV{...}`, `ENV` is fontified as a *variable* and the
-  content as a *constant*.
-* For `$<name:...>` constructs, `name` is colored as a *constant*.
-* For preprocessor definitions like `-DNAME`, `NAME` is colored as
-  a *constant*.
-
 
 ## Customizing
 
@@ -72,35 +65,35 @@ be aware of the keywords and types of the CMake functions used. To
 add information about non-standard CMake function, the following
 functions can be used:
 
-### `andersl-cmake-font-lock-add-keywords` -- Add keyword information
+### `cmake-font-lock-add-keywords` -- Add keyword information
 
 Adding the list of keywords to a function is a simple way to get
 basic coloring correct. For most functions, this is sufficient.
 For example:
 
-        (andersl-cmake-font-lock-add-keywords
+        (cmake-font-lock-add-keywords
            "my-func" '("FILE" "RESULT" "OTHER"))
 
-### `andersl-cmake-font-lock-set-signature` -- Set full function type
+### `cmake-font-lock-set-signature` -- Set full function type
 
 Set the signature (the type of the arguments) for a function. For
 example:
 
-        (andersl-cmake-font-lock-set-signature
+        (cmake-font-lock-set-signature
            "my-func" '(:var nil :prop) '(("FILE" :file) ("RESULT" :var)))
 
 ### Custom types
 
 The signatures of CMake functions provided by this package use a
-number of types (see `andersl-cmake-font-lock-function-signatures`
+number of types (see `cmake-font-lock-function-signatures`
 for details). However, when adding new signatures, it's possible to
 use additional types. In that case, the variable
-`andersl-cmake-font-lock-argument-kind-face-alist` must be modified
+`cmake-font-lock-argument-kind-face-alist` must be modified
 to map the CMake type to a concrete Emacs face. For example:
 
-    (andersl-cmake-font-lock-set-signature "my_warn" (:warning))
+    (cmake-font-lock-set-signature "my_warn" (:warning))
     (add-to-list '(:warning . font-lock-warning-face)
-                 andersl-cmake-font-lock-argument-kind-face-alist)
+                 cmake-font-lock-argument-kind-face-alist)
 
 
 ## Problems
@@ -123,9 +116,9 @@ to map the CMake type to a concrete Emacs face. For example:
 ## Implementation notes
 
 The list of CMake keywords,
-`andersl-cmake-font-lock-function-keywords-alist`, is generated by
+`cmake-font-lock-function-keywords-alist`, is generated by
 the script `ParseCMakeDocCommands.rb` from the CMake documentation.
 
 
 ---
-Converted from `andersl-cmake-font-lock.el` by [*el2markdown*](https://github.com/Lindydancer/el2markdown).
+Converted from `cmake-font-lock.el` by [*el2markdown*](https://github.com/Lindydancer/el2markdown).

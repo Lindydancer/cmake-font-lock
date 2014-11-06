@@ -1,4 +1,4 @@
-;;; andersl-cmake-font-lock-test-facit.el --- Regression test CMake font-lock.
+;;; cmake-font-lock-test-facit.el --- Regression test CMake font-lock.
 
 ;; Copyright (C) 2012-2013 Anders Lindgren
 
@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; Regression test of `andersl-cmake-font-lock', a package providing
+;; Regression test of `cmake-font-lock', a package providing
 ;; font-lock rules for CMake. This module verifies fontification of a
 ;; number of CMakeLists.txt files taken from real projects. This is
 ;; done by keeing a text representation of the fontification using
@@ -33,30 +33,30 @@
 
 (require 'faceup)
 
-(defvar andersl-cmake-font-lock-test-dir (faceup-this-file-directory))
+(defvar cmake-font-lock-test-dir (faceup-this-file-directory))
 
-(defun andersl-cmake-font-lock-test-facit (dir)
+(defun cmake-font-lock-test-facit (dir)
   "Test that `dir'/CMakeLists.txt is fontifies as the .faceup file describes.
 
 `dir' is interpreted as relative to this source directory."
   (faceup-test-font-lock-file 'cmake-mode
                               (concat
-                               andersl-cmake-font-lock-test-dir
+                               cmake-font-lock-test-dir
                                dir
                                "/CMakeLists.txt")))
-(faceup-defexplainer andersl-cmake-font-lock-test-facit)
+(faceup-defexplainer cmake-font-lock-test-facit)
 
 
-(ert-deftest andersl-cmake-font-lock-file-test ()
-  (should (andersl-cmake-font-lock-test-facit "facit/grantlee"))
-  (should (andersl-cmake-font-lock-test-facit "facit/libarchive"))
-  (should (andersl-cmake-font-lock-test-facit "facit/opencollada"))
-  (should (andersl-cmake-font-lock-test-facit "facit/gamekit"))
-  (should (andersl-cmake-font-lock-test-facit "facit/gazebo"))
-  (should (andersl-cmake-font-lock-test-facit "facit/scrapbook"))
-  (should (andersl-cmake-font-lock-test-facit "facit/openscenegraph"))
-  (should (andersl-cmake-font-lock-test-facit "facit/additions")))
+(ert-deftest cmake-font-lock-file-test ()
+  (should (cmake-font-lock-test-facit "facit/grantlee"))
+  (should (cmake-font-lock-test-facit "facit/libarchive"))
+  (should (cmake-font-lock-test-facit "facit/opencollada"))
+  (should (cmake-font-lock-test-facit "facit/gamekit"))
+  (should (cmake-font-lock-test-facit "facit/gazebo"))
+  (should (cmake-font-lock-test-facit "facit/scrapbook"))
+  (should (cmake-font-lock-test-facit "facit/openscenegraph"))
+  (should (cmake-font-lock-test-facit "facit/additions")))
 
-(provide 'andersl-cmake-font-lock-test-facit)
+(provide 'cmake-font-lock-test-facit)
 
-;; andersl-cmake-font-lock-test-facit.el ends here.
+;; cmake-font-lock-test-facit.el ends here.

@@ -1,11 +1,12 @@
-;;; andersl-cmake-font-lock.el --- Syntax coloring support for CMake.
+;;; cmake-font-lock.el --- Advanced, type aware, highlight support for CMake
 
 ;; Copyright (C) 2012-2014 Anders Lindgren
 
 ;; Author: Anders Lindgren
 ;; Keywords: faces, languages
 ;; Created: 2012-12-05
-;; Version: 0.0.5
+;; Version: 0.1.0
+;; Package-Requires: (("cmake-mode" "0.0"))
 ;; URL: https://github.com/Lindydancer/cmake-font-lock
 
 ;; This program is free software: you can redistribute it and/or modify
@@ -45,6 +46,27 @@
 ;; This package is aware of all built-in CMake functions. In addition,
 ;; it allows you to add function signatures for your own functions.
 
+;; The following is colored:
+;;
+;; * Function arguments are colored according to it's use, An argument
+;;   can be colored as a *keyword*, a *variable*, a *property*, or a
+;;   *target*. This package provides information on all built-in CMake
+;;   functions. Information on user-defined functions can be added.
+;;
+;; * All function names are colored, however, special functions like
+;;   `if', `while', `function', and `include' are colored using a
+;;   different color.
+;;
+;; * The constants `true', `false', `yes', `no', `y', `n', `on', and
+;;   `off'.
+;;
+;; * The constructs `${...}', `$ENV{...}', and `$<name:...>'.
+;;
+;; * In preprocessor definitions like `-DNAME', `NAME' is colored.
+;;
+;; * Comments and quoted strings.
+;;
+
 ;; Installation:
 ;;
 ;; Place the file in a directory in Emacs' load path.
@@ -52,45 +74,14 @@
 ;; Add the following lines to a suitable init file, like ~/.emacs, to
 ;; enable this package:
 ;;
-;; (autoload 'andersl-cmake-font-lock-activate "andersl-cmake-font-lock" nil t)
-;; (add-hook 'cmake-mode-hook 'andersl-cmake-font-lock-activate)
+;; (autoload 'cmake-font-lock-activate "cmake-font-lock" nil t)
+;; (add-hook 'cmake-mode-hook 'cmake-font-lock-activate)
 ;;
 ;; This package is designed to be used together with a major mode for
 ;; editing CMake files. Once such package is `cmake-mode.el'
 ;; distributed by Kitware, however this package is not dependent upon
 ;; or associated with any specific CMake major mode. (Note that the
 ;; Kitware package contains rudimentary syntax coloring support.)
-
-;; What is colored:
-;;
-;; * Comments and quoted strings.
-;;
-;; * Special functions like `if', `while', `function', and `include'
-;;   are colored as font-lock *keywords* (not to be confused with
-;;   keywords in the CMake sense).
-;;
-;; * Other function name are colored as, well, *functions*.
-;;
-;; * The arguments of functions are colored according to the type, as
-;;   specified by the function *signature*. The built-in signatures
-;;   can color an arguments as a *variable*, a *function*, a
-;;   *property*, a *target*, a *policy*, and finally a CMake keyword
-;;   is colored as a *type*.
-;;
-;; * The constants `true', `false', `yes', `no', `y', `n', `on', and
-;;   `off' are colored as *constants*.
-;;
-;; * `${...}' constructs are fontified as *variables*. Nested
-;;   constructs are supported.
-;;
-;; * For `$ENV{...}', `ENV' is fontified as a *variable* and the
-;;   content as a *constant*.
-;;
-;; * For `$<name:...>' constructs, `name' is colored as a *constant*.
-;;
-;; * For preprocessor definitions like `-DNAME', `NAME' is colored as
-;;   a *constant*.
-;;
 
 ;; Customizing:
 ;;
@@ -99,35 +90,35 @@
 ;; add information about non-standard CMake function, the following
 ;; functions can be used:
 ;;
-;; `andersl-cmake-font-lock-add-keywords' -- Add keyword information:
+;; `cmake-font-lock-add-keywords' -- Add keyword information:
 ;;
 ;; Adding the list of keywords to a function is a simple way to get
 ;; basic coloring correct. For most functions, this is sufficient.
 ;; For example:
 ;;
-;;     (andersl-cmake-font-lock-add-keywords
+;;     (cmake-font-lock-add-keywords
 ;;        "my-func" '("FILE" "RESULT" "OTHER"))
 ;;
-;; `andersl-cmake-font-lock-set-signature' -- Set full function type:
+;; `cmake-font-lock-set-signature' -- Set full function type:
 ;;
 ;; Set the signature (the type of the arguments) for a function. For
 ;; example:
 ;;
-;;     (andersl-cmake-font-lock-set-signature
+;;     (cmake-font-lock-set-signature
 ;;        "my-func" '(:var nil :prop) '(("FILE" :file) ("RESULT" :var)))
 ;;
 ;; Custom types:
 ;;
 ;; The signatures of CMake functions provided by this package use a
-;; number of types (see `andersl-cmake-font-lock-function-signatures'
+;; number of types (see `cmake-font-lock-function-signatures'
 ;; for details). However, when adding new signatures, it's possible to
 ;; use additional types. In that case, the variable
-;; `andersl-cmake-font-lock-argument-kind-face-alist' must be modified
+;; `cmake-font-lock-argument-kind-face-alist' must be modified
 ;; to map the CMake type to a concrete Emacs face. For example:
 ;;
-;; (andersl-cmake-font-lock-set-signature "my_warn" (:warning))
+;; (cmake-font-lock-set-signature "my_warn" (:warning))
 ;; (add-to-list '(:warning . font-lock-warning-face)
-;;              andersl-cmake-font-lock-argument-kind-face-alist)
+;;              cmake-font-lock-argument-kind-face-alist)
 ;;
 
 ;; Problems:
@@ -151,14 +142,22 @@
 ;; Implementation notes:
 ;;
 ;; The list of CMake keywords,
-;; `andersl-cmake-font-lock-function-keywords-alist', is generated by
+;; `cmake-font-lock-function-keywords-alist', is generated by
 ;; the script `ParseCMakeDocCommands.rb' from the CMake documentation.
 
 ;;; Code:
 
+;; Naming:
+;;
+;; The package `cmake-mode' use the prefix `cmake-', this package use
+;; the prefix `cmake-font-lock'. The only indentifier where this could
+;; have been a problem is the constant `cmake-font-lock-keywords',
+;; provided by `cmake-mode'. To avoid a collision, this package
+;; provide `cmake-font-lock-advanced-keywords' instead.
+
 ;; Ideas for the future:
 ;;
-;; - rename "andersl-cmake-font-lock-xxx" to "cmfl-xxx"?
+;; - rename "cmake-font-lock-xxx" to "cmfl-xxx"?
 ;;
 ;; - Join keywords and signature datastructures? (Hard work for the
 ;;   generator.)
@@ -171,13 +170,13 @@
 ;;
 ;; - Use consistent naming (keyword).
 ;;
-;; - Allow `andersl-cmake-font-lock-function-signatures' to contain a
+;; - Allow `cmake-font-lock-function-signatures' to contain a
 ;;   function to call for the cases where a signature isn't powerful
 ;;   enough to describe a function.
 
 
 
-(defvar andersl-cmake-font-lock-function-keywords-alist
+(defvar cmake-font-lock-function-keywords-alist
   '(("add_custom_command"          . ("APPEND"
                                       "ARGS"
                                       "COMMAND"
@@ -607,7 +606,7 @@
 
 
 
-(defvar andersl-cmake-font-lock-function-alias-alist
+(defvar cmake-font-lock-function-alias-alist
   '(("else"        . "if")
     ("elseif"      . "if")
     ("endif"       . "if")
@@ -619,11 +618,11 @@
   "*Alias function names.
 
 This is used to keep down the size of
-`andersl-cmake-font-lock-function-keywords-alist' and
-`andersl-cmake-font-lock-function-signatures'.")
+`cmake-font-lock-function-keywords-alist' and
+`cmake-font-lock-function-signatures'.")
 
 
-(defvar andersl-cmake-font-lock-function-signatures
+(defvar cmake-font-lock-function-signatures
   '(("add_custom_command"     ()     (("DEPENDS" :repeat :path)
                                       ("IMPLICIT_DEPENDS" nil :repeat :path)
                                       ("MAIN_DEPENDENCY" :path)
@@ -678,7 +677,7 @@ This is used to keep down the size of
     ("get_test_property"      (:test :prop :var))
     ;; Note: "(" is treated as a keyword, however, it will never be
     ;; fontified as such, thanks to
-    ;; `andersl-cmake-font-lock-argument-kind-regexp-alist'.
+    ;; `cmake-font-lock-argument-kind-regexp-alist'.
     ;;
     ;; This works for all keywords except "IS_NEWER_THAN", since it is
     ;; the only keyword that does not take a variable on its left hand
@@ -804,24 +803,24 @@ An argument kind is:
  - Anything else  A custom type
 
 Elements are fontified as specified by
-`andersl-cmake-font-lock-argument-kind-face-alist'.")
+`cmake-font-lock-argument-kind-face-alist'.")
 
-;; Filled in by `andersl-cmake-font-lock-setup'.
-(defvar andersl-cmake-font-lock-keywords nil)
+;; Filled in by `cmake-font-lock-setup'.
+(defvar cmake-font-lock-advanced-keywords nil)
 
 ;; --------------------------------------------------
 ;; Public functions
 ;;
 
 ;;;###autoload
-(defun andersl-cmake-font-lock-activate ()
+(defun cmake-font-lock-activate ()
   "Activate advanced CMake colorization.
 
 To activate this every time a CMake file is opened, use the following:
 
-    (add-hook 'cmake-mode-hook 'andersl-cmake-font-lock-activate)"
+    (add-hook 'cmake-mode-hook 'cmake-font-lock-activate)"
   (interactive)
-  (andersl-cmake-font-lock-setup)
+  (cmake-font-lock-setup)
   ;; If this function is called after font-lock is up and running,
   ;; refresh it. (This does not work on older Emacs versions.)
   (if (and font-lock-mode
@@ -832,33 +831,33 @@ To activate this every time a CMake file is opened, use the following:
 ;; This ensures that this package is enabled automatically when
 ;; installed as a package (when cmake-mode is installed).
 
-;;;###autoload(add-hook 'cmake-mode-hook 'andersl-cmake-font-lock-activate)
+;;;###autoload(add-hook 'cmake-mode-hook 'cmake-font-lock-activate)
 
 
-(defun andersl-cmake-font-lock-add-keywords (name keywords)
+(defun cmake-font-lock-add-keywords (name keywords)
   "Add keywords to a CMake function."
   (setq name (downcase name))
-  (let ((pair (assoc name andersl-cmake-font-lock-function-keywords-alist)))
+  (let ((pair (assoc name cmake-font-lock-function-keywords-alist)))
     (unless pair
       (setq pair (cons name ()))
-      (push pair andersl-cmake-font-lock-function-keywords-alist))
+      (push pair cmake-font-lock-function-keywords-alist))
     (dolist (kw keywords)
       (unless (member kw (cdr pair))
         (setcdr pair (cons kw (cdr pair)))))))
 
-(defun andersl-cmake-font-lock-set-signature (name sig
+(defun cmake-font-lock-set-signature (name sig
                                               &optional keyword-sig-alist)
   "Set the signature of a CMake function.
 
 `sig' and `keyword-sig-alist' should be on the same form as the
 second and third element of each entry in the list
-`andersl-cmake-font-lock-function-signatures'."
+`cmake-font-lock-function-signatures'."
   (setq name (downcase name))
-  (let ((entry (assoc name andersl-cmake-font-lock-function-signatures)))
+  (let ((entry (assoc name cmake-font-lock-function-signatures)))
     (if entry
         (setcdr entry (list sig keyword-sig-alist))
       (push (list name sig keyword-sig-alist)
-            andersl-cmake-font-lock-function-signatures))))
+            cmake-font-lock-function-signatures))))
 
 
 ;; --------------------------------------------------
@@ -867,11 +866,11 @@ second and third element of each entry in the list
 
 
 
-(defun andersl-cmake-font-lock-normalize-function-name (name)
+(defun cmake-font-lock-normalize-function-name (name)
   "Normalize function name, or name alias."
   (setq name (downcase name))
   (let ((alias-pair (assoc name
-                           andersl-cmake-font-lock-function-alias-alist)))
+                           cmake-font-lock-function-alias-alist)))
     (if alias-pair
         (cdr alias-pair)
       name)))
@@ -885,7 +884,7 @@ second and third element of each entry in the list
 ;; - name{...}   -- Used by set() and unset().
 ;;
 
-(defun andersl-cmake-font-lock-skip-braces ()
+(defun cmake-font-lock-skip-braces ()
   "Move point past the end of a (possibly nested) ${...} construct.
 Return nil if the matching closing brace was not found."
   ;; Skip initial optional dollar.
@@ -913,10 +912,10 @@ Return nil if the matching closing brace was not found."
                       (setq done t)))))
          res)))
 
-(defvar andersl-cmake-font-lock-match-dollar-braces-has-name nil
+(defvar cmake-font-lock-match-dollar-braces-has-name nil
   "True when the current brace construct is a hash, like ENV.")
 
-(defun andersl-cmake-font-lock-match-dollar-braces-content (lim)
+(defun cmake-font-lock-match-dollar-braces-content (lim)
   "Match (part of) the content of a ${...} construct.
 In the case of nested ${...} construct, repeated calls to this
 match next top-level part.
@@ -932,24 +931,24 @@ matched in subsequent call:
       111      222"
   ;; Skip embedded ${...} constructs.
   (while (eq (following-char) ?$)
-    (andersl-cmake-font-lock-skip-braces))
+    (cmake-font-lock-skip-braces))
   (let ((p (point)))
     (if (> (skip-chars-forward "a-zA-Z@0-9_") 0)
         ;; Create match data.
         (let* ((md (list p (point)))
                (md-full md))
-          (if andersl-cmake-font-lock-match-dollar-braces-has-name
+          (if cmake-font-lock-match-dollar-braces-has-name
               (setq md-full (append md-full '(nil nil))))
           (setq md-full (append md-full md))
           (set-match-data md-full)
           t)
       nil)))
 
-(defun andersl-cmake-font-lock-match-dollar-braces (lim)
+(defun cmake-font-lock-match-dollar-braces (lim)
   "Match a $xxx{...} construct.
 
 Place point after the opening brace, to prepare for calls to
-`andersl-cmake-font-lock-match-dollar-braces-content'.
+`cmake-font-lock-match-dollar-braces-content'.
 
 Subexpressions of the match-data are as follows:
 
@@ -965,12 +964,12 @@ Subexpressions of the match-data are as follows:
                          (match-beginning 1) (match-end 1)
                          (match-beginning 2) (match-end 2)
                          (match-beginning 3) (match-end 3))))
-           (setq andersl-cmake-font-lock-match-dollar-braces-has-name
+           (setq cmake-font-lock-match-dollar-braces-has-name
                  (match-beginning 2))
            (save-excursion
              (goto-char (match-end 0))
              (while
-                 (andersl-cmake-font-lock-match-dollar-braces-content lim))
+                 (cmake-font-lock-match-dollar-braces-content lim))
              (if (eq (following-char) ?})
                  (nconc md (list (point) (+ (point) 1))))
              ;; Patch slot 0.
@@ -984,13 +983,13 @@ Subexpressions of the match-data are as follows:
 ;; Function matcher.
 ;;
 
-(defvar andersl-cmake-font-lock-arguments-begin nil)
-(defvar andersl-cmake-font-lock-arguments-end   nil
+(defvar cmake-font-lock-arguments-begin nil)
+(defvar cmake-font-lock-arguments-end   nil
   "The point after the closing parenthesis of the current function.")
-(defvar andersl-cmake-font-lock-current-function nil
+(defvar cmake-font-lock-current-function nil
   "Name of function being fontified.")
 
-(defun andersl-cmake-font-lock-match-plain-function (lim)
+(defun cmake-font-lock-match-plain-function (lim)
   "Search for a CMake function and setup for argument list matching.
 
 Point is placed after the parenthesis that starts the argument list.
@@ -999,10 +998,10 @@ Return the name of the matched function."
         (id "\\<[a-z@_][a-z@_0-9]*\\>"))
     (if (re-search-forward (concat "^" ws "\\(" id "\\)" ws "(") lim t)
         (let ((name (match-string 1)))
-          (setq andersl-cmake-font-lock-current-function name)
-          (setq andersl-cmake-font-lock-arguments-begin
+          (setq cmake-font-lock-current-function name)
+          (setq cmake-font-lock-arguments-begin
                 (match-end 0))
-          (setq andersl-cmake-font-lock-arguments-end
+          (setq cmake-font-lock-arguments-end
                 (save-excursion
                   ;; Right before the opening parenthesis.
                   (goto-char (match-end 1))
@@ -1018,18 +1017,18 @@ Return the name of the matched function."
       ;; Name not found.
       nil)))
 
-(defun andersl-cmake-font-lock-arguments-bound ()
+(defun cmake-font-lock-arguments-bound ()
   "Set point at the start of the argument list and return the end.
 This is useful as a font-lock pre-match form."
-  (goto-char andersl-cmake-font-lock-arguments-begin)
-  andersl-cmake-font-lock-arguments-end)
+  (goto-char cmake-font-lock-arguments-begin)
+  cmake-font-lock-arguments-end)
 
 
 ;; ----------------------------------------
 ;; Argument matcher.
 ;;
 
-(defun andersl-cmake-font-lock-skip-whitespace ()
+(defun cmake-font-lock-skip-whitespace ()
   (let ((spc 32))
     (while (and (not (eobp))
                 (member (following-char) (list spc  ?\t ?# ?\n)))
@@ -1039,7 +1038,7 @@ This is useful as a font-lock pre-match form."
       ;; Skip whitespace.
       (skip-chars-forward " \t\n"))))
 
-(defun andersl-cmake-font-lock-this-argument (&optional limit)
+(defun cmake-font-lock-this-argument (&optional limit)
   "Set point at the current argument and return the end.
 
 Parameter `limit' points the before the closing parenthesis of
@@ -1049,7 +1048,7 @@ Return nil if there are no more arguments.
 
 Treats parenthesis as individual tokens. A token can contain a
 ${var} construct."
-  (andersl-cmake-font-lock-skip-whitespace)
+  (cmake-font-lock-skip-whitespace)
   (if (and limit
            (>= (point) limit))
       nil
@@ -1085,7 +1084,7 @@ ${var} construct."
             (point)
           nil)))))
 
-(defvar andersl-cmake-font-lock-argument-kind-face-alist
+(defvar cmake-font-lock-argument-kind-face-alist
   '((:def     . font-lock-constant-face)
     (:var     . font-lock-variable-name-face)
     (:func    . font-lock-function-name-face)
@@ -1096,16 +1095,16 @@ ${var} construct."
   "*Map from argument kind to face used to highlight that kind.")
 
 
-(defvar andersl-cmake-font-lock-arguments-with-type '()
+(defvar cmake-font-lock-arguments-with-type '()
   "Function arguments collected but not yet fontified.
 
 Each entry is in the form `(kind beg end)', where `kind'
 corresponds to the kinds described by
-`andersl-cmake-font-lock-function-signatures'. `beg' and `end'
+`cmake-font-lock-function-signatures'. `beg' and `end'
 are the start and end points of the argument.")
 
 
-(defun andersl-cmake-font-lock-minimun-number-of-arguments (signature)
+(defun cmake-font-lock-minimun-number-of-arguments (signature)
   "The least number of arguments needed to match the signature."
   (let ((res 0))
     (while signature
@@ -1118,7 +1117,7 @@ are the start and end points of the argument.")
     res))
 
 
-(defun andersl-cmake-font-lock-collect-all-arguments (function-name limit)
+(defun cmake-font-lock-collect-all-arguments (function-name limit)
   "Find and categorize all arguments.
 
 `function-name' is the name of the function and `limit' is the point
@@ -1131,13 +1130,13 @@ Return a list of `(kind beg end)', where `kind' is the type of
 the argument (variable, property etc.), `beg' and `end' are the
 location in the buffer where the argument is located."
   (setq function-name
-        (andersl-cmake-font-lock-normalize-function-name function-name))
+        (cmake-font-lock-normalize-function-name function-name))
   (let ((all-arguments '()))
     ;; ----------
     ;; Collect all arguments into `all-arguments'.
     ;;
     (while
-        (let ((end-point (andersl-cmake-font-lock-this-argument (- limit 1))))
+        (let ((end-point (cmake-font-lock-this-argument (- limit 1))))
           (if end-point
               (let ((argument (buffer-substring-no-properties
                                (point) end-point)))
@@ -1157,13 +1156,13 @@ location in the buffer where the argument is located."
     ;; something else.
     (let ((signature-to-args-alist '()))
       (let ((triplet (assoc function-name
-                            andersl-cmake-font-lock-function-signatures))
+                            cmake-font-lock-function-signatures))
             (signature          '())
             (keyword-signatures '())
             (function-keywords
              (cdr-safe
               (assoc function-name
-                     andersl-cmake-font-lock-function-keywords-alist))))
+                     cmake-font-lock-function-keywords-alist))))
         ;; Start with the signature of arguments in front of any
         ;; keyword.
         (when triplet
@@ -1171,7 +1170,7 @@ location in the buffer where the argument is located."
           (setq keyword-signatures (nth 2 triplet)))
         (while all-arguments
           (let ((least-number-of-arguments
-                 (andersl-cmake-font-lock-minimun-number-of-arguments
+                 (cmake-font-lock-minimun-number-of-arguments
                   signature))
                 (args '()))
             (while (and all-arguments
@@ -1255,54 +1254,54 @@ location in the buffer where the argument is located."
         (nreverse arguments-with-type)))))
 
 
-(defun andersl-cmake-font-lock-collect-all-arguments-pre-match-form ()
+(defun cmake-font-lock-collect-all-arguments-pre-match-form ()
   "Collect all arguments of the current matched function.
 
 Set the point to the beginning of the argument list and return
 the end, making this function suitable for a font-lock
 pre-match-form."
-  (setq andersl-cmake-font-lock-arguments-with-type
-        (andersl-cmake-font-lock-collect-all-arguments
-         andersl-cmake-font-lock-current-function
-         andersl-cmake-font-lock-arguments-end))
-  (andersl-cmake-font-lock-arguments-bound))
+  (setq cmake-font-lock-arguments-with-type
+        (cmake-font-lock-collect-all-arguments
+         cmake-font-lock-current-function
+         cmake-font-lock-arguments-end))
+  (cmake-font-lock-arguments-bound))
 
 
 ;; The regexp match an identifier, possibly containing an ${...}
 ;; constructs.
-(defvar andersl-cmake-font-lock-argument-kind-regexp-alist
+(defvar cmake-font-lock-argument-kind-regexp-alist
   '((:var     . "\\`[a-z@_$][a-z@_0-9${}]*\\'")
     (:keyword . "\\`[a-z@_$][a-z@_0-9${}]*\\'")
     (:prop    . "\\`[a-z@_$][a-z@_0-9${}]*\\'")
     (:policy  . "\\`[a-z@_$][a-z@_0-9${}]*\\'")))
 
 
-(defvar andersl-cmake-font-lock-this-argument-face nil
+(defvar cmake-font-lock-this-argument-face nil
   "The font-lock face (color) that should be used an argument.
 
-This is set by `andersl-cmake-font-lock-next-collected-argument'
+This is set by `cmake-font-lock-next-collected-argument'
 to correspond to the type of the argument.")
 
 
-(defun andersl-cmake-font-lock-next-collected-argument (lim)
+(defun cmake-font-lock-next-collected-argument (lim)
   "Match the next argument.
 
 When there are arguments to match, set the active match data to
 correspond to the type of the argument, as specified by
-`andersl-cmake-font-lock-argument-kind-face-alist', and
+`cmake-font-lock-argument-kind-face-alist', and
 return non-nil. Return nil if there are no more arguments to
 match."
   (let ((res nil))
     (while
-        (let ((match (and andersl-cmake-font-lock-arguments-with-type
-                          (pop andersl-cmake-font-lock-arguments-with-type))))
+        (let ((match (and cmake-font-lock-arguments-with-type
+                          (pop cmake-font-lock-arguments-with-type))))
 ;          (message "next: %s" match)
           (if match
               (let* ((kind (nth 0 match))
                      (type-regexp-pair
                       (assoc
                        kind
-                       andersl-cmake-font-lock-argument-kind-regexp-alist)))
+                       cmake-font-lock-argument-kind-regexp-alist)))
                 (if (or (null type-regexp-pair)
                         (string-match (cdr type-regexp-pair)
                                       (buffer-substring-no-properties
@@ -1311,10 +1310,10 @@ match."
                     (let ((type-face-pair
                            (assoc
                             kind
-                            andersl-cmake-font-lock-argument-kind-face-alist)))
+                            cmake-font-lock-argument-kind-face-alist)))
                       (if type-face-pair
                           (progn
-                            (setq andersl-cmake-font-lock-this-argument-face
+                            (setq cmake-font-lock-this-argument-face
                                   (cdr type-face-pair))
                             (set-match-data (list (nth 1 match)
                                                   (nth 2 match)))
@@ -1333,9 +1332,9 @@ match."
 ;; Setup.
 ;;
 
-(defvar andersl-cmake-font-lock-saved-point nil)
+(defvar cmake-font-lock-saved-point nil)
 
-(defun andersl-cmake-font-lock-setup ()
+(defun cmake-font-lock-setup ()
   "Initialize cmake font-lock rules."
 
   ;;----------
@@ -1373,7 +1372,7 @@ match."
     ;; ----------
     ;; The third argument sets case-independent font-lock rules.
     (setq font-lock-defaults
-          (list 'andersl-cmake-font-lock-keywords nil t syntax-alist)))
+          (list 'cmake-font-lock-advanced-keywords nil t syntax-alist)))
 
   ;; ----------
   ;; New font-lock rules.
@@ -1402,7 +1401,7 @@ match."
          (id "[a-z@_][a-z@_0-9]*")
          (ws "\\s-*"))
     (setq
-     andersl-cmake-font-lock-keywords
+     cmake-font-lock-advanced-keywords
      (list
       ;; Keywords -- Basic language features like flow control.
       (cons (concat "\\<"
@@ -1433,7 +1432,7 @@ match."
       ;;
       ;; Nested constructs like "${abc${def}ghi}" are handled by using
       ;; an anchored rule, where the inner match function
-      ;; `andersl-cmake-font-lock-match-dollar-braces-content'
+      ;; `cmake-font-lock-match-dollar-braces-content'
       ;; repeatedly match the non-${} parts, in this case "abc" and
       ;; "ghi".
       ;;
@@ -1445,33 +1444,33 @@ match."
       ;;
       ;; The pre- and post-match forms are used to back up the point,
       ;; to ensure that nested constructs work.
-      '(andersl-cmake-font-lock-match-dollar-braces
+      '(cmake-font-lock-match-dollar-braces
         (1 'default nil t)
         (2 'font-lock-variable-name-face nil t)
         (3 'default)
         (4 'default nil t)
-        (andersl-cmake-font-lock-match-dollar-braces-content
+        (cmake-font-lock-match-dollar-braces-content
          ;; PRE-MATCH-FORM:
-         (setq andersl-cmake-font-lock-saved-point (point))
+         (setq cmake-font-lock-saved-point (point))
          ;; POST-MATCH-FORM:
-         (goto-char andersl-cmake-font-lock-saved-point)
+         (goto-char cmake-font-lock-saved-point)
          ;; Highlight.
          (1 'font-lock-variable-name-face prepend t)
          (2 'font-lock-constant-face prepend t)))
       ;; Function calls and arguments.
-      '(andersl-cmake-font-lock-match-plain-function
+      '(cmake-font-lock-match-plain-function
         (1 'font-lock-function-name-face)
         ;; Arguments passed to functions, like "WARNING" in
         ;; "message(WARNING ...). This can fontify keywords,
         ;; variables, properties, and function names -- but only if
         ;; the function type is known.
-        (andersl-cmake-font-lock-next-collected-argument
+        (cmake-font-lock-next-collected-argument
          ;; PRE-MATCH-FORM:
-         (andersl-cmake-font-lock-collect-all-arguments-pre-match-form)
+         (cmake-font-lock-collect-all-arguments-pre-match-form)
          ;; POST-MATCH-FORM:
          nil
          ;; Highlight
-         (0 andersl-cmake-font-lock-this-argument-face keep t)))
+         (0 cmake-font-lock-this-argument-face keep t)))
       ))))
 
 
@@ -1479,6 +1478,6 @@ match."
 ;; The end
 ;;
 
-(provide 'andersl-cmake-font-lock)
+(provide 'cmake-font-lock)
 
-;;; andersl-cmake-font-lock.el ends here
+;;; cmake-font-lock.el ends here

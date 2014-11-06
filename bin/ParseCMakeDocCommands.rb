@@ -101,7 +101,7 @@ class ParseCMakeDocCommandsApplication
       end
     end
 
-    puts "(defvar andersl-cmake-font-lock-function-keywords-alist"
+    puts "(defvar cmake-font-lock-function-keywords-alist"
     print "  '("
 
     first = true
