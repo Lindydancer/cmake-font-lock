@@ -6,7 +6,7 @@
 ;; Keywords: faces, languages
 ;; Created: 2012-12-05
 ;; Version: 0.1.0
-;; Package-Requires: (("cmake-mode" "0.0"))
+;; Package-Requires: ((cmake-mode "0.0"))
 ;; URL: https://github.com/Lindydancer/cmake-font-lock
 
 ;; This program is free software: you can redistribute it and/or modify
