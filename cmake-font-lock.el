@@ -5,7 +5,7 @@
 ;; Author: Anders Lindgren
 ;; Keywords: faces, languages
 ;; Created: 2012-12-05
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Package-Requires: ((cmake-mode "0.0"))
 ;; URL: https://github.com/Lindydancer/cmake-font-lock
 
@@ -206,6 +206,7 @@
     ("add_library"                 . ("EXCLUDE_FROM_ALL"
                                       "GLOBAL"
                                       "IMPORTED"
+                                      "INTERFACE"
                                       "MODULE"
                                       "OBJECT"
                                       "SHARED"
@@ -271,6 +272,7 @@
                                       "TIMEOUT"
                                       "WORKING_DIRECTORY"))
     ("export"                      . ("APPEND"
+                                      "EXPORT"
                                       "FILE"
                                       "NAMESPACE"
                                       "PACKAGE"
@@ -283,6 +285,7 @@
                                       "DESTINATION"
                                       "DIRECTORY_PERMISSIONS"
                                       "DOWNLOAD"
+                                      "ENCODING"
                                       "EXCLUDE"
                                       "EXPECTED_HASH"
                                       "EXPECTED_MD5"
@@ -509,6 +512,7 @@
                                       "VAR2"))
     ("math"                        . ("EXPR"))
     ("message"                     . ("AUTHOR_WARNING"
+                                      "DEPRECATION"
                                       "FATAL_ERROR"
                                       "SEND_ERROR"
                                       "STATUS"
@@ -552,6 +556,8 @@
                                       "MATCHALL"
                                       "MATCHES"
                                       "MD5"
+                                      "NAME"
+                                      "NAMESPACE"
                                       "NOTEQUAL"
                                       "RANDOM"
                                       "RANDOM_SEED"
@@ -567,21 +573,32 @@
                                       "SUBSTRING"
                                       "TOLOWER"
                                       "TOUPPER"
+                                      "TYPE"
+                                      "UPPER"
                                       "UTC"))
     ("subdirs"                     . ("EXCLUDE_FROM_ALL"
                                       "PREORDER"))
+    ("target_compile_features"     . ("INTERFACE"
+                                      "PRIVATE"
+                                      "PUBLIC"))
     ("target_compile_options"      . ("BEFORE"
                                       "INTERFACE"
                                       "PUBLIC"
                                       "PRIVATE"))
     ("target_include_directories"  . ("SYSTEM"
                                       "BEFORE"))
-    ("target_link_libraries"       . ("LINK_INTERFACE_LIBRARIES"
+    ("target_link_libraries"       . ("INTERFACE"
+                                      "LINK_INTERFACE_LIBRARIES"
                                       "LINK_PRIVATE"
                                       "LINK_PUBLIC"
+                                      "PRIVATE"
+                                      "PUBLIC"
                                       "debug"
                                       "general"
                                       "optimized"))
+    ("target_sources"              . ("INTERFACE"
+                                      "PRIVATE"
+                                      "PUBLIC"))
     ("try_compile"                 . ("CMAKE_FLAGS"
                                       "COPY_FILE"
                                       "INCLUDE_DIRECTORIES"
@@ -594,7 +611,8 @@
                                       "COMPILE_OUTPUT_VARIABLE"
                                       "OUTPUT_VARIABLE"
                                       "RUN_OUTPUT_VARIABLE"))
-    ("unset"                       . ("CACHE"))
+    ("unset"                       . ("CACHE"
+                                      "PARENT_SCOPE"))
     ("use_mangled_mesa"            . ("OUTPUT_DIRECTORY"
                                       "PATH_TO_MESA"))
     ("variable_requires"           . ("REQUIRED_VARIABLE1"
@@ -624,7 +642,7 @@ This is used to keep down the size of
 
 (defvar cmake-font-lock-function-signatures
   '(("add_custom_command"     ()     (("DEPENDS" :repeat :path)
-                                      ("IMPLICIT_DEPENDS" nil :repeat :path)
+                                      ("IMPLICIT_DEPENDS" :repeat nil :path)
                                       ("MAIN_DEPENDENCY" :path)
                                       ("TARGET" :tgt)))
     ("add_custom_target"      (:tgt) (("DEPENDS" :repeat :path)))
@@ -738,7 +756,9 @@ This is used to keep down the size of
                                       (("PROPERTIES" :repeat (:prop nil))))
     ("set_test_properties"    ()      (("PROPERTIES" :repeat (:prop nil))))
     ("site_name"              (:var))
-    ("string"                 ()      (("MATCH"     nil :var)
+    ("string"                 ()      (("CONCAT"    :var)
+                                       ("GENEX_STRIP" nil :var)
+                                       ("MATCH"     nil :var)
                                        ("MATCHALL"  nil :var)
                                        ("REPLACE"   nil nil :var)
                                        ("MD5"       :var)
@@ -761,15 +781,18 @@ This is used to keep down the size of
                                        ("TIMESTAMP" :var)
                                        ("MAKE_C_IDENTIFIER" nil :var)
                                        ("RANDOM"    :repeat nil :var)
-                                       ("FIND"      nil nil :var)))
-    ("target_compile_options" (:tgt))
+                                       ("FIND"      nil nil :var)
+                                       ("UUID"      :var)))
+    ("target_compile_features"    (:tgt))
+    ("target_compile_options"     (:tgt))
     ("target_compile_definitions" (:tgt) (("INTERFACE" :repeat :def)
                                           ("PUBLIC"    :repeat :def)
                                           ("PRIVATE"   :repeat :def)))
     ("target_include_directories" (:tgt) (("INTERFACE" :repeat :path)
                                           ("PUBLIC"    :repeat :path)
                                           ("PRIVATE"   :repeat :path)))
-    ("target_link_libraries"   (:tgt))
+    ("target_link_libraries"      (:tgt))
+    ("target_sources"             (:tgt))
     ;; Placement of :optional is to allow "try_compile(var dir SOURCES ...)"
     ("try_compile"             (:var nil :optional nil nil :tgt)
                                        (("OUTPUT_VARIABLE" :var)
@@ -876,6 +899,34 @@ second and third element of each entry in the list
       name)))
 
 
+(defun cmake-font-lock-is-in-comment ()
+  "Return non-nil if point is in a comment.
+
+This assumes that Font Lock is active and has fontified comments."
+  (let ((props (text-properties-at (point)))
+        (faces '()))
+    (while props
+      (let ((pr (pop props))
+            (value (pop props)))
+        (if (eq pr 'face)
+            (setq faces value))))
+    (unless (listp faces)
+      (setq faces (list faces)))
+    (memq 'font-lock-comment-face faces)))
+
+
+(defun cmake-font-lock-search-forward-ignore-comments (re limit)
+  "Search forward for regexp RE but ignore occurences in comments.
+LIMIT is search limit."
+  (let (res)
+    (while
+        (progn
+          (setq res (re-search-forward re limit t))
+          (and res
+               (cmake-font-lock-is-in-comment))))
+    res))
+
+
 ;; ----------------------------------------
 ;; Support for ${...} constructs.
 ;;
@@ -958,8 +1009,8 @@ Subexpressions of the match-data are as follows:
  }   4 (if present)"
   (let ((id "[a-zA-Z@_][a-zA-Z@_0-9]*")
         (ws "\\s-*"))
-     (if (re-search-forward
-          (concat "\\(\\$\\)?" ws "\\(" id ws "\\)?" "\\({\\)") lim t)
+     (if (cmake-font-lock-search-forward-ignore-comments
+          (concat "\\(\\$\\)?" ws "\\(" id ws "\\)?" "\\({\\)") lim)
          (let ((md (list (match-beginning 0) (match-end 0)
                          (match-beginning 1) (match-end 1)
                          (match-beginning 2) (match-end 2)

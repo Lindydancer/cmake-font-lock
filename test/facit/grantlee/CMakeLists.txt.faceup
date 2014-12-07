@@ -228,7 +228,7 @@
 
   «f:set»(«v:coverage_ARGS» «D:${»«v:coverage_ARGS»«D:}» COMMAND «D:${»«v:LCOV_EXECUTABLE»«D:}» «D:${»«v:infoFiles»«D:}» -o test_all.info)
 
-  «x:# For an unknown reason lcov does not work with absolute paths such as ${«v:CMAKE_BINARY_DIR»}
+  «x:# For an unknown reason lcov does not work with absolute paths such as ${CMAKE_BINARY_DIR}
 »  «f:file»(«t:RELATIVE_PATH» «v:relBinaryDir» / «D:${»«v:CMAKE_BINARY_DIR»«D:}»)
   «f:file»(«t:RELATIVE_PATH» «v:relQtDir» / «D:${»«v:QT_HEADERS_DIR»«D:}»)
 

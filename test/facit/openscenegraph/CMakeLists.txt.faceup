@@ -315,7 +315,7 @@
 
         «x:# turn off various warnings
 »        «x:# foreach(warning 4244 4251 4267 4275 4290 4786 4305 4996)
-»        «x:#     SET(CMAKE_CXX_FLAGS "${«v:CMAKE_CXX_FLAGS»} /wd${«v:warning»}")
+»        «x:#     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd${warning}")
 »        «x:# endforeach(warning)
 »
         «x:# This option is to enable the /DYNAMICBASE switch
@@ -358,7 +358,7 @@
 # the following options are MSVC specific,
 # the first OSG_MSVC_VERSIONED_DLL activate a custom build-time layout that should allow to run examples and application
 # fron bin folder without requiring installation step.
-# it also prepend "osg${«v:OPENSCENEGRAPH_SOVERSION»}-" to only .dll files, leaving .lib files untouched in lib
+# it also prepend "osg${OPENSCENEGRAPH_SOVERSION}-" to only .dll files, leaving .lib files untouched in lib
 # it also use a hack to get rid of Debug and Release folder in MSVC projects
 # all the .dll and .pdb are in bin and all the .lib and .exp are in lib
 #
@@ -391,9 +391,9 @@
 #luigi#SET(CMAKE_SKIP_RPATH TRUE)
 #luigi#SET(CMAKE_SKIP_RULE_DEPENDENCY TRUE)
 #luigi#IF(UNIX)
-#luigi#    LIST_CONTAINS(contains "g++" ${«v:CMAKE_CXX_COMPILER_LIST»})
+#luigi#    LIST_CONTAINS(contains "g++" ${CMAKE_CXX_COMPILER_LIST})
 #luigi#    IF (contains)
-#luigi#        MESSAGE(${«v:MY_MESSAGE_DEFAULT»} "${«v:CMAKE_CURRENT_LIST_FILE»}:${«v:CMAKE_CURRENT_LIST_LINE»} setting  CMAKE_CXX_COMPILER to g++")
+#luigi#        MESSAGE(${MY_MESSAGE_DEFAULT} "${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} setting  CMAKE_CXX_COMPILER to g++")
 #luigi#        SET(CMAKE_CXX_COMPILER "g++")
 #luigi#        SET(CMAKE_CXX_COMPILER_LOADED 2)
 #luigi#        SET(CMAKE_CXX_COMPILER_WORKS 2)
@@ -436,11 +436,11 @@
 
 «f:SET»(«v:OPENGL_egl_LIBRARY» «t:CACHE» «t:STRING» «s:"Set the OpenGL egl library."»)
 
-«x:# SET(OSG_GL_DISPLAYLISTS_AVAILABLE ${«v:OSG_GL1_AVAILABLE»})
-# SET(OSG_GL_MATRICES_AVAILABLE ${«v:OSG_GL1_AVAILABLE»})
-# SET(OSG_GL_VERTEX_FUNCS_AVAILABLE ${«v:OSG_GL1_AVAILABLE»})
-# SET(OSG_GL_VERTEX_ARRAY_FUNCS_AVAILABLE ${«v:OSG_GL1_AVAILABLE»})
-# SET(OSG_GL_FIXED_FUNCTION_AVAILABLE ${«v:OSG_GL1_AVAILABLE»})
+«x:# SET(OSG_GL_DISPLAYLISTS_AVAILABLE ${OSG_GL1_AVAILABLE})
+# SET(OSG_GL_MATRICES_AVAILABLE ${OSG_GL1_AVAILABLE})
+# SET(OSG_GL_VERTEX_FUNCS_AVAILABLE ${OSG_GL1_AVAILABLE})
+# SET(OSG_GL_VERTEX_ARRAY_FUNCS_AVAILABLE ${OSG_GL1_AVAILABLE})
+# SET(OSG_GL_FIXED_FUNCTION_AVAILABLE ${OSG_GL1_AVAILABLE})
 »
 «f:OPTION»(«v:OSG_GL_DISPLAYLISTS_AVAILABLE» «s:"Set to OFF to disable use of OpenGL display lists."» «D:${»«v:OSG_GL1_AVAILABLE»«D:}»)
 «f:OPTION»(«v:OSG_GL_MATRICES_AVAILABLE» «s:"Set to OFF to disable use of OpenGL built-in matrices."» «D:${»«v:OSG_GL1_AVAILABLE»«D:}»)
@@ -461,7 +461,7 @@
 «f:CONFIGURE_FILE»(«s:"${«v:CMAKE_CURRENT_SOURCE_DIR»}/src/osg/Version.in"»
                «s:"${«v:OPENSCENEGRAPH_VERSION_HEADER»}"»)
 
-«x:# INSTALL_FILES(/include/osg/ FILES "${«v:OPENSCENEGRAPH_CONFIG_HEADER»}")
+«x:# INSTALL_FILES(/include/osg/ FILES "${OPENSCENEGRAPH_CONFIG_HEADER}")
 »
 
 «x:################################################################################
@@ -652,14 +652,14 @@
 «x:# Here we apparantly do some funky stuff with making the bin/ and lib/
 # folders which is probably needed to work around a very old CMake bug?
 »
-«x:#SET(OUTPUT_BINDIR ${«v:PROJECT_BINARY_DIR»}/bin/${«v:CMAKE_SYSTEM_NAME»})
+«x:#SET(OUTPUT_BINDIR ${PROJECT_BINARY_DIR}/bin/${CMAKE_SYSTEM_NAME})
 »«f:SET»(«v:OUTPUT_BINDIR» «D:${»«v:PROJECT_BINARY_DIR»«D:}»/bin)
 «f:MAKE_DIRECTORY»(«D:${»«v:OUTPUT_BINDIR»«D:}»)
 «k:IF»(«v:MSVC» «t:AND» «t:NOT» «v:MSVC_IDE»)
     «f:MAKE_DIRECTORY»(«D:${»«v:OUTPUT_BINDIR»«D:}»/«D:${»«v:OSG_PLUGINS»«D:}»)
 «k:ENDIF»(«v:MSVC» «t:AND» «t:NOT» «v:MSVC_IDE»)
 
-«x:#SET(OUTPUT_LIBDIR ${«v:PROJECT_BINARY_DIR»}/lib/${«v:CMAKE_SYSTEM_NAME»})
+«x:#SET(OUTPUT_LIBDIR ${PROJECT_BINARY_DIR}/lib/${CMAKE_SYSTEM_NAME})
 »«f:SET»(«v:OUTPUT_LIBDIR» «D:${»«v:PROJECT_BINARY_DIR»«D:}»/lib)
 «f:MAKE_DIRECTORY»(«D:${»«v:OUTPUT_LIBDIR»«D:}»)
 «k:IF»(«t:NOT» «v:MSVC» «t:OR» «v:MSVC_IDE»)
@@ -941,7 +941,7 @@
 »    «f:CONFIGURE_FILE»(«D:${»«v:PROJECT_SOURCE_DIR»«D:}»/PlatformSpecifics/Windows/icons/src/osg32-32.png
         «D:${»«v:PROJECT_BINARY_DIR»«D:}»/doc/OpenSceneGraphReferenceDocs/osg32-32.png «t:COPYONLY»
     )
-    «x:#INSTALL(FILES ${«v:PROJECT_BINARY_DIR»}/doc/${«v:PROJECT_NAME»}ReferenceDocs-${«v:OPENSCENEGRAPH_VERSION»}.chm DESTINATION doc OPTIONAL COMPONENT openscenegraph-doc)
+    «x:#INSTALL(FILES ${PROJECT_BINARY_DIR}/doc/${PROJECT_NAME}ReferenceDocs-${OPENSCENEGRAPH_VERSION}.chm DESTINATION doc OPTIONAL COMPONENT openscenegraph-doc)
 »    «f:INSTALL»(«t:DIRECTORY» «D:${»«v:PROJECT_BINARY_DIR»«D:}»/doc/OpenSceneGraphReferenceDocs «t:DESTINATION» doc «t:COMPONENT» openscenegraph-doc)
 
     «x:# now set up openthreads documentation generation
@@ -957,7 +957,7 @@
 »    «f:CONFIGURE_FILE»(«D:${»«v:PROJECT_SOURCE_DIR»«D:}»/PlatformSpecifics/Windows/icons/src/osg32-32.png
         «D:${»«v:PROJECT_BINARY_DIR»«D:}»/doc/OpenThreadsReferenceDocs/osg32-32.png «t:COPYONLY»
     )
-    «x:#INSTALL(FILES ${«v:PROJECT_BINARY_DIR»}/doc/${«v:PROJECT_NAME»}ReferenceDocs-${«v:OPENSCENEGRAPH_VERSION»}.chm DESTINATION doc OPTIONAL COMPONENT openscenegraph-doc)
+    «x:#INSTALL(FILES ${PROJECT_BINARY_DIR}/doc/${PROJECT_NAME}ReferenceDocs-${OPENSCENEGRAPH_VERSION}.chm DESTINATION doc OPTIONAL COMPONENT openscenegraph-doc)
 »    «f:INSTALL»(«t:DIRECTORY» «D:${»«v:PROJECT_BINARY_DIR»«D:}»/doc/OpenThreadsReferenceDocs «t:DESTINATION» doc «t:COMPONENT» openthreads-doc)
 
     «x:# Process our other doxyfiles but don't create targets for these
@@ -969,7 +969,7 @@
         «D:${»«v:PROJECT_BINARY_DIR»«D:}»/doc/core_Doxyfile)
 
     «x:# This creates a new target to build documentation.
-»    «x:# It runs ${«v:DOXYGEN»} which is the full path and executable to
+»    «x:# It runs ${DOXYGEN} which is the full path and executable to
 »    «x:# Doxygen on your system, set by the FindDoxygen.cmake module
 »    «x:# (called by FindDocumentation.cmake).
 »    «x:# It runs the final generated Doxyfile against it.

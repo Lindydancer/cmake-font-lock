@@ -96,7 +96,7 @@
 
 	«f:CHECK_C_COMPILER_FLAG»(«s:"${«v:_FLAG»}"» «s:"${«v:_CACHE_VAR»}"»)
 	«k:if»(«D:${»«v:_CACHE_VAR»«D:}»)
-		«x:# message(STATUS "Using CFLAG: ${«v:_FLAG»}")
+		«x:# message(STATUS "Using CFLAG: ${_FLAG}")
 »		«f:set»(«D:${»«v:_CFLAGS»«D:}» «s:"${${«v:_CFLAGS»}} ${«v:_FLAG»}"»)
 	«k:else»()
 		«f:message»(«t:STATUS» «s:"Unsupported CFLAG: ${«v:_FLAG»}"»)
@@ -112,7 +112,7 @@
 
 	«f:CHECK_CXX_COMPILER_FLAG»(«s:"${«v:_FLAG»}"» «s:"${«v:_CACHE_VAR»}"»)
 	«k:if»(«D:${»«v:_CACHE_VAR»«D:}»)
-		«x:# message(STATUS "Using CXXFLAG: ${«v:_FLAG»}")
+		«x:# message(STATUS "Using CXXFLAG: ${_FLAG}")
 »		«f:set»(«D:${»«v:_CXXFLAGS»«D:}» «s:"${${«v:_CXXFLAGS»}} ${«v:_FLAG»}"»)
 	«k:else»()
 		«f:message»(«t:STATUS» «s:"Unsupported CXXFLAG: ${«v:_FLAG»}"»)

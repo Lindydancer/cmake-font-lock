@@ -46,3 +46,9 @@ try_run(var1 var2 bindir srcdir COMPILE_DEFINITIONS DEF1 DEF2)
 #
 
 foo($<FOO:$<CONFIGURATION>>)
+
+#
+# Don't highlight variable expressions in comments: ${var}
+#
+
+foo("But they should work in ${strings} and" ${outside})

@@ -46,3 +46,9 @@
 #
 »
 «f:foo»($<«c:FOO»:$<«c:CONFIGURATION»>>)
+
+«x:#
+# Don't highlight variable expressions in comments: ${var}
+#
+»
+«f:foo»(«s:"But they should work in ${«v:strings»} and"» «D:${»«v:outside»«D:}»)
