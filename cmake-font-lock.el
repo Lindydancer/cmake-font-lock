@@ -1,11 +1,11 @@
 ;;; cmake-font-lock.el --- Advanced, type aware, highlight support for CMake
 
-;; Copyright (C) 2012-2014 Anders Lindgren
+;; Copyright (C) 2012-2015 Anders Lindgren
 
 ;; Author: Anders Lindgren
 ;; Keywords: faces, languages
 ;; Created: 2012-12-05
-;; Version: 0.1.1
+;; Version: 0.1.2
 ;; Package-Requires: ((cmake-mode "0.0"))
 ;; URL: https://github.com/Lindydancer/cmake-font-lock
 
@@ -1056,13 +1056,18 @@ Return the name of the matched function."
                 (save-excursion
                   ;; Right before the opening parenthesis.
                   (goto-char (match-end 1))
-                  ;; Find the matching closing parenthesis, use the end
-                  ;; of the buffer as limit if none is found.
-                  (condition-case nil
-                      (progn
-                        (forward-sexp)
-                        (point))
-                    (error (point-max)))))
+                  ;; Search limit. Pick the first of:
+                  (or
+                   ;; Closing parethesis.
+                   (ignore-errors
+                     (forward-sexp)
+                     (point))
+                   ;; Next line starting in column zero.
+                   (save-match-data
+                     (and (re-search-forward "^[^ \t]" lim t)
+                          (match-beginning 0)))
+                   ;; End of buffer.
+                   (point-max))))
           ;; Return function name.
           name)
       ;; Name not found.
@@ -1171,8 +1176,9 @@ are the start and end points of the argument.")
 (defun cmake-font-lock-collect-all-arguments (function-name limit)
   "Find and categorize all arguments.
 
-`function-name' is the name of the function and `limit' is the point
-after the closing parenthesis of the argument list.
+`function-name' is the name of the function and `limit' is the
+point after the closing parenthesis of the argument list (or, if
+not found, another suitable point).
 
 The point is assumed to be positioned after the parenthesis that
 start the argument list.
