@@ -34,7 +34,7 @@
 (require 'faceup)
 
 (defun cmake-font-lock-test (faceup)
-  (faceup-test-font-lock-string 'cmake-mode faceup))
+  (faceup-test-font-lock-string '(cmake-mode cmake-font-lock-activate) faceup))
 (faceup-defexplainer cmake-font-lock-test)
 
 (ert-deftest cmake-font-lock-primitives ()

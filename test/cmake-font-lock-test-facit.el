@@ -36,10 +36,10 @@
 (defvar cmake-font-lock-test-dir (faceup-this-file-directory))
 
 (defun cmake-font-lock-test-facit (dir)
-  "Test that `dir'/CMakeLists.txt is fontifies as the .faceup file describes.
+  "Test that DIR/CMakeLists.txt is fontifies as the .faceup file describes.
 
-`dir' is interpreted as relative to this source directory."
-  (faceup-test-font-lock-file 'cmake-mode
+DIR is interpreted as relative to this source directory."
+  (faceup-test-font-lock-file '(cmake-mode cmake-font-lock-activate)
                               (concat
                                cmake-font-lock-test-dir
                                dir

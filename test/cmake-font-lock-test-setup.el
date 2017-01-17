@@ -28,7 +28,6 @@
 
 (require 'cmake-mode)
 (require 'cmake-font-lock)
-(add-hook 'cmake-mode-hook 'cmake-font-lock-activate)
 
 (require 'cmake-font-lock-test-simple)
 (require 'cmake-font-lock-test-facit)
