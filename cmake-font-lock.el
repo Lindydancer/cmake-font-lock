@@ -179,9 +179,12 @@
 (defvar cmake-font-lock-function-keywords-alist
   '(("add_custom_command"          . ("APPEND"
                                       "ARGS"
+                                      "BYPRODUCTS"
                                       "COMMAND"
+                                      "COMMAND_EXPAND_LISTS"
                                       "COMMENT"
                                       "DEPENDS"
+                                      "DEPFILE"
                                       "IMPLICIT_DEPENDS"
                                       "MAIN_DEPENDENCY"
                                       "OUTPUT"
@@ -189,13 +192,17 @@
                                       "PRE_BUILD"
                                       "PRE_LINK"
                                       "TARGET"
+                                      "USE_TERMINAL"
                                       "VERBATIM"
                                       "WORKING_DIRECTORY"))
     ("add_custom_target"           . ("ALL"
+                                      "BYPRODUCTS"
                                       "COMMAND"
+                                      "COMMAND_EXPAND_LISTS"
                                       "COMMENT"
                                       "DEPENDS"
                                       "SOURCES"
+                                      "USES_TERMINAL"
                                       "VERBATIM"
                                       "WORKING_DIRECTORY"))
     ("add_executable"              . ("EXCLUDE_FROM_ALL"
@@ -220,9 +227,11 @@
     ("build_command"               . ("CONFIGURATION"
                                       "PROJECT_NAME"
                                       "TARGET"))
-    ("cmake_host_system_information" . ("QUERY"))
+    ("cmake_host_system_information" . ("QUERY"
+                                        "RESULT"))
     ("cmake_minimum_required"      . ("FATAL_ERROR"
                                       "VERSION"))
+    ("cmake_parse_arguments"       . ("PARSE_ARGV"))
     ("cmake_policy"                . ("CMP"
                                       "GET"
                                       "NEW"
@@ -259,6 +268,7 @@
                                       "OUTPUT_VARIABLE"
                                       "RETURN_VALUE"))
     ("execute_process"             . ("COMMAND"
+                                      "ENCODING"
                                       "ERROR_FILE"
                                       "ERROR_QUIET"
                                       "ERROR_STRIP_TRAILING_WHITESPACE"
@@ -269,9 +279,11 @@
                                       "OUTPUT_STRIP_TRAILING_WHITESPACE"
                                       "OUTPUT_VARIABLE"
                                       "RESULT_VARIABLE"
+                                      "RESULTS_VARIABLE"
                                       "TIMEOUT"
                                       "WORKING_DIRECTORY"))
-    ("export"                      . ("APPEND"
+    ("export"                      . ("ANDROID_MK"
+                                      "APPEND"
                                       "EXPORT"
                                       "FILE"
                                       "NAMESPACE"
@@ -283,20 +295,26 @@
                                       "CONTENT"
                                       "COPY"
                                       "DESTINATION"
+                                      "DIRECTORY"
                                       "DIRECTORY_PERMISSIONS"
                                       "DOWNLOAD"
                                       "ENCODING"
                                       "EXCLUDE"
                                       "EXPECTED_HASH"
                                       "EXPECTED_MD5"
+                                      "FILE"
                                       "FILES_MATCHING"
                                       "FILE_PERMISSIONS"
                                       "FOLLOW_SYMLINKS"
+                                      "FUNCTION"
                                       "GENERATE"
                                       "GLOB"
                                       "GLOB_RECURSE"
+                                      "GUARD"
                                       "HEX"
+                                      "HTTPHEADER"
                                       "INACTIVITY_TIMEOUT"
+                                      "IGNORED"
                                       "INSTALL"
                                       "INPUT"
                                       "LENGTH_MAXIMUM"
@@ -305,22 +323,30 @@
                                       "LIMIT_COUNT"
                                       "LIMIT_INPUT"
                                       "LIMIT_OUTPUT"
+                                      "LIST_DIRECTORIES"
                                       "LOG"
                                       "MAKE_DIRECTORY"
                                       "MD5"
+                                      "NETRC"
+                                      "NETRC_FILE"
                                       "NEWLINE_CONSUME"
                                       "NO_HEX_CONVERSION"
                                       "NO_SOURCE_PERMISSIONS"
                                       "OFFSET"
+                                      "OPTIONAL"
                                       "OUTPUT"
                                       "PATTERN"
                                       "PERMISSIONS"
+                                      "PROCESS"
                                       "REGEX"
                                       "RELATIVE"
                                       "RELATIVE_PATH"
+                                      "RELEASE"
                                       "REMOVE"
                                       "REMOVE_RECURSE"
                                       "RENAME"
+                                      "REQUIRED"
+                                      "RESULT_VARIABLE"
                                       "SHA1"
                                       "SHA224"
                                       "SHA256"
@@ -335,6 +361,7 @@
                                       "TO_NATIVE_PATH"
                                       "UPLOAD"
                                       "USE_SOURCE_PERMISSIONS"
+                                      "USERPWD"
                                       "UTC"
                                       "WRITE"))
     ("find_file"                   . ("CMAKE_FIND_ROOT_PATH_BOTH"
@@ -410,6 +437,7 @@
                                       "ENV"
                                       "HINTS"
                                       "NAMES"
+                                      "NAMES_PER_DIR"
                                       "NO_CMAKE_ENVIRONMENT_PATH"
                                       "NO_CMAKE_FIND_ROOT_PATH"
                                       "NO_CMAKE_PATH"
@@ -441,6 +469,7 @@
                                       "DIRECTORY"
                                       "FULL_DOCS"
                                       "GLOBAL"
+                                      "INSTALL"
                                       "PROPERTY"
                                       "SET"
                                       "SOURCE"
@@ -456,6 +485,8 @@
     ("include_external_msproject"  . ("GUID"
                                       "PLATFORM"
                                       "TYPE"))
+    ("include_guard"               . ("DIRECTORY"
+                                      "GLOBAL"))
     ("install"                     . ("ARCHIVE"
                                       "BUNDLE"
                                       "CODE"
@@ -465,7 +496,10 @@
                                       "DIRECTORY"
                                       "DIRECTORY_PERMISSIONS"
                                       "EXCLUDE"
+                                      "EXCLUDE_FROM_ALL"
                                       "EXPORT"
+                                      "EXPORT_ANDROID_MK"
+                                      "EXPORT_LINK_INTERFACE_LIBRARIES"
                                       "FILE"
                                       "FILES"
                                       "FILES_MATCHING"
@@ -474,9 +508,11 @@
                                       "INCLUDES"
                                       "LIBRARY"
                                       "MESSAGE"
+                                      "MESSAGE_NEVER"
                                       "NAMELINK_ONLY"
                                       "NAMELINK_SKIP"
                                       "NAMESPACE"
+                                      "OBJECTS"
                                       "OPTIONAL"
                                       "PATTERN"
                                       "PERMISSIONS"
@@ -494,10 +530,14 @@
     ("install_programs"            . ("FILES"))
     ("install_targets"             . ("RUNTIME_DIRECTORY"))
     ("list"                        . ("APPEND"
+                                      "EXCLUDE"
+                                      "FILTER"
                                       "FIND"
                                       "GET"
+                                      "INCLUDE"
                                       "INSERT"
                                       "LENGTH"
+                                      "REGEX"
                                       "REMOVE_AT"
                                       "REMOVE_DUPLICATES"
                                       "REMOVE_ITEM"
@@ -517,7 +557,11 @@
                                       "SEND_ERROR"
                                       "STATUS"
                                       "WARNING"))
-    ("separate_arguments"          . ("UNIX_COMMAND"
+    ("project"                     . ("DESCRIPTION"
+                                      "LANGUAGES"
+                                      "VERSION"))
+    ("separate_arguments"          . ("NATIVE_COMMAND"
+                                      "UNIX_COMMAND"
                                       "WINDOWS_COMMAND"))
     ("set"                         . ("BOOL"
                                       "CACHE"
@@ -532,6 +576,7 @@
                                       "CACHE"
                                       "DIRECTORY"
                                       "GLOBAL"
+                                      "INSTALL"
                                       "PROPERTY"
                                       "SOURCE"
                                       "TARGET"
@@ -540,18 +585,25 @@
     ("set_target_properties"       . ("PROPERTIES"))
     ("set_tests_properties"        . ("PROPERTIES"))
     ("source_group"                . ("FILES"
-                                      "REGULAR_EXPRESSION"))
+                                      "PREFIX"
+                                      "REGULAR_EXPRESSION"
+                                      "TREE"))
     ("string"                      . ("@ONLY"
                                       "ALPHABET"
+                                      "APPEND"
                                       "ASCII"
                                       "COMPARE"
+                                      "CONCAT"
                                       "CONFIGURE"
                                       "EQUAL"
                                       "ESCAPE_QUOTES"
                                       "FIND"
+                                      "GENEX_STRIP"
                                       "GREATER"
+                                      "GREATER_EQUAL"
                                       "LENGTH"
                                       "LESS"
+                                      "LESS_EQUAL"
                                       "MATCH"
                                       "MATCHALL"
                                       "MATCHES"
@@ -559,6 +611,7 @@
                                       "NAME"
                                       "NAMESPACE"
                                       "NOTEQUAL"
+                                      "PREPEND"
                                       "RANDOM"
                                       "RANDOM_SEED"
                                       "REGEX"
@@ -569,8 +622,13 @@
                                       "SHA256"
                                       "SHA384"
                                       "SHA512"
+                                      "SHA3_224"
+                                      "SHA3_256"
+                                      "SHA3_384"
+                                      "SHA3_512"
                                       "STRIP"
                                       "SUBSTRING"
+                                      "TIMESTAMP"
                                       "TOLOWER"
                                       "TOUPPER"
                                       "TYPE"
@@ -586,7 +644,10 @@
                                       "PUBLIC"
                                       "PRIVATE"))
     ("target_include_directories"  . ("SYSTEM"
-                                      "BEFORE"))
+                                      "BEFORE"
+                                      "INTERFACE"
+                                      "PUBLIC"
+                                      "PRIVATE"))
     ("target_link_libraries"       . ("INTERFACE"
                                       "LINK_INTERFACE_LIBRARIES"
                                       "LINK_PRIVATE"
@@ -599,7 +660,13 @@
     ("target_sources"              . ("INTERFACE"
                                       "PRIVATE"
                                       "PUBLIC"))
-    ("try_compile"                 . ("CMAKE_FLAGS"
+    ("try_compile"                 . ("C_STANDARD"
+                                      "C_STANDARD_REQUIRED"
+                                      "CXX_STANDARD"
+                                      "CXX_STANDARD_REQUIRED"
+                                      "C_EXTENSIONS"
+                                      "CXX_EXTENSIONS"
+                                      "CMAKE_FLAGS"
                                       "COPY_FILE"
                                       "INCLUDE_DIRECTORIES"
                                       "LINK_DIRECTORIES"
@@ -609,6 +676,7 @@
     ("try_run"                     . ("ARGS"
                                       "CMAKE_FLAGS"
                                       "COMPILE_OUTPUT_VARIABLE"
+                                      "LINK_LIBRARIES"
                                       "OUTPUT_VARIABLE"
                                       "RUN_OUTPUT_VARIABLE"))
     ("unset"                       . ("CACHE"
@@ -641,11 +709,15 @@ This is used to keep down the size of
 
 
 (defvar cmake-font-lock-function-signatures
-  '(("add_custom_command"     ()     (("DEPENDS" :repeat :path)
+  '(("add_custom_command"     ()     (("BYPRODUCTS" :repeat :path)
+                                      ("DEPENDS" :repeat :path)
+                                      ("DEPFILE" :path)
                                       ("IMPLICIT_DEPENDS" :repeat nil :path)
                                       ("MAIN_DEPENDENCY" :path)
                                       ("TARGET" :tgt)))
-    ("add_custom_target"      (:tgt) (("DEPENDS" :repeat :path)))
+    ("add_custom_target"      (:tgt) (("BYPRODUCTS" :repeat :path)
+                                      ("DEPENDS" :repeat :path)
+                                      ("SOURCES" :repeat :path)))
     ("add_dependencies"       (:repeat :tgt))
     ("add_executable"         (:tgt) (("ALIAS" :tgt)))
     ("add_library"            (:tgt) (("ALIAS" :tgt)))
@@ -656,24 +728,31 @@ This is used to keep down the size of
                                   ("SET" :policy)))
     ("define_property"        () (("PROPERTY" :prop)))
     ("execute_process"        ()     (("RESULT_VARIABLE" :var)
+                                      ("RESULTS_VARIABLE" :var)
                                       ("OUTPUT_VARIABLE" :var)
                                       ("ERROR_VARIABLE"  :var)
                                       ("INPUT_FILE"      nil)))
     ("export"                 () (("TARGETS" :repeat :tgt)))
-    ("file"                   ()     (("READ"           :path :var)
-                                      ("MD5"            :path :var)
-                                      ("SHA1"           :path :var)
-                                      ("SHA224"         :path :var)
-                                      ("SHA256"         :path :var)
-                                      ("SHA384"         :path :var)
-                                      ("SHA512"         :path :var)
-                                      ("STRINGS"        :path :var)
-                                      ("TIMESTAMP"      :path :var)
-                                      ("GLOB"           :var)
-                                      ("GLOB_RECURSE"   :var)
-                                      ("RELATIVE_PATH"  :var :path :path)
-                                      ("TO_CMAKE_PATH"  :path :var)
-                                      ("TO_NATIVE_PATH" :path :var)))
+    ("file"                   ()     (("LOCK"            :path)
+                                      ("READ"            :path :var)
+                                      ("MD5"             :path :var)
+                                      ("SHA1"            :path :var)
+                                      ("SHA224"          :path :var)
+                                      ("SHA256"          :path :var)
+                                      ("SHA384"          :path :var)
+                                      ("SHA512"          :path :var)
+                                      ("SHA3_224"        :path :var)
+                                      ("SHA3_256"        :path :var)
+                                      ("SHA3_384"        :path :var)
+                                      ("SHA3_512"        :path :var)
+                                      ("STRINGS"         :path :var)
+                                      ("TIMESTAMP"       :path :var)
+                                      ("GLOB"            :var)
+                                      ("GLOB_RECURSE"    :var)
+                                      ("RESULT_VARIABLE" :var)
+                                      ("RELATIVE_PATH"   :var :path :path)
+                                      ("TO_CMAKE_PATH"   :path :var)
+                                      ("TO_NATIVE_PATH"  :path :var)))
     ("find_file"              (:var :optional nil :repeat :path))
     ("find_library"           (:var :optional nil :repeat :path))
     ("find_path"              (:var :optional nil :repeat :path))
@@ -688,8 +767,12 @@ This is used to keep down the size of
      (("DIRECTORY"  :path :optional :prop)
       ("DEFINITION" :var :optional :prop)))
     ("get_filename_component" (:var :path))
-    ("get_property"           (:var) (("PROPERTY" :prop)
-                                      ("TARGET"   :tgt)))
+    ("get_property"           (:var) (("PROPERTY"  :prop)
+                                      ("DIRECTORY" :path)
+                                      ("INSTALL"   :path)
+                                      ("SOURCE"    :path)
+                                      ("TARGET"    :tgt)
+                                      ("TEST"      :tst)))
     ("get_source_file_property" (:var :path :prop))
     ("get_target_property"    (:var :tgt :prop))
     ("get_test_property"      (:test :prop :var))
@@ -705,33 +788,42 @@ This is used to keep down the size of
     ;; The ":optional :var" is needed to match both "(x OR y)" and the
     ;; more complex "(x OR ( y AND z ))"
     ("if"  (:optional :var)
-     (("("               :optional :var)
-      ("AND"             :optional :var)
-      ("COMMAND"         :func)
-      ("DEFINED"         :var)
-      ("EQUAL"           :var)
-      ("EXISTS"          :path)
-      ("GREATER"         :var)
-      ("IS_ABSOLUTE"     :path)
-      ("IS_DIRECTORY"    :path)
-      ("IS_NEWER_THAN"   :path)
-      ("IS_SYMLINK"      :path)
-      ("LESS"            :var)
-      ("MATCHES"         :regexp)
-      ("NOT"             :optional :var)
-      ("OR"              :optional :var)
-      ("POLICY"          :policy)
-      ("STREQUAL"        :var)
-      ("STRGREATER"      :var)
-      ("STRLESS"         :var)
-      ("TARGET"          :tgt)
-      ("VERSION_EQUAL"   :var)
-      ("VERSION_GREATER" :var)
-      ("VERSION_LESS"    :var)))
+     (("("                     :optional :var)
+      ("AND"                   :optional :var)
+      ("COMMAND"               :func)
+      ("DEFINED"               :var)
+      ("EQUAL"                 :var)
+      ("EXISTS"                :path)
+      ("GREATER"               :var)
+      ("GREATER_EQUAL"         :var)
+      ("IN_LIST"               :var)
+      ("IS_ABSOLUTE"           :path)
+      ("IS_DIRECTORY"          :path)
+      ("IS_NEWER_THAN"         :path)
+      ("IS_SYMLINK"            :path)
+      ("LESS"                  :var)
+      ("LESS_EQUAL"            :var)
+      ("MATCHES"               :regexp)
+      ("NOT"                   :optional :var)
+      ("OR"                    :optional :var)
+      ("POLICY"                :policy)
+      ("STREQUAL"              :var)
+      ("STRGREATER"            :var)
+      ("STRGREATER_EQUAL"      :var)
+      ("STRLESS"               :var)
+      ("STRLESS_EQUAL"         :var)
+      ("TARGET"                :tgt)
+      ("TEST"                  :tst)
+      ("VERSION_EQUAL"         :var)
+      ("VERSION_GREATER"       :var)
+      ("VERSION_GREATER_EQUAL" :var)
+      ("VERSION_LESS"          :var)
+      ("VERSION_LESS_EQUAL"    :var)))
     ("include"                ()     (("RESULT_VARIABLE"   :var)))
     ("include_external_msproject" (:tgt :path))
     ("install"                ()     (("TARGETS"           :repeat :tgt)))
-    ("list"                   ()     (("LENGTH"            nil :var)
+    ("list"                   ()     (("FILTER"            :var)
+                                      ("LENGTH"            nil :var)
                                       ("GET"               :repeat nil :var)
                                       ("APPEND"            :var)
                                       ("FIND"              :var nil :var)
@@ -750,11 +842,16 @@ This is used to keep down the size of
     ("set"                    (:var))
     ("set_directory_properties" ()    (("PROPERTIES" :repeat (:prop nil))))
     ("set_property"           ()      (("PROPERTY"   :prop)
-                                       ("TARGET"     :repeat :prop)))
+                                       ("DIRECTORY"  :path)
+                                       ("INSTALL"    :repeat :path)
+                                       ("SOURCE"     :repeat :path)
+                                       ("TARGET"     :repeat :tgt)
+                                       ("TEST"       :repeat :tst)))
     ("set_source_files_properties" () (("PROPERTIES" :repeat (:prop nil))))
     ("set_target_properties"  (:repeat :tgt)
                                       (("PROPERTIES" :repeat (:prop nil))))
-    ("set_test_properties"    ()      (("PROPERTIES" :repeat (:prop nil))))
+    ("set_test_properties"    (:repeat :tst)
+                                      (("PROPERTIES" :repeat (:prop nil))))
     ("site_name"              (:var))
     ("string"                 ()      (("CONCAT"    :var)
                                        ("GENEX_STRIP" nil :var)
@@ -767,6 +864,10 @@ This is used to keep down the size of
                                        ("SHA256"    :var)
                                        ("SHA384"    :var)
                                        ("SHA512"    :var)
+                                       ("SHA3_224"  :var)
+                                       ("SHA3_256"  :var)
+                                       ("SHA3_384"  :var)
+                                       ("SHA3_512"  :var)
                                        ("EQUAL"     nil nil :var)
                                        ("NOTEQUAL"  nil nil :var)
                                        ("LESS"      nil nil :var)
@@ -799,7 +900,9 @@ This is used to keep down the size of
                                         ("COMPILE_DEFINITIONS" :repeat :def)
                                         ("COPY_FILE_ERROR" :var)))
     ("try_run"                 (:var :var)
-                                       (("OUTPUT_VARIABLE" :var)
+                                       (("COMPILE_OUTPUT_VARIABLE" :var)
+                                        ("OUTPUT_VARIABLE" :var)
+                                        ("RUN_OUTPUT_VARIABLE" :var)
                                         ("COMPILE_DEFINITIONS" :repeat :def)))
     ("unset"                   (:var))
     ("variable_watch"          (:var)))
@@ -1147,7 +1250,8 @@ ${var} construct."
     (:prop    . font-lock-constant-face)
     (:policy  . font-lock-constant-face)
     (:keyword . font-lock-type-face)
-    (:tgt     . font-lock-constant-face))
+    (:tgt     . font-lock-constant-face)
+    (:tst     . font-lock-constant-face))
   "*Map from argument kind to face used to highlight that kind.")
 
 
@@ -1437,6 +1541,7 @@ match."
 
   (setq font-lock-multiline t)
   (let* ((keywords '("break"
+                     "continue"
                      "foreach"    "endforeach"
                      "function"   "endfunction"
                      "else"
