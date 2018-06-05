@@ -292,6 +292,7 @@
     ("export_library_dependencies" . ("APPEND"))
     ("file"                        . ("APPEND"
                                       "CONDITION"
+                                      "CONFIGURE_DEPENDS"
                                       "CONTENT"
                                       "COPY"
                                       "DESTINATION"
@@ -359,6 +360,8 @@
                                       "TLS_CAINFO"
                                       "TO_CMAKE_PATH"
                                       "TO_NATIVE_PATH"
+                                      "TOUCH"
+                                      "TOUCH_NOCREATE"
                                       "UPLOAD"
                                       "USE_SOURCE_PERMISSIONS"
                                       "USERPWD"
@@ -410,6 +413,7 @@
                                       "NO_CMAKE_SYSTEM_PATH"
                                       "NO_DEFAULT_PATH"
                                       "NO_MODULE"
+                                      "NO_PACKAGE_ROOT_PATH"
                                       "NO_POLICY_SCOPE"
                                       "NO_SYSTEM_ENVIRONMENT_PATH"
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
@@ -509,6 +513,7 @@
                                       "LIBRARY"
                                       "MESSAGE"
                                       "MESSAGE_NEVER"
+                                      "NAMELINK_COMPONENT"
                                       "NAMELINK_ONLY"
                                       "NAMELINK_SKIP"
                                       "NAMESPACE"
@@ -530,19 +535,31 @@
     ("install_programs"            . ("FILES"))
     ("install_targets"             . ("RUNTIME_DIRECTORY"))
     ("list"                        . ("APPEND"
+                                      "AT"
                                       "EXCLUDE"
                                       "FILTER"
                                       "FIND"
+                                      "FOR"
+                                      "GENEX_STRIP"
                                       "GET"
                                       "INCLUDE"
                                       "INSERT"
+                                      "JOIN"
                                       "LENGTH"
+                                      "PREPEND"
                                       "REGEX"
                                       "REMOVE_AT"
                                       "REMOVE_DUPLICATES"
                                       "REMOVE_ITEM"
+                                      "REPLACE"
                                       "REVERSE"
-                                      "SORT"))
+                                      "SORT"
+                                      "STRIP"
+                                      "SUBLIST"
+                                      "TOLOWER"
+                                      "TOUPPER"
+                                      "TRANSFORM"
+                                      "OUTPUT_VARIABLE"))
     ("load_cache"                  . ("EXCLUDE"
                                       "INCLUDE_INTERNALS"
                                       "READ_WITH_PREFIX"))
@@ -558,6 +575,7 @@
                                       "STATUS"
                                       "WARNING"))
     ("project"                     . ("DESCRIPTION"
+                                      "HOMEPAGE_URL"
                                       "LANGUAGES"
                                       "VERSION"))
     ("separate_arguments"          . ("NATIVE_COMMAND"
@@ -601,6 +619,7 @@
                                       "GENEX_STRIP"
                                       "GREATER"
                                       "GREATER_EQUAL"
+                                      "JOIN"
                                       "LENGTH"
                                       "LESS"
                                       "LESS_EQUAL"
@@ -823,16 +842,18 @@ This is used to keep down the size of
     ("include_external_msproject" (:tgt :path))
     ("install"                ()     (("TARGETS"           :repeat :tgt)))
     ("list"                   ()     (("FILTER"            :var)
-                                      ("LENGTH"            nil :var)
-                                      ("GET"               :repeat nil :var)
+                                      ("LENGTH"            :var :var)
+                                      ("GET"               :var :repeat nil :var)
                                       ("APPEND"            :var)
                                       ("FIND"              :var nil :var)
-                                      ("INSERT"            :var)
+                                      ("INSERT"            :var nil)
+                                      ("JOIN"              :var nil :var)
                                       ("REMOVE_ITEM"       :var)
                                       ("REMOVE_AT"         :var)
                                       ("REMOVE_DUPLICATES" :var)
                                       ("REVERSE"           :var)
-                                      ("SORT"              :var)))
+                                      ("SORT"              :var)
+                                      ("TRANSFORM"         :var)))
     ("macro"                  (:func :repeat :var))
     ("mark_as_advanced"       (:repeat :var) (("CLEAR" :repeat :var)
                                               ("FORCE" :repeat :var)))
@@ -874,6 +895,7 @@ This is used to keep down the size of
                                        ("GREATER"   nil nil :var)
                                        ("ASCII"     :repeat nil :var)
                                        ("CONFIGURE" nil :var)
+                                       ("JOIN"      nil :var)
                                        ("TOUPPER"   nil :var)
                                        ("TOLOWER"   nil :var)
                                        ("LENGTH"    nil :var)
