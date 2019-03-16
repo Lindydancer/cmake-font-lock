@@ -1301,7 +1301,7 @@ ${var} construct."
       nil
     (save-excursion
       (let ((p (point)))
-        (if (memq (following-char) '( ?( ?) ))
+        (if (memq (following-char) '( ?\( ?\) ))
             ;; Parentheses are tokens by themselves.
             ;;
             ;; set(x (y))  == set(x "(;y;)")
