@@ -41,11 +41,32 @@
 
 «f:try_run»(«v:var1» «v:var2» bindir srcdir «t:COMPILE_DEFINITIONS» «c:DEF1» «c:DEF2»)
 
+«x:# list()
+»
+«f:list»(«t:INSERT» «v:var»)                «x:# Incomplete, should still highlight OK.
+»«f:list»(«t:INSERT» «v:var» alpha beta)
+
+«x:# execute_process()
+»
+«f:execute_process»(
+  «t:COMMAND» mycommand
+  «t:RESULT_VARIABLE» «v:myvar»
+  «t:OUTPUT_FILE» myfile
+  «t:INPUT_FILE» myfile
+  «t:OUTPUT_FILE» myfile)
+
+«f:execute_process»(
+  «t:COMMAND» mycommand
+  «t:RESULT_VARIABLE» «v:myvar»
+  «t:OUTPUT_FILE»
+  INPUT_FILE                    «x:# This is the argument to OUTPUT_FILE.
+»  «t:OUTPUT_FILE»)
+
 «x:#
 # Generator expressions
 #
 »
-«f:foo»($<«c:FOO»:$<«c:CONFIGURATION»>>)
+«f:foo»($<«p:FOO»:$<«p:CONFIGURATION»>>)
 
 «x:#
 # Don't highlight variable expressions in comments: ${var}

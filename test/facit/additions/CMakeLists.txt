@@ -41,6 +41,27 @@ try_compile(var bindir src COPY_FILE file COPY_FILE_ERROR var2)
 
 try_run(var1 var2 bindir srcdir COMPILE_DEFINITIONS DEF1 DEF2)
 
+# list()
+
+list(INSERT var)                # Incomplete, should still highlight OK.
+list(INSERT var alpha beta)
+
+# execute_process()
+
+execute_process(
+  COMMAND mycommand
+  RESULT_VARIABLE myvar
+  OUTPUT_FILE myfile
+  INPUT_FILE myfile
+  OUTPUT_FILE myfile)
+
+execute_process(
+  COMMAND mycommand
+  RESULT_VARIABLE myvar
+  OUTPUT_FILE
+  INPUT_FILE                    # This is the argument to OUTPUT_FILE.
+  OUTPUT_FILE)
+
 #
 # Generator expressions
 #

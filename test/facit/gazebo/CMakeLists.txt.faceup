@@ -18,7 +18,7 @@
 
 «f:message» («t:STATUS» «s:"${«v:PROJECT_NAME»} version ${«v:GAZEBO_VERSION_FULL»}"»)
 
-«f:set» («v:gazebo_cmake_dir» «D:${»«v:PROJECT_SOURCE_DIR»«D:}»/cmake «t:CACHE» PATH «s:"Location of CMake scripts"»)
+«f:set» («v:gazebo_cmake_dir» «D:${»«v:PROJECT_SOURCE_DIR»«D:}»/cmake «t:CACHE» «t:PATH» «s:"Location of CMake scripts"»)
 
 «x:########################################
 # Package Creation: 

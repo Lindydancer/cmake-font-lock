@@ -5,8 +5,8 @@
 »
 «f:add_compiler_rt_static_runtime»(clang_rt.asan-«D:${»«v:arch»«D:}» «D:${»«v:arch»«D:}»
       SOURCES «D:${»«v:ASAN_SOURCES»«D:}»
-              $<«c:TARGET_OBJECTS»:RTInterception.«D:${»«v:arch»«D:}»>
-              $<«c:TARGET_OBJECTS»:RTSanitizerCommon.«D:${»«v:arch»«D:}»>
+              $<«p:TARGET_OBJECTS»:RTInterception.«D:${»«v:arch»«D:}»>
+              $<«p:TARGET_OBJECTS»:RTSanitizerCommon.«D:${»«v:arch»«D:}»>
       CFLAGS «D:${»«v:ASAN_CFLAGS»«D:}»
       DEFS «D:${»«v:ASAN_COMMON_DEFINITIONS»«D:}»)
 

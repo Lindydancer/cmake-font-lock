@@ -532,13 +532,13 @@
 »«f:INSTALL»(
   «t:DIRECTORY» Modules Templates
   «t:DESTINATION» «s:"${«v:CMake_DATA_DEST»}"»
-  «t:FILE_PERMISSIONS» OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
-  «t:DIRECTORY_PERMISSIONS» OWNER_READ OWNER_EXECUTE OWNER_WRITE
-                        GROUP_READ GROUP_EXECUTE
-                        WORLD_READ WORLD_EXECUTE
-  «t:PATTERN» «s:"*.sh*"» «t:PERMISSIONS» OWNER_READ OWNER_EXECUTE OWNER_WRITE
-                              GROUP_READ GROUP_EXECUTE
-                              WORLD_READ WORLD_EXECUTE
+  «t:FILE_PERMISSIONS» «t:OWNER_READ» «t:OWNER_WRITE» «t:GROUP_READ» «t:WORLD_READ»
+  «t:DIRECTORY_PERMISSIONS» «t:OWNER_READ» «t:OWNER_EXECUTE» «t:OWNER_WRITE»
+                        «t:GROUP_READ» «t:GROUP_EXECUTE»
+                        «t:WORLD_READ» «t:WORLD_EXECUTE»
+  «t:PATTERN» «s:"*.sh*"» «t:PERMISSIONS» «t:OWNER_READ» «t:OWNER_EXECUTE» «t:OWNER_WRITE»
+                              «t:GROUP_READ» «t:GROUP_EXECUTE»
+                              «t:WORLD_READ» «t:WORLD_EXECUTE»
   «t:PATTERN» «s:"CVS"» «t:EXCLUDE»
   )
 

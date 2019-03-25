@@ -1,3 +1,37 @@
+### DiffCommandHelp.rb -- View command changes between two CMake versions.
+
+# Copyright (C) 2014-2019 Anders Lindgren
+
+## Author: Anders Lindgren
+
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+### Commentary:
+
+## View command changes between to CMake versions.
+##
+## Usage:
+##
+##     ruby DiffCommandHelp.rb [OPTIONS] PATH_TO_CMAKE1 [PATH_TO_CMAKE2]
+##
+##         --signatures              Diff only function signatures
+##         --strip                   Normalize output
+##         --cmd=NAME                Only diff command NAME
+##
+
+### Code:
+
 require "optparse"
 
 $strip = false
@@ -5,6 +39,8 @@ $signatures = false
 $cmd = nil
 
 option_parser = OptionParser.new do |opts|
+  opts.banner = "DiffCommandHelp.rb [options] PATH-TO-CMAKE1 [PATH-TO-CMAKE2]"
+
   opts.on("--signatures", "Diff only function signatures") do |v|
     $signatures = true
   end
@@ -21,6 +57,10 @@ end
 
 option_parser.parse!
 
+if ARGV.empty?
+  puts option_parser
+  exit 1
+end
 
 cmake1 = ARGV.shift
 if ARGV.empty?
