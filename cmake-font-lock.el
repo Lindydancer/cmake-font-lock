@@ -5,7 +5,7 @@
 ;; Author: Anders Lindgren
 ;; Keywords: faces, languages
 ;; Created: 2012-12-05
-;; Version: 0.1.4
+;; Version: 0.1.5
 ;; Package-Requires: ((cmake-mode "0.0"))
 ;; URL: https://github.com/Lindydancer/cmake-font-lock
 
@@ -180,6 +180,7 @@
                                       "DEPENDS"
                                       "DEPFILE"
                                       "IMPLICIT_DEPENDS"
+                                      "JOB_POOL"
                                       "MAIN_DEPENDENCY"
                                       "OUTPUT"
                                       "POST_BUILD"
@@ -195,6 +196,7 @@
                                       "COMMAND_EXPAND_LISTS"
                                       "COMMENT"
                                       "DEPENDS"
+                                      "JOB_POOL"
                                       "SOURCES"
                                       "USES_TERMINAL"
                                       "VERBATIM"
@@ -261,20 +263,29 @@
     ("exec_program"                . ("ARGS"
                                       "OUTPUT_VARIABLE"
                                       "RETURN_VALUE"))
-    ("execute_process"             . ("COMMAND"
+    ("execute_process"             . ("ANSI"
+                                      "AUTO"
+                                      "COMMAND"
+                                      "COMMAND_ECHO"
                                       "ENCODING"
                                       "ERROR_FILE"
                                       "ERROR_QUIET"
                                       "ERROR_STRIP_TRAILING_WHITESPACE"
                                       "ERROR_VARIABLE"
                                       "INPUT_FILE"
+                                      "NONE"
+                                      "OEM"
                                       "OUTPUT_FILE"
                                       "OUTPUT_QUIET"
                                       "OUTPUT_STRIP_TRAILING_WHITESPACE"
                                       "OUTPUT_VARIABLE"
                                       "RESULT_VARIABLE"
                                       "RESULTS_VARIABLE"
+                                      "STDERR"
+                                      "STDOUT"
                                       "TIMEOUT"
+                                      "UTF8"
+                                      "UTF-8"
                                       "WORKING_DIRECTORY"))
     ("export"                      . ("ANDROID_MK"
                                       "APPEND"
@@ -304,6 +315,7 @@
                                       "FILES_MATCHING"
                                       "FILE_PERMISSIONS"
                                       "FOLLOW_SYMLINKS"
+                                      "FOLLOW_SYMLINK_CHAIN"
                                       "FUNCTION"
                                       "GENERATE"
                                       "GLOB"
@@ -582,6 +594,8 @@
                                       "JOIN"
                                       "LENGTH"
                                       "ORDER"
+                                      "POP_BACK"
+                                      "POP_FRONT"
                                       "PREPEND"
                                       "REGEX"
                                       "REMOVE_AT"
@@ -611,9 +625,13 @@
                                       "OUTPUT_FORMAT"))
     ("message"                     . ("AUTHOR_WARNING"
                                       "DEPRECATION"
+                                      "DEBUG"
                                       "FATAL_ERROR"
+                                      "NOTICE"
                                       "SEND_ERROR"
                                       "STATUS"
+                                      "TRACE"
+                                      "VERBOSE"
                                       "WARNING"))
     ("project"                     . ("DESCRIPTION"
                                       "HOMEPAGE_URL"
@@ -677,6 +695,7 @@
                                       "RANDOM"
                                       "RANDOM_SEED"
                                       "REGEX"
+                                      "REPEAT"
                                       "REPLACE"
                                       "REVERSE"
                                       "SHA1"
@@ -910,6 +929,9 @@ This is used to keep down the size of
                                   ("FIND"              :var nil :var)
                                   ("INSERT"            :var)
                                   ("JOIN"              :var nil :var)
+                                  ("POP_BACK"          :var)
+                                  ("POP_FRONT"         :var)
+                                  ("PREPEND"           :var)
                                   ("REMOVE_ITEM"       :var)
                                   ("REMOVE_AT"         :var)
                                   ("REMOVE_DUPLICATES" :var)
@@ -962,6 +984,7 @@ This is used to keep down the size of
                                        ("TOUPPER"   nil :var)
                                        ("TOLOWER"   nil :var)
                                        ("LENGTH"    nil :var)
+                                       ("REPEAT"    nil nil :var)
                                        ("SUBSTRING" nil nil nil :var)
                                        ("STRIP"     nil :var)
                                        ("TIMESTAMP" :var)
