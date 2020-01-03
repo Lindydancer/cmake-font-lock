@@ -32,6 +32,11 @@
 (require 'cmake-font-lock-test-simple)
 (require 'cmake-font-lock-test-facit)
 
+;; Ensure that path arguments are highlighted.
+(unless (assq :path cmake-font-lock-argument-kind-face-alist)
+  (push '(:path font-lock-string-face)
+        cmake-font-lock-argument-kind-face-alist))
+
 (ert t)
 
 ;;; cmake-font-lock-test-setup.el ends here

@@ -18,11 +18,11 @@
   «t:INPUT»
   «t:CONTENT»
   «t:OUTPUT»
-  «t:READ» path «v:var»
+  «t:READ» «s:path» «v:var»
   «t:TLS_VERIFY»
   «t:TLS_CAINFO»)
-«f:file»(«t:TIMESTAMP» file «v:var» format «t:UTC»)
-«f:include_external_msproject»(«c:tgt» file «t:TYPE» alpha
+«f:file»(«t:TIMESTAMP» «s:file» «v:var» format «t:UTC»)
+«f:include_external_msproject»(«c:tgt» «s:file» «t:TYPE» alpha
   «t:GUID» beta «t:PLATFORM» delta dep1 dep2)
 «f:install»(«t:TARGETS» «c:tgt» «t:INCLUDES» «t:DESTINATION» path)
 «f:string»(«t:TIMESTAMP» «v:var» format «t:UTC»)
@@ -33,7 +33,7 @@
   -D«c:ALPHA»)
 
 «f:target_include_directories»(«c:target» «t:SYSTEM» «t:BEFORE» «t:PUBLIC»
-  these are «t:INTERFACE» paths)
+  «s:these» «s:are» «t:INTERFACE» «s:paths»)
 
 «f:try_compile»(«v:var» bindir srcdir projectName «c:tgt» «t:OUTPUT_VARIABLE» «v:var2»)
 «f:try_compile»(«v:var» bindir «t:SOURCES» src1 src2 «t:COMPILE_DEFINITIONS» «c:DEF1» «c:DEF2»)
@@ -51,15 +51,15 @@
 «f:execute_process»(
   «t:COMMAND» mycommand
   «t:RESULT_VARIABLE» «v:myvar»
-  «t:OUTPUT_FILE» myfile
-  «t:INPUT_FILE» myfile
-  «t:OUTPUT_FILE» myfile)
+  «t:OUTPUT_FILE» «s:myfile»
+  «t:INPUT_FILE» «s:myfile»
+  «t:OUTPUT_FILE» «s:myfile»)
 
 «f:execute_process»(
   «t:COMMAND» mycommand
   «t:RESULT_VARIABLE» «v:myvar»
   «t:OUTPUT_FILE»
-  INPUT_FILE                    «x:# This is the argument to OUTPUT_FILE.
+  «s:INPUT_FILE»                    «x:# This is the argument to OUTPUT_FILE.
 »  «t:OUTPUT_FILE»)
 
 «x:#
@@ -73,3 +73,7 @@
 #
 »
 «f:foo»(«s:"But they should work in ${«v:strings»} and"» «D:${»«v:outside»«D:}»)
+
+«x:# The argument of DIRECTORY is optional.
+»«f:get_property»(«v:my_var» «t:DIRECTORY» «t:PROPERTY» «c:my_prop»)
+«f:get_property»(«v:my_var» «t:DIRECTORY» «s:a_dir» «t:PROPERTY» «c:my_prop»)

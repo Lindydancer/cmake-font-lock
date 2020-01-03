@@ -119,7 +119,7 @@
 
 «f:set»(«v:CMAKECONFIG_INSTALL_DIR» «s:"${«v:LIB_INSTALL_DIR»}/cmake/grantlee"» )
 
-«f:file»(«t:RELATIVE_PATH» «v:relInstallDir» «D:${»«v:CMAKE_INSTALL_PREFIX»«D:}»/«D:${»«v:CMAKECONFIG_INSTALL_DIR»«D:}» «D:${»«v:CMAKE_INSTALL_PREFIX»«D:}» )
+«f:file»(«t:RELATIVE_PATH» «v:relInstallDir» «D:${»«v:CMAKE_INSTALL_PREFIX»«D:}»«s:/»«D:${»«v:CMAKECONFIG_INSTALL_DIR»«D:}» «D:${»«v:CMAKE_INSTALL_PREFIX»«D:}» )
 
 «f:configure_file»(
   «s:"${«v:Grantlee_MODULE_DIR»}/GrantleeConfig.cmake.in"»
@@ -182,7 +182,7 @@
   «x:# Add support for a Qt assistant docs target
 »  «x:# qttags.tag is too big to distribute with Grantlee. Get it
 »  «x:# from http://api.kde.org/kdereview-api/kdereview.tar.gz for example.
-»  «k:if»(«t:EXISTS» «D:${»«v:CMAKE_SOURCE_DIR»«D:}»/scripts/qttags.tag)
+»  «k:if»(«t:EXISTS» «D:${»«v:CMAKE_SOURCE_DIR»«D:}»«s:/scripts/qttags.tag»)
     «f:set»(«v:DOCS_OUTPUT_DIRECTORY» «s:"@CMAKE_BINARY_DIR@/qtdocs"»)
 
     «x:# Available from http://steveire.com/libstdc++-longnames.tag
@@ -229,8 +229,8 @@
   «f:set»(«v:coverage_ARGS» «D:${»«v:coverage_ARGS»«D:}» COMMAND «D:${»«v:LCOV_EXECUTABLE»«D:}» «D:${»«v:infoFiles»«D:}» -o test_all.info)
 
   «x:# For an unknown reason lcov does not work with absolute paths such as ${CMAKE_BINARY_DIR}
-»  «f:file»(«t:RELATIVE_PATH» «v:relBinaryDir» / «D:${»«v:CMAKE_BINARY_DIR»«D:}»)
-  «f:file»(«t:RELATIVE_PATH» «v:relQtDir» / «D:${»«v:QT_HEADERS_DIR»«D:}»)
+»  «f:file»(«t:RELATIVE_PATH» «v:relBinaryDir» «s:/» «D:${»«v:CMAKE_BINARY_DIR»«D:}»)
+  «f:file»(«t:RELATIVE_PATH» «v:relQtDir» «s:/» «D:${»«v:QT_HEADERS_DIR»«D:}»)
 
   «f:set»(«v:coverage_ARGS» «D:${»«v:coverage_ARGS»«D:}» COMMAND «D:${»«v:LCOV_EXECUTABLE»«D:}» -r test_all.info *«D:${»«v:relBinaryDir»«D:}»*
                                                                 -r test_all.info *pluginpointer*

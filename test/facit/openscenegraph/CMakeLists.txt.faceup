@@ -117,13 +117,13 @@
 
     «f:ADD_CUSTOM_COMMAND»(
         «t:OUTPUT»    Android-OpenSceneGraph
-        «t:DEPENDS»   «D:${»«v:CMAKE_BINARY_DIR»«D:}»/Android.mk
+        «t:DEPENDS»   «D:${»«v:CMAKE_BINARY_DIR»«D:}»«s:/Android.mk»
         «t:COMMAND»   «s:"${«v:ANDROID_NDK»}/ndk-build"»
         «t:ARGS»      --directory=«D:${»«v:CMAKE_BINARY_DIR»«D:}» NDK_APPLICATION_MK=Application.mk -j«D:${»«v:J»«D:}» NDK_LOG=1
     )
 
     «f:ADD_CUSTOM_TARGET»(«c:ndk» «t:ALL» echo
-          «t:DEPENDS» Android-OpenSceneGraph
+          «t:DEPENDS» «s:Android-OpenSceneGraph»
     )
     «f:install»(«t:DIRECTORY» include/ «t:DESTINATION» include/
         «t:PATTERN» «s:".svn"» «t:EXCLUDE»
@@ -1047,7 +1047,7 @@
             «s:"Your applications may not be able to find your installed libraries unless you:\n"»
             «s:"    set your LD_LIBRARY_PATH (user specific) or\n"»
             «s:"    update your ld.so configuration (system wide)"»)
-        «k:IF»(«t:IS_DIRECTORY» /etc/ld.so.conf.d)
+        «k:IF»(«t:IS_DIRECTORY» «s:/etc/ld.so.conf.d»)
             «f:MESSAGE»(«s:"You have an ld.so.conf.d directory on your system, so if you wish to ensure that\n"»
                 «s:"applications find the installed osg libraries, system wide, you could install an\n"»
                 «s:"OpenSceneGraph specific ld.so configuration with:\n"»
@@ -1062,7 +1062,7 @@
                 «t:COMMENT» «s:"Copying openscenegraph.conf to /etc/ld.so.conf.d and running ldconfig"»
             )
         «k:ELSE»()
-            «k:IF»(«t:EXISTS» /etc/ld.so.conf)
+            «k:IF»(«t:EXISTS» «s:/etc/ld.so.conf»)
                 «f:MESSAGE»(«s:"You have an ld.so.conf file in /etc, if you wish to ensure \n"»
                 «s:"that applications find the installed osg libraries, system wide, you\n"»
                 «s:"could add ${«v:CMAKE_INSTALL_PREFIX»}/lib${«v:LIB_POSTFIX»} to it."»)

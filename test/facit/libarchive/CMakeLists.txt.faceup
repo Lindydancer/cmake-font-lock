@@ -11,7 +11,7 @@
 «x:#
 # Version - read from 'version' file.
 #
-»«f:FILE»(«t:STRINGS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/build/version «v:_version»)
+»«f:FILE»(«t:STRINGS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»«s:/build/version» «v:_version»)
 «f:STRING»(«t:REGEX» «t:REPLACE»
  «s:"^([0-9])[0-9][0-9][0-9][0-9][0-9][0-9][a-z]?$"» «s:"\\1"» «v:_major» «D:${»«v:_version»«D:}»)
 «f:STRING»(«t:REGEX» «t:REPLACE»
@@ -716,12 +716,12 @@
 »  «x:# on one's computer.
 »  «x:# These PDF documents are available in the release package.
 »  «x:#
-»  «k:IF»(«t:EXISTS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/doc/pdf)
+»  «k:IF»(«t:EXISTS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»«s:/doc/pdf»)
     «f:INSTALL»(«t:DIRECTORY» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/doc/pdf
             «t:DESTINATION» share/man
             «t:FILES_MATCHING» «t:PATTERN» «s:"*.pdf"»
     )
-  «k:ENDIF»(«t:EXISTS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»/doc/pdf)
+  «k:ENDIF»(«t:EXISTS» «D:${»«v:CMAKE_CURRENT_SOURCE_DIR»«D:}»«s:/doc/pdf»)
 «k:ENDIF»(«v:WIN32» «t:AND» «t:NOT» «v:CYGWIN»)
 «x:#
 #

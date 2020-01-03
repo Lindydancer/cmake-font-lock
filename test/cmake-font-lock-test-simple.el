@@ -136,12 +136,12 @@
   (should (cmake-font-lock-test
            "«f:get_directory_property»(«v:var» «c:prop»)"))
   (should (cmake-font-lock-test
-           "«f:get_directory_property»(«v:var» «t:DIRECTORY» dir «c:prop»)"))
+           "«f:get_directory_property»(«v:var» «t:DIRECTORY» «s:dir» «c:prop»)"))
   (should (cmake-font-lock-test
            "«f:get_directory_property»(«v:var» «t:DEFINITION» «v:var»)"))
   (should (cmake-font-lock-test
            (concat "«f:get_directory_property»("
-                   "«v:var» «t:DIRECTORY» dir «t:DEFINITION» «v:var»)")))
+                   "«v:var» «t:DIRECTORY» «s:dir» «t:DEFINITION» «v:var»)")))
   ;; --------------------
   ;; set_directory_properties -- repeat with more than one parameter.
   (should (cmake-font-lock-test

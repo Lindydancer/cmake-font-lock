@@ -73,3 +73,7 @@ foo($<FOO:$<CONFIGURATION>>)
 #
 
 foo("But they should work in ${strings} and" ${outside})
+
+# The argument of DIRECTORY is optional.
+get_property(my_var DIRECTORY PROPERTY my_prop)
+get_property(my_var DIRECTORY a_dir PROPERTY my_prop)
