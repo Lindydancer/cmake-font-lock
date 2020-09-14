@@ -15,9 +15,9 @@
 «f:file»(«t:CONDITION»
   «t:EXPECTED_HASH»
   «t:GENERATE»
-  «t:INPUT»
+  «t:INPUT» «s:input_path»
   «t:CONTENT»
-  «t:OUTPUT»
+  «t:OUTPUT» «s:output_path»
   «t:READ» «s:path» «v:var»
   «t:TLS_VERIFY»
   «t:TLS_CAINFO»)

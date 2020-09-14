@@ -1,11 +1,11 @@
 ;;; cmake-font-lock.el --- Advanced, type aware, highlight support for CMake
 
-;; Copyright (C) 2012-2015 Anders Lindgren
+;; Copyright (C) 2012-2020 Anders Lindgren
 
 ;; Author: Anders Lindgren
 ;; Keywords: faces, languages
 ;; Created: 2012-12-05
-;; Version: 0.1.6
+;; Version: 0.1.9
 ;; Package-Requires: ((cmake-mode "0.0"))
 ;; URL: https://github.com/Lindydancer/cmake-font-lock
 
@@ -67,21 +67,22 @@
 ;; * Comments and quoted strings.
 ;;
 
-;; Installation:
-;;
-;; Place the file in a directory in Emacs' load path.
-;;
-;; Add the following lines to a suitable init file, like ~/.emacs, to
-;; enable this package:
-;;
-;; (autoload 'cmake-font-lock-activate "cmake-font-lock" nil t)
-;; (add-hook 'cmake-mode-hook 'cmake-font-lock-activate)
+;; Background:
 ;;
 ;; This package is designed to be used together with a major mode for
 ;; editing CMake files. Once such package is `cmake-mode.el'
-;; distributed by Kitware, however this package is not dependent upon
-;; or associated with any specific CMake major mode. (Note that the
-;; Kitware package contains rudimentary syntax coloring support.)
+;; distributed by Kitware.  However this package is not dependent upon
+;; or associated with any specific CMake major mode.  (Note that the
+;; Kitware package contains rudimentary syntax coloring support, this
+;; package replaces that part of the major mode.)
+
+;; Installation:
+;;
+;; Install this package with Emacs' package manager.
+;;
+;; When installed, this package is automatically activated when using
+;; CMake mode, or any other mode in the list `cmake-font-lock-modes'.
+;; Set this variable to nil to disable automatic initialization.
 
 ;; Customizing:
 ;;
@@ -228,6 +229,9 @@
                                       "TARGET"))
     ("cmake_host_system_information" . ("QUERY"
                                         "RESULT"))
+    ("cmake_language"               . ("CALL"
+                                       "CODE"
+                                       "EVAL"))
     ("cmake_minimum_required"      . ("FATAL_ERROR"
                                       "VERSION"))
     ("cmake_parse_arguments"       . ("PARSE_ARGV"))
@@ -268,6 +272,8 @@
                                       "AUTO"
                                       "COMMAND"
                                       "COMMAND_ECHO"
+                                      "ECHO_ERROR_VARIABLE"
+                                      "ECHO_OUTPUT_VARIABLE"
                                       "ENCODING"
                                       "ERROR_FILE"
                                       "ERROR_QUIET"
@@ -297,30 +303,40 @@
                                       "PACKAGE"
                                       "TARGETS"))
     ("export_library_dependencies" . ("APPEND"))
-    ("file"                        . ("APPEND"
+    ("file"                        . ("@ONLY"
+                                      "APPEND"
+                                      "ARCHIVE_CREATE"
+                                      "ARCHIVE_EXTRACT"
                                       "BUNDLE_EXECUTABLE"
                                       "CONDITION"
+                                      "COMPRESSION"
                                       "CONFLICTING_DEPENDENCIES_PREFIX"
+                                      "CONFIGURE"
                                       "CONFIGURE_DEPENDS"
                                       "CONTENT"
                                       "COPY"
                                       "COPY_ON_ERROR"
-                                      "CREATE_SYMLINK"
+                                      "CREATE_LINK"
+                                      "CRLF"
                                       "DESTINATION"
                                       "DIRECTORIES"
                                       "DIRECTORY"
                                       "DIRECTORY_PERMISSIONS"
+                                      "DOS"
                                       "DOWNLOAD"
                                       "ENCODING"
+                                      "ESCAPE_QUOTES"
                                       "EXCLUDE"
                                       "EXECUTABLES"
                                       "EXPECTED_HASH"
                                       "EXPECTED_MD5"
                                       "FILE"
+                                      "FILES"
                                       "FILES_MATCHING"
                                       "FILE_PERMISSIONS"
                                       "FOLLOW_SYMLINKS"
                                       "FOLLOW_SYMLINK_CHAIN"
+                                      "FORMAT"
                                       "FUNCTION"
                                       "GENERATE"
                                       "GET_RUNTIME_DEPENDENCIES"
@@ -335,26 +351,32 @@
                                       "INPUT"
                                       "LENGTH_MAXIMUM"
                                       "LENGTH_MINIMUM"
+                                      "LF"
                                       "LIBRARIES"
                                       "LIMIT"
                                       "LIMIT_COUNT"
                                       "LIMIT_INPUT"
                                       "LIMIT_OUTPUT"
                                       "LIST_DIRECTORIES"
+                                      "LIST_ONLY"
                                       "LOCK"
                                       "LOG"
                                       "MAKE_DIRECTORY"
                                       "MD5"
                                       "MODULES"
+                                      "MTIME"
                                       "NETRC"
                                       "NETRC_FILE"
                                       "NEWLINE_CONSUME"
+                                      "NEWLINE_STYLE"
                                       "NO_HEX_CONVERSION"
                                       "NO_SOURCE_PERMISSIONS"
                                       "OFFSET"
                                       "OPTIONAL"
                                       "OUTPUT"
+                                      "PATHS"
                                       "PATTERN"
+                                      "PATTERNS"
                                       "PERMISSIONS"
                                       "POST_EXCLUDE_REGEXES"
                                       "POST_INCLUDE_REGEXES"
@@ -392,11 +414,15 @@
                                       "TO_NATIVE_PATH"
                                       "TOUCH"
                                       "TOUCH_NOCREATE"
+                                      "TYPE"
+                                      "UNIX"
                                       "UNRESOLVED_DEPENDENCIES_VAR"
                                       "UPLOAD"
                                       "USE_SOURCE_PERMISSIONS"
                                       "USERPWD"
                                       "UTC"
+                                      "VERBOSE"
+                                      "WIN32"
                                       "WRITE"))
     ("find_file"                   . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
@@ -412,7 +438,8 @@
                                       "NO_SYSTEM_ENVIRONMENT_PATH"
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
-                                      "PATH_SUFFIXES"))
+                                      "PATH_SUFFIXES"
+                                      "REQUIRED"))
     ("find_library"                . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
@@ -428,7 +455,8 @@
                                       "NO_SYSTEM_ENVIRONMENT_PATH"
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
-                                      "PATH_SUFFIXES"))
+                                      "PATH_SUFFIXES"
+                                      "REQUIRED"))
     ("find_package"                . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "COMPONENTS"
                                       "CONFIG"
@@ -469,7 +497,8 @@
                                       "NO_SYSTEM_ENVIRONMENT_PATH"
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
-                                      "PATH_SUFFIXES"))
+                                      "PATH_SUFFIXES"
+                                      "REQUIRED"))
     ("find_program"                . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
@@ -485,11 +514,13 @@
                                       "NO_SYSTEM_ENVIRONMENT_PATH"
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
-                                      "PATH_SUFFIXES"))
+                                      "PATH_SUFFIXES"
+                                      "REQUIRED"))
     ("foreach"                     . ("IN"
                                       "ITEMS"
                                       "LISTS"
-                                      "RANGE"))
+                                      "RANGE"
+                                      "ZIP_LISTS"))
     ("get_directory_property"      . ("DEFINITION"
                                       "DIRECTORY"))
     ("get_filename_component"      . ("ABSOLUTE"
@@ -516,8 +547,11 @@
                                       "SET"
                                       "SOURCE"
                                       "TARGET"
+                                      "TARGET_DIRECTORY"
                                       "TEST"
                                       "VARIABLE"))
+    ("get_source_file_property"    . ("DIRECTORY"
+                                      "TARGET_DIRECTORY"))
     ("include"                     . ("NO_POLICY_SCOPE"
                                       "OPTIONAL"
                                       "RESULT_VARIABLE"))
@@ -607,6 +641,7 @@
                                       "INSERT"
                                       "JOIN"
                                       "LENGTH"
+                                      "NATURAL"
                                       "ORDER"
                                       "POP_BACK"
                                       "POP_FRONT"
@@ -638,6 +673,9 @@
                                       "INPUT_FORMAT"
                                       "OUTPUT_FORMAT"))
     ("message"                     . ("AUTHOR_WARNING"
+                                      "CHECK_FAIL"
+                                      "CHECK_PASS"
+                                      "CHECK_START"
                                       "DEPRECATION"
                                       "DEBUG"
                                       "FATAL_ERROR"
@@ -672,8 +710,11 @@
                                       "PROPERTY"
                                       "SOURCE"
                                       "TARGET"
+                                      "TARGET_DIRECTORY"
                                       "TEST"))
-    ("set_source_files_properties" . ("PROPERTIES"))
+    ("set_source_files_properties" . ("DIRECTORY"
+                                      "PROPERTIES"
+                                      "TARGET_DIRECTORY"))
     ("set_target_properties"       . ("PROPERTIES"))
     ("set_tests_properties"        . ("PROPERTIES"))
     ("source_group"                . ("FILES"
@@ -693,6 +734,7 @@
                                       "GENEX_STRIP"
                                       "GREATER"
                                       "GREATER_EQUAL"
+                                      "HEX"
                                       "JOIN"
                                       "LENGTH"
                                       "LESS"
@@ -872,18 +914,25 @@ This is used to keep down the size of
                                       ("LIBRARIES"       :repeat :path)
                                       ("MODULES"         :repeat :path)
                                       ("DIRECTORIES"     :repeat :path)
+                                      ("PATHS"           :repeat :path)
                                       ("BUNDLE_EXECUTABLE" :path)
                                       ("GLOB"            :var)
                                       ("GLOB_RECURSE"    :var)
                                       ("RESULT_VARIABLE" :var)
                                       ("RELATIVE_PATH"   :var :path :path)
                                       ("TO_CMAKE_PATH"   :path :var)
-                                      ("TO_NATIVE_PATH"  :path :var)))
+                                      ("TO_NATIVE_PATH"  :path :var)
+                                      ("INPUT"           :path)
+                                      ("OUTPUT"          :path)
+                                      ("FILES"           :repeat :path)
+                                      ("DIRECTORY"       :repeat :path)
+                                      ("DESTINATION"     :path)))
     ("find_file"              (:var :optional nil :repeat :path))
     ("find_library"           (:var :optional nil :repeat :path))
     ("find_path"              (:var :optional nil :repeat :path))
     ("find_program"           (:var :optional nil :repeat :path))
-    ("foreach"                (:var) (("LISTS" :repeat :var)))
+    ("foreach"                (:var) (("LISTS" :repeat :var)
+                                      ("ZIP_LISTS" :repeat :var)))
     ("function"               (:func :repeat :var))
     ("get_cmake_property"     (:var :prop))
     ;; Note: This falls outside the standard form, as "DIRECTORY dir"
@@ -979,11 +1028,13 @@ This is used to keep down the size of
                                        ("SOURCE"     :repeat :path)
                                        ("TARGET"     :repeat :tgt)
                                        ("TEST"       :repeat :tst)))
-    ("set_source_files_properties" () (("PROPERTIES" :repeat (:prop nil))))
+    ("set_source_files_properties" () (("PROPERTIES" :repeat (:prop nil))
+                                       ("DIRECTORY"  :repeat :path)
+                                       ("TARGET_DIRECTORY" :repeat :tgt)))
     ("set_target_properties"  (:repeat :tgt)
-                                      (("PROPERTIES" :repeat (:prop nil))))
+     (("PROPERTIES" :repeat (:prop nil))))
     ("set_test_properties"    (:repeat :tst)
-                                      (("PROPERTIES" :repeat (:prop nil))))
+     (("PROPERTIES" :repeat (:prop nil))))
     ("site_name"              (:var))
     ("string"                 ()      (("CONCAT"    :var)
                                        ("GENEX_STRIP" nil :var)
@@ -1017,7 +1068,8 @@ This is used to keep down the size of
                                        ("MAKE_C_IDENTIFIER" nil :var)
                                        ("RANDOM"    :repeat nil :var)
                                        ("FIND"      nil nil :var)
-                                       ("UUID"      :var)))
+                                       ("UUID"      :var)
+                                       ("HEX"       nil :var)))
     ("target_compile_features"    (:tgt))
     ("target_compile_options"     (:tgt))
     ("target_compile_definitions" (:tgt) (("INTERFACE" :repeat :def)
@@ -1038,14 +1090,14 @@ This is used to keep down the size of
     ("target_sources"             (:tgt))
     ;; Placement of :optional is to allow "try_compile(var dir SOURCES ...)"
     ("try_compile"             (:var nil :optional nil nil :tgt)
-                                       (("OUTPUT_VARIABLE" :var)
-                                        ("COMPILE_DEFINITIONS" :repeat :def)
-                                        ("COPY_FILE_ERROR" :var)))
+     (("OUTPUT_VARIABLE" :var)
+      ("COMPILE_DEFINITIONS" :repeat :def)
+      ("COPY_FILE_ERROR" :var)))
     ("try_run"                 (:var :var)
-                                       (("COMPILE_OUTPUT_VARIABLE" :var)
-                                        ("OUTPUT_VARIABLE" :var)
-                                        ("RUN_OUTPUT_VARIABLE" :var)
-                                        ("COMPILE_DEFINITIONS" :repeat :def)))
+     (("COMPILE_OUTPUT_VARIABLE" :var)
+      ("OUTPUT_VARIABLE" :var)
+      ("RUN_OUTPUT_VARIABLE" :var)
+      ("COMPILE_DEFINITIONS" :repeat :def)))
     ("unset"                   (:var))
     ("variable_watch"          (:var)))
   "*List of function signatures.
@@ -1081,6 +1133,14 @@ Elements are fontified as specified by
 ;;
 
 ;;;###autoload
+(defvar cmake-font-lock-modes
+  '(cmake-mode)
+  "List of major modes this package should be activated for.
+
+Set this to nil to disable automatic activation.")
+
+
+;;;###autoload
 (defun cmake-font-lock-activate ()
   "Activate advanced CMake colorization.
 
@@ -1099,7 +1159,15 @@ To activate this every time a CMake file is opened, use the following:
 ;; This ensures that this package is enabled automatically when
 ;; installed as a package (when cmake-mode is installed).
 
-;;;###autoload(add-hook 'cmake-mode-hook 'cmake-font-lock-activate)
+;; Note: Personally, I dislike adding lambda expressions to hooks.
+;; However, in this case it's required to ensure that this package
+;; isn't loaded until it's actually used.
+
+;;;###autoload
+(add-hook 'change-major-mode-after-body-hook
+          (lambda ()
+            (when (apply #'derived-mode-p cmake-font-lock-modes)
+              (cmake-font-lock-activate))))
 
 
 (defun cmake-font-lock-add-keywords (name keywords)
