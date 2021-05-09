@@ -236,6 +236,48 @@
     ("cmake_minimum_required"      . ("FATAL_ERROR"
                                       "VERSION"))
     ("cmake_parse_arguments"       . ("PARSE_ARGV"))
+    ("cmake_path"                  . ("ABSOLUTE_PATH"
+                                      "APPEND"
+                                      "APPEND_STRING"
+                                      "BASE_DIRECTORY"
+                                      "COMPARE"
+                                      "CONVERT"
+                                      "EQUAL"
+                                      "EXTENSION"
+                                      "FILENAME"
+                                      "GET"
+                                      "HAS_EXTENSION"
+                                      "HAS_FILENAME"
+                                      "HAS_PARENT_PATH"
+                                      "HAS_STEM"
+                                      "HAS_RELATIVE_PART"
+                                      "HAS_ROOT_DIRECTORY"
+                                      "HAS_ROOT_NAME"
+                                      "HAS_ROOT_PATH"
+                                      "HASH"
+                                      "IS_ABSOLUTE"
+                                      "IS_PREFIX"
+                                      "IS_RELATIVE"
+                                      "LAST_ONLY"
+                                      "NATIVE_PATH"
+                                      "NORMAL_PATH"
+                                      "NORMALIZE"
+                                      "NOT_RQUAL"
+                                      "OUTPUT_VARIABLE"
+                                      "PARENT_PATH"
+                                      "RELATIVE_PART"
+                                      "RELATIVE_PATH"
+                                      "REMOVE_EXTENSION"
+                                      "REMOVE_FILENAME"
+                                      "REPLACE_EXTENSION"
+                                      "REPLACE_FILENAME"
+                                      "ROOT_DIRECTORY"
+                                      "ROOT_NAME"
+                                      "ROOT_PATH"
+                                      "SET"
+                                      "STEM"
+                                      "TO_CMAKE_PATH_LIST"
+                                      "TO_NATIVE_PATH_LIST"))
     ("cmake_policy"                . ("GET"
                                       "NEW"
                                       "OLD"
@@ -248,11 +290,22 @@
                                       "CRLF"
                                       "DOS"
                                       "ESCAPE_QUOTES"
+                                      "FILE_PERMISSIONS"
+                                      "GROUP_EXECUTE"
+                                      "GROUP_READ"
+                                      "GROUP_WRITE"
                                       "LF"
                                       "NEWLINE_STYLE"
                                       "NO_SOURCE_PERMISSIONS"
+                                      "OWNER_EXECUTE"
+                                      "OWNER_READ"
+                                      "OWNER_WRITE"
                                       "UNIX"
-                                      "WIN32"))
+                                      "USE_SOURCE_PERMISSIONS"
+                                      "WIN32"
+                                      "WORLD_EXECUTE"
+                                      "WORLD_READ"
+                                      "WORLD_WRITE"))
     ("create_test_sourcelist"      . ("EXTRA_INCLUDE"
                                       "FUNCTION"))
     ("define_property"             . ("BRIEF_DOCS"
@@ -351,6 +404,9 @@
                                       "GET_RUNTIME_DEPENDENCIES"
                                       "GLOB"
                                       "GLOB_RECURSE"
+                                      "GROUP_EXECUTE"
+                                      "GROUP_READ"
+                                      "GROUP_WRITE"
                                       "GUARD"
                                       "HEX"
                                       "HTTPHEADER"
@@ -383,6 +439,9 @@
                                       "OFFSET"
                                       "OPTIONAL"
                                       "OUTPUT"
+                                      "OWNER_EXECUTE"
+                                      "OWNER_READ"
+                                      "OWNER_WRITE"
                                       "PATHS"
                                       "PATTERN"
                                       "PATTERNS"
@@ -434,6 +493,9 @@
                                       "UTC"
                                       "VERBOSE"
                                       "WIN32"
+                                      "WORLD_EXECUTE"
+                                      "WORLD_READ"
+                                      "WORLD_WRITE"
                                       "WRITE"))
     ("find_file"                   . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
@@ -803,7 +865,8 @@
                                       "INTERFACE"
                                       "PRIVATE"
                                       "PUBLIC"))
-    ("target_include_directories"  . ("BEFORE"
+    ("target_include_directories"  . ("AFTER"
+                                      "BEFORE"
                                       "INTERFACE"
                                       "PRIVATE"
                                       "PUBLIC"
@@ -855,7 +918,8 @@
                                       "LINK_LIBRARIES"
                                       "LINK_OPTIONS"
                                       "OUTPUT_VARIABLE"
-                                      "RUN_OUTPUT_VARIABLE"))
+                                      "RUN_OUTPUT_VARIABLE"
+                                      "WORKING_DIRECTORY"))
     ("unset"                       . ("CACHE"
                                       "PARENT_SCOPE"))
     ("use_mangled_mesa"            . ("OUTPUT_DIRECTORY"
@@ -903,6 +967,30 @@ This is used to keep down the size of
     ("cmake_host_system_information" () (("RESULT" :var)))
     ("cmake_policy"           () (("GET" :policy :var)
                                   ("SET" :policy)))
+    ("cmake_path"             () (("ABSOLUTE_PATH" :var)
+                                  ("APPEND" :var)
+                                  ("APPEND_STRING" :var)
+                                  ("GET" :var)
+                                  ("HAS_EXTENSION" :var :var)
+                                  ("HAS_FILENAME" :var :var)
+                                  ("HAS_PARENT_PATH" :var :var)
+                                  ("HAS_RELATIVE_PART" :var :var)
+                                  ("HAS_ROOT_DIRECTORY" :var :var)
+                                  ("HAS_ROOT_NAME" :var :var)
+                                  ("HAS_ROOT_PATH" :var :var)
+                                  ("HAS_STEM" :var :var)
+                                  ("HASH" :var)
+                                  ("IS_ABSSOLUTE" :var :var)
+                                  ("IS_PREFIX" :var)
+                                  ("IS_RELATIVE" :var :var)
+                                  ("NATIVE_PATH" :var)
+                                  ("NORMAL_PATH" :var)
+                                  ("RELATIVE_PATH" :var)
+                                  ("REMOVE_EXTENSION" :var)
+                                  ("REMOVE_FILENAME" :var)
+                                  ("REPLACE_EXTENSION" :var)
+                                  ("REPLACE_FILENAME" :var)
+                                  ("SET" :var)))
     ("define_property"        () (("PROPERTY" :prop)))
     ("execute_process"        () (("RESULT_VARIABLE"  :var)
                                   ("RESULTS_VARIABLE" :var)
