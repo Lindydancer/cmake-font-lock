@@ -1,7 +1,7 @@
 # cmake-font-lock - Advanced, type aware, highlight support for CMake
 
 *Author:* Anders Lindgren<br>
-*Version:* 0.1.11<br>
+*Version:* 0.1.12<br>
 *URL:* [https://github.com/Lindydancer/cmake-font-lock](https://github.com/Lindydancer/cmake-font-lock)<br>
 
 Advanced syntax coloring support for CMake scripts.
@@ -23,8 +23,9 @@ even a plain string.
 By highlighting each argument, CMake scripts becomes much easier to
 read, and also to write.
 
-This package is aware of all built-in CMake functions. In addition,
-it allows you to add function signatures for your own functions.
+This package is aware of all built-in CMake functions, as provided
+by CMake 3.22.1.  In addition, it allows you to add function
+signatures for your own functions.
 
 ## The following is colored
 

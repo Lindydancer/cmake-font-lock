@@ -30,6 +30,8 @@
 ##         --cmd=NAME                Only diff command NAME
 ##
 
+## Older versions of CMake can be downloaded from cmake.org/files.
+
 ### Code:
 
 require "optparse"

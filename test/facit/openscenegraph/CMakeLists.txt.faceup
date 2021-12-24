@@ -604,7 +604,7 @@
 # Create bin and lib directories if required
 »
 «k:IF»(«s:"${«v:CMAKE_SOURCE_DIR»}"» «t:STREQUAL» «s:"${«v:CMAKE_BINARY_DIR»}"»)
-   «f:FILE»(«t:MAKE_DIRECTORY» «D:${»«v:CMAKE_BINARY_DIR»«D:}»/bin «D:${»«v:CMAKE_BINARY_DIR»«D:}»/lib «D:${»«v:CMAKE_BINARY_DIR»«D:}»/lib/«D:${»«v:OSG_PLUGINS»«D:}»)
+   «f:FILE»(«t:MAKE_DIRECTORY» «D:${»«v:CMAKE_BINARY_DIR»«D:}»«s:/bin» «D:${»«v:CMAKE_BINARY_DIR»«D:}»«s:/lib» «D:${»«v:CMAKE_BINARY_DIR»«D:}»«s:/lib/»«D:${»«v:OSG_PLUGINS»«D:}»)
 «k:ENDIF»()
 
 
