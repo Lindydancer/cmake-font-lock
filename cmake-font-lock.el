@@ -322,6 +322,7 @@
                                       "FULL_DOCS"
                                       "GLOBAL"
                                       "INHERITED"
+                                      "INITIALIZE_FROM_VARIABLE"
                                       "PROPERTY"
                                       "SOURCE"
                                       "TARGET"
@@ -666,6 +667,7 @@
                                       "EXPORT_ANDROID_MK"
                                       "EXPORT_LINK_INTERFACE_LIBRARIES"
                                       "FILE"
+                                      "FILE_SET"
                                       "FILES"
                                       "FILES_MATCHING"
                                       "FILE_PERMISSIONS"
@@ -918,9 +920,13 @@
                                       "PRIVATE"
                                       "PUBLIC"
                                       "REUSE_FROM"))
-    ("target_sources"              . ("INTERFACE"
+    ("target_sources"              . ("BASE_DIRS"
+                                      "FILE_SET"
+                                      "FILES"
+                                      "INTERFACE"
                                       "PRIVATE"
-                                      "PUBLIC"))
+                                      "PUBLIC"
+                                      "TYPE"))
     ("try_compile"                 . ("CMAKE_FLAGS"
                                       "COMPILE_DEFINITIONS"
                                       "COPY_FILE"
@@ -1017,7 +1023,8 @@ This is used to keep down the size of
                                   ("REPLACE_EXTENSION" :var)
                                   ("REPLACE_FILENAME" :var)
                                   ("SET" :var)))
-    ("define_property"        () (("PROPERTY" :prop)))
+    ("define_property"        () (("PROPERTY" :prop)
+                                  ("INITIALIZE_FROM_VARIABLE" :var)))
     ("execute_process"        () (("RESULT_VARIABLE"  :var)
                                   ("RESULTS_VARIABLE" :var)
                                   ("OUTPUT_VARIABLE"  :var)
@@ -1257,7 +1264,7 @@ This is used to keep down the size of
                                           ("PUBLIC"    :repeat :path)
                                           ("PRIVATE"   :repeat :path)
                                           ("REUSE_FROM" :tgt)))
-    ("target_sources"             (:tgt))
+    ("target_sources"             (:tgt) (("BASE_DIRS" :repeat :path)))
     ;; Placement of :optional is to allow "try_compile(var dir SOURCES ...)"
     ("try_compile"             (:var nil :optional nil nil :tgt)
      (("OUTPUT_VARIABLE" :var)
