@@ -229,18 +229,36 @@
                                       "PARALLEL_LEVEL"
                                       "PROJECT_NAME"
                                       "TARGET"))
-    ("cmake_host_system_information" . ("QUERY"
-                                        "RESULT"))
+    ("cmake_host_system_information" . ("32"
+                                        "32_64"
+                                        "64"
+                                        "64_32"
+                                        "BOTH"
+                                        "ERROR_VARIABLE"
+                                        "HOST"
+                                        "QUERY"
+                                        "RESULT"
+                                        "SEPARATOR"
+                                        "SUBKEYS"
+                                        "TARGET"
+                                        "VALUE"
+                                        "VALUE_NAMES"
+                                        "VIEW"
+                                        "WINDOWS_REGISTRY"))
     ("cmake_language"               . ("CALL"
                                        "CANCEL_CALL"
                                        "CODE"
                                        "DEFER"
                                        "DIRECTORY"
                                        "EVAL"
+                                       "FETCHCONTENT_MAKEAVAILABLE_SERIAL"
+                                       "FIND_PACKAGE"
                                        "ID"
                                        "ID_VAR"
                                        "GET_CALL"
-                                       "GET_CALL_IDS"))
+                                       "GET_CALL_IDS"
+                                       "SET_DEPENDENCY_PROVIDER"
+                                       "SUPPORTED_METHODS"))
     ("cmake_minimum_required"      . ("FATAL_ERROR"
                                       "VERSION"))
     ("cmake_parse_arguments"       . ("PARSE_ARGV"))
@@ -462,6 +480,8 @@
                                       "PRE_EXCLUDE_REGEXES"
                                       "PRE_INCLUDE_REGEXES"
                                       "PROCESS"
+                                      "RANGE_START"
+                                      "RANGE_END"
                                       "READ"
                                       "READ_SYMLINK"
                                       "REAL_PATH"
@@ -510,10 +530,16 @@
                                       "WORLD_READ"
                                       "WORLD_WRITE"
                                       "WRITE"))
-    ("find_file"                   . ("CMAKE_FIND_ROOT_PATH_BOTH"
+    ("find_file"                   . ("32"
+                                      "32_64"
+                                      "64"
+                                      "64_32"
+                                      "BOTH"
+                                      "CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
                                       "HINTS"
+                                      "HOST"
                                       "NAMES"
                                       "NO_CACHE"
                                       "NO_CMAKE_ENVIRONMENT_PATH"
@@ -526,11 +552,19 @@
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
                                       "PATH_SUFFIXES"
-                                      "REQUIRED"))
-    ("find_library"                . ("CMAKE_FIND_ROOT_PATH_BOTH"
+                                      "REGISTRY_VIEW"
+                                      "REQUIRED"
+                                      "TARGET"))
+    ("find_library"                . ("32"
+                                      "32_64"
+                                      "64"
+                                      "64_32"
+                                      "BOTH"
+                                      "CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
                                       "HINTS"
+                                      "HOST"
                                       "NAMES"
                                       "NAMES_PER_DIR"
                                       "NO_CMAKE_ENVIRONMENT_PATH"
@@ -543,13 +577,23 @@
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
                                       "PATH_SUFFIXES"
-                                      "REQUIRED"))
-    ("find_package"                . ("CMAKE_FIND_ROOT_PATH_BOTH"
+                                      "REGISTRY_VIEW"
+                                      "REQUIRED"
+                                      "TARGET"))
+    ("find_package"                . ("32"
+                                      "32_64"
+                                      "64"
+                                      "64_32"
+                                      "BOTH"
+                                      "BYPASS_PROVIDER"
+                                      "CMAKE_FIND_ROOT_PATH_BOTH"
                                       "COMPONENTS"
                                       "CONFIG"
                                       "CONFIGS"
                                       "EXACT"
+                                      "GLOBAL"
                                       "HINTS"
+                                      "HOST"
                                       "MODULE"
                                       "NAMES"
                                       "NO_CMAKE_BUILDS_PATH"
@@ -569,11 +613,19 @@
                                       "PATHS"
                                       "PATH_SUFFIXES"
                                       "QUIET"
-                                      "REQUIRED"))
-    ("find_path"                   . ("CMAKE_FIND_ROOT_PATH_BOTH"
+                                      "REGISTRY_VIEW"
+                                      "REQUIRED"
+                                      "TARGET"))
+    ("find_path"                   . ("32"
+                                      "32_64"
+                                      "64"
+                                      "64_32"
+                                      "BOTH"
+                                      "CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
                                       "HINTS"
+                                      "HOST"
                                       "NAMES"
                                       "NO_CACHE"
                                       "NO_CMAKE_ENVIRONMENT_PATH"
@@ -586,11 +638,19 @@
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
                                       "PATH_SUFFIXES"
-                                      "REQUIRED"))
-    ("find_program"                . ("CMAKE_FIND_ROOT_PATH_BOTH"
+                                      "REGISTRY_VIEW"
+                                      "REQUIRED"
+                                      "TARGET"))
+    ("find_program"                . ("32"
+                                      "32_64"
+                                      "64"
+                                      "64_32"
+                                      "BOTH"
+                                      "CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
                                       "HINTS"
+                                      "HOST"
                                       "NAMES"
                                       "NAMES_PER_DIR"
                                       "NO_CACHE"
@@ -604,7 +664,9 @@
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
                                       "PATH_SUFFIXES"
-                                      "REQUIRED"))
+                                      "REGISTRY_VIEW"
+                                      "REQUIRED"
+                                      "TARGET"))
     ("foreach"                     . ("IN"
                                       "ITEMS"
                                       "LISTS"
@@ -996,7 +1058,10 @@ This is used to keep down the size of
     ("add_library"            (:tgt) (("ALIAS" :tgt)))
     ("aux_source_directory"   (nil :var))
     ("build_command"          (:var) (("TARGET" :tgt)))
-    ("cmake_host_system_information" () (("RESULT" :var)))
+    ("cmake_host_system_information" () (("ERROR_VARIABLE" :var)
+                                         ("RESULT" :var)))
+    ("cmake_language"         () (("CALL" :func :repeat :var)
+                                  ("SET_DEPENDENCY_PROVIDER" :func)))
     ("cmake_policy"           () (("GET" :policy :var)
                                   ("SET" :policy)))
     ("cmake_path"             () (("ABSOLUTE_PATH" :var)
@@ -1149,6 +1214,7 @@ This is used to keep down the size of
       ("MATCHES"               :regexp)
       ("NOT"                   :optional :var)
       ("OR"                    :optional :var)
+      ("PATH_EQUAL"            :var)
       ("POLICY"                :policy)
       ("STREQUAL"              :var)
       ("STRGREATER"            :var)
