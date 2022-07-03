@@ -219,12 +219,17 @@
                                       "SHARED"
                                       "STATIC"
                                       "UNKNOWN"))
-    ("add_subdirectory"            . ("EXCLUDE_FROM_ALL"))
+    ("add_subdirectory"            . ("EXCLUDE_FROM_ALL"
+                                      "SYSTEM"))
     ("add_test"                    . ("COMMAND"
                                       "COMMAND_EXPAND_LISTS"
                                       "CONFIGURATIONS"
                                       "NAME"
                                       "WORKING_DIRECTORY"))
+    ("block"                       . ("POLICIES"
+                                      "PROPAGATE"
+                                      "SCOPE_FOR"
+                                      "VARIABLES"))
     ("build_command"               . ("CONFIGURATION"
                                       "PARALLEL_LEVEL"
                                       "PROJECT_NAME"
@@ -253,10 +258,11 @@
                                        "EVAL"
                                        "FETCHCONTENT_MAKEAVAILABLE_SERIAL"
                                        "FIND_PACKAGE"
-                                       "ID"
-                                       "ID_VAR"
                                        "GET_CALL"
                                        "GET_CALL_IDS"
+                                       "GET_MESSAGE_LOG_LEVEL"
+                                       "ID"
+                                       "ID_VAR"
                                        "SET_DEPENDENCY_PROVIDER"
                                        "SUPPORTED_METHODS"))
     ("cmake_minimum_required"      . ("FATAL_ERROR"
@@ -554,7 +560,8 @@
                                       "PATH_SUFFIXES"
                                       "REGISTRY_VIEW"
                                       "REQUIRED"
-                                      "TARGET"))
+                                      "TARGET"
+                                      "VALIDATOR"))
     ("find_library"                . ("32"
                                       "32_64"
                                       "64"
@@ -579,7 +586,8 @@
                                       "PATH_SUFFIXES"
                                       "REGISTRY_VIEW"
                                       "REQUIRED"
-                                      "TARGET"))
+                                      "TARGET"
+                                      "VALIDATOR"))
     ("find_package"                . ("32"
                                       "32_64"
                                       "64"
@@ -640,7 +648,8 @@
                                       "PATH_SUFFIXES"
                                       "REGISTRY_VIEW"
                                       "REQUIRED"
-                                      "TARGET"))
+                                      "TARGET"
+                                      "VALIDATOR"))
     ("find_program"                . ("32"
                                       "32_64"
                                       "64"
@@ -666,7 +675,8 @@
                                       "PATH_SUFFIXES"
                                       "REGISTRY_VIEW"
                                       "REQUIRED"
-                                      "TARGET"))
+                                      "TARGET"
+                                      "VALIDATOR"))
     ("foreach"                     . ("IN"
                                       "ITEMS"
                                       "LISTS"
@@ -852,6 +862,7 @@
                                       "HOMEPAGE_URL"
                                       "LANGUAGES"
                                       "VERSION"))
+    ("return"                      . ("PROPAGATE"))
     ("separate_arguments"          . ("NATIVE_COMMAND"
                                       "PROGRAM"
                                       "SEPARATE_ARGS"
@@ -993,26 +1004,67 @@
                                       "COMPILE_DEFINITIONS"
                                       "COPY_FILE"
                                       "COPY_FILE_ERROR"
+                                      "CUDA_EXTENSIONS"
+                                      "CUDA_STANDARD"
+                                      "CUDA_STANDARD_REQUIRED"
                                       "CXX_EXTENSIONS"
                                       "CXX_STANDARD"
                                       "CXX_STANDARD_REQUIRED"
                                       "C_EXTENSIONS"
                                       "C_STANDARD"
                                       "C_STANDARD_REQUIRED"
+                                      "HIP_EXTENSIONS"
+                                      "HIP_STANDARD"
+                                      "HIP_STANDARD_REQUIRED"
+                                      "OBJC_EXTENSIONS"
+                                      "OBJC_STANDARD"
+                                      "OBJC_STANDARD_REQUIRED"
+                                      "OBJCXX_EXTENSIONS"
+                                      "OBJCXX_STANDARD"
+                                      "OBJCXX_STANDARD_REQUIRED"
                                       "INCLUDE_DIRECTORIES"
                                       "LINK_DIRECTORIES"
                                       "LINK_LIBRARIES"
                                       "LINK_OPTIONS"
+                                      "NO_CACHE"
                                       "OUTPUT_VARIABLE"
-                                      "SOURCES"))
+                                      "SOURCES"
+                                      "SOURCE_FROM_CONTENT"
+                                      "SOURCE_FROM_FILE"
+                                      "SOURCE_FROM_VAR"))
     ("try_run"                     . ("ARGS"
                                       "CMAKE_FLAGS"
                                       "COMPILE_DEFINITIONS"
                                       "COMPILE_OUTPUT_VARIABLE"
+                                      "CUDA_EXTENSIONS"
+                                      "CUDA_STANDARD"
+                                      "CUDA_STANDARD_REQUIRED"
+                                      "CXX_EXTENSIONS"
+                                      "CXX_STANDARD"
+                                      "CXX_STANDARD_REQUIRED"
+                                      "C_EXTENSIONS"
+                                      "C_STANDARD"
+                                      "C_STANDARD_REQUIRED"
+                                      "HIP_EXTENSIONS"
+                                      "HIP_STANDARD"
+                                      "HIP_STANDARD_REQUIRED"
+                                      "OBJC_EXTENSIONS"
+                                      "OBJC_STANDARD"
+                                      "OBJC_STANDARD_REQUIRED"
+                                      "OBJCXX_EXTENSIONS"
+                                      "OBJCXX_STANDARD"
+                                      "OBJCXX_STANDARD_REQUIRED"
                                       "LINK_LIBRARIES"
                                       "LINK_OPTIONS"
+                                      "NO_CACHE"
                                       "OUTPUT_VARIABLE"
+                                      "RUN_OUTPUT_STDERR_VARIABLE"
+                                      "RUN_OUTPUT_STDOUT_VARIABLE"
                                       "RUN_OUTPUT_VARIABLE"
+                                      "SOURCES"
+                                      "SOURCE_FROM_CONTENT"
+                                      "SOURCE_FROM_FILE"
+                                      "SOURCE_FROM_VAR"
                                       "WORKING_DIRECTORY"))
     ("unset"                       . ("CACHE"
                                       "PARENT_SCOPE"))
@@ -1033,6 +1085,7 @@
     ("endif"       . "if")
     ("while"       . "if")
     ("endwhile"    . "if")
+    ("endblock"    . "block")
     ("endforeach"  . "foreach")
     ("endfunction" . "function")
     ("endmacro"    . "macro"))
@@ -1057,10 +1110,12 @@ This is used to keep down the size of
     ("add_executable"         (:tgt) (("ALIAS" :tgt)))
     ("add_library"            (:tgt) (("ALIAS" :tgt)))
     ("aux_source_directory"   (nil :var))
+    ("block"                  () (("PROPAGATE" :repeat :var)))
     ("build_command"          (:var) (("TARGET" :tgt)))
     ("cmake_host_system_information" () (("ERROR_VARIABLE" :var)
                                          ("RESULT" :var)))
     ("cmake_language"         () (("CALL" :func :repeat :var)
+                                  ("GET_MESSAGE_LOG_LEVEL" :var)
                                   ("SET_DEPENDENCY_PROVIDER" :func)))
     ("cmake_policy"           () (("GET" :policy :var)
                                   ("SET" :policy)))
@@ -1151,19 +1206,23 @@ This is used to keep down the size of
      ;; This is not currently supported, as "ENV" is treated as a
      ;; keyword and ths breaks the parsing of path arguments.
      (("HINTS" :repeat :path)
-      ("PATHS" :repeat :path)))
+      ("PATHS" :repeat :path)
+      ("VALIDATOR" :func)))
     ("find_library"           (:var :optional nil :repeat :path)
      ;; Note: See comment in "fild_file".
      (("HINTS" :repeat :path)
-      ("PATHS" :repeat :path)))
+      ("PATHS" :repeat :path)
+      ("VALIDATOR" :func)))
     ("find_path"              (:var :optional nil :repeat :path)
      ;; Note: See comment in "fild_file".
      (("HINTS" :repeat :path)
-      ("PATHS" :repeat :path)))
+      ("PATHS" :repeat :path)
+      ("VALIDATOR" :func)))
     ("find_program"           (:var :optional nil :repeat :path)
      ;; Note: See comment in "fild_file".
      (("HINTS" :repeat :path)
-      ("PATHS" :repeat :path)))
+      ("PATHS" :repeat :path)
+      ("VALIDATOR" :func)))
     ("foreach"                (:var) (("LISTS" :repeat :var)
                                       ("ZIP_LISTS" :repeat :var)))
     ("function"               (:func :repeat :var))
@@ -1259,6 +1318,7 @@ This is used to keep down the size of
                                               ("FORCE" :repeat :var)))
     ("math"                   () (("EXPR" :var)))
     ("option"                 (:var))
+    ("return"                 () (("PROPAGATE" :repeat :var)))
     ("separate_arguments"     (:var))
     ("set"                    (:var))
     ("set_directory_properties" ()    (("PROPERTIES" :repeat (:prop nil))))
@@ -1331,16 +1391,23 @@ This is used to keep down the size of
                                           ("PRIVATE"   :repeat :path)
                                           ("REUSE_FROM" :tgt)))
     ("target_sources"             (:tgt) (("BASE_DIRS" :repeat :path)))
-    ;; Placement of :optional is to allow "try_compile(var dir SOURCES ...)"
-    ("try_compile"             (:var nil :optional nil nil :tgt)
+    ("try_compile"             (:var :optional :path)
      (("OUTPUT_VARIABLE" :var)
       ("COMPILE_DEFINITIONS" :repeat :def)
-      ("COPY_FILE_ERROR" :var)))
-    ("try_run"                 (:var :var)
-     (("COMPILE_OUTPUT_VARIABLE" :var)
+      ("COPY_FILE_ERROR" :var)
+      ("SOURCE_FROM_CONTENT" nil nil)
+      ("SOURCE_FROM_FILE" nil :path)
+      ("SOURCE_FROM_VAR" nil :var)))
+    ("try_run"                 (:var :var :optional :path)
+     (("COMPILE_DEFINITIONS" :repeat :def)
+      ("COMPILE_OUTPUT_VARIABLE" :var)
       ("OUTPUT_VARIABLE" :var)
+      ("RUN_OUTPUT_STDERR_VARIABLE" :var)
+      ("RUN_OUTPUT_STDOUT_VARIABLE" :var)
       ("RUN_OUTPUT_VARIABLE" :var)
-      ("COMPILE_DEFINITIONS" :repeat :def)))
+      ("SOURCE_FROM_CONTENT" nil nil)
+      ("SOURCE_FROM_FILE" nil :path)
+      ("SOURCE_FROM_VAR" nil :var)))
     ("unset"                   (:var))
     ("variable_watch"          (:var)))
   "*List of function signatures.
@@ -1995,6 +2062,7 @@ match."
   (setq font-lock-multiline t)
   (let* ((keywords '("break"
                      "continue"
+                     "block"      "endblock"
                      "foreach"    "endforeach"
                      "function"   "endfunction"
                      "else"
