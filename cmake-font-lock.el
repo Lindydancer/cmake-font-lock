@@ -5,7 +5,7 @@
 ;; Author: Anders Lindgren
 ;; Keywords: faces, languages
 ;; Created: 2012-12-05
-;; Version: 0.1.12
+;; Version: 0.1.13
 ;; Package-Requires: ((cmake-mode "0.0"))
 ;; URL: https://github.com/Lindydancer/cmake-font-lock
 
@@ -44,7 +44,7 @@
 ;; read, and also to write.
 ;;
 ;; This package is aware of all built-in CMake functions, as provided
-;; by CMake 3.22.1.  In addition, it allows you to add function
+;; by CMake 3.26.1.  In addition, it allows you to add function
 ;; signatures for your own functions.
 
 ;; The following is colored:
@@ -219,28 +219,49 @@
                                       "SHARED"
                                       "STATIC"
                                       "UNKNOWN"))
-    ("add_subdirectory"            . ("EXCLUDE_FROM_ALL"))
+    ("add_subdirectory"            . ("EXCLUDE_FROM_ALL"
+                                      "SYSTEM"))
     ("add_test"                    . ("COMMAND"
                                       "COMMAND_EXPAND_LISTS"
                                       "CONFIGURATIONS"
                                       "NAME"
                                       "WORKING_DIRECTORY"))
+    ("block"                       . ("POLICIES"
+                                      "SCOPE_FOR"
+                                      "VARIABLES"))
     ("build_command"               . ("CONFIGURATION"
                                       "PARALLEL_LEVEL"
                                       "PROJECT_NAME"
                                       "TARGET"))
-    ("cmake_host_system_information" . ("QUERY"
-                                        "RESULT"))
-    ("cmake_language"               . ("CALL"
-                                       "CANCEL_CALL"
+    ("cmake_host_system_information" . ("ERROR_VARIABLE"
+                                        "QUERY"
+                                        "RESULT"
+                                        "SEPARATOR"
+                                        "SUBKEYS"
+                                        "VALUE"
+                                        "VALUE_NAMES"
+                                        "VIEW"
+                                        "WINDOWS_REGISTRY"
+                                        ;; Suboptions to VIEW
+                                        "32"
+                                        "64"
+                                        "64_32"
+                                        "32_64"
+                                        "BOTH"
+                                        "HOST"
+                                        "TARGET"))
+    ("cmake_language"               . ("CANCEL_CALL"
                                        "CODE"
                                        "DEFER"
                                        "DIRECTORY"
                                        "EVAL"
+                                       "FETCHCONTENT_MAKEAVAILABE_SERIAL"
+                                       "FIND_PACKAGE"
+                                       "GET_CALL"
+                                       "GET_CALL_IDS"
                                        "ID"
                                        "ID_VAR"
-                                       "GET_CALL"
-                                       "GET_CALL_IDS"))
+                                       "SUPPORTED_METHODS"))
     ("cmake_minimum_required"      . ("FATAL_ERROR"
                                       "VERSION"))
     ("cmake_parse_arguments"       . ("PARSE_ARGV"))
@@ -423,6 +444,7 @@
                                       "IGNORED"
                                       "INSTALL"
                                       "INPUT"
+                                      "INPUT_MAY_BE_RECENT"
                                       "LENGTH_MAXIMUM"
                                       "LENGTH_MINIMUM"
                                       "LF"
@@ -508,24 +530,37 @@
                                       "WORLD_EXECUTE"
                                       "WORLD_READ"
                                       "WORLD_WRITE"
-                                      "WRITE"))
+                                      "WRITE"
+                                      ;; Additional options to DOWNLOAD
+                                      "EXPECTED_HASH"
+                                      "EXPECTED_MD5"
+                                      "RANGE_START"
+                                      "RANGE_END"))
     ("find_file"                   . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
-                                      "HINTS"
                                       "NAMES"
                                       "NO_CACHE"
                                       "NO_CMAKE_ENVIRONMENT_PATH"
                                       "NO_CMAKE_FIND_ROOT_PATH"
+                                      "NO_CMAKE_INSTALL_PREFIX"
                                       "NO_CMAKE_PATH"
                                       "NO_CMAKE_SYSTEM_PATH"
                                       "NO_DEFAULT_PATH"
                                       "NO_PACKAGE_ROOT_PATH"
                                       "NO_SYSTEM_ENVIRONMENT_PATH"
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
-                                      "PATHS"
                                       "PATH_SUFFIXES"
-                                      "REQUIRED"))
+                                      "REGISTRY_VIEW"
+                                      "REQUIRED"
+                                      ;; Additional options to REGISTRY_VIEW
+                                      "64"
+                                      "32"
+                                      "64_32"
+                                      "32_64"
+                                      "HOST"
+                                      "TARGET"
+                                      "BOTH"))
     ("find_library"                . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
@@ -534,6 +569,7 @@
                                       "NAMES_PER_DIR"
                                       "NO_CMAKE_ENVIRONMENT_PATH"
                                       "NO_CMAKE_FIND_ROOT_PATH"
+                                      "NO_CMAKE_INSTALL_PREFIX"
                                       "NO_CMAKE_PATH"
                                       "NO_CMAKE_SYSTEM_PATH"
                                       "NO_DEFAULT_PATH"
@@ -542,12 +578,24 @@
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
                                       "PATH_SUFFIXES"
-                                      "REQUIRED"))
-    ("find_package"                . ("CMAKE_FIND_ROOT_PATH_BOTH"
+                                      "REGISTRY_VIEW"
+                                      "REQUIRED"
+                                      "VALIDATOR"
+                                      ;; Additional options to REGISTRY_VIEW
+                                      "64"
+                                      "32"
+                                      "64_32"
+                                      "32_64"
+                                      "HOST"
+                                      "TARGET"
+                                      "BOTH"))
+    ("find_package"                . ("BYPASS_PROVIDER"
+                                      "CMAKE_FIND_ROOT_PATH_BOTH"
                                       "COMPONENTS"
                                       "CONFIG"
                                       "CONFIGS"
                                       "EXACT"
+                                      "GLOBAL"
                                       "HINTS"
                                       "MODULE"
                                       "NAMES"
@@ -568,7 +616,16 @@
                                       "PATHS"
                                       "PATH_SUFFIXES"
                                       "QUIET"
-                                      "REQUIRED"))
+                                      "REQUIRED"
+                                      "REGISTRY_VIEW"
+                                      ;; Additional options to REGISTRY_VIEW
+                                      "64"
+                                      "32"
+                                      "64_32"
+                                      "32_64"
+                                      "HOST"
+                                      "TARGET"
+                                      "BOTH"))
     ("find_path"                   . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
@@ -577,6 +634,7 @@
                                       "NO_CACHE"
                                       "NO_CMAKE_ENVIRONMENT_PATH"
                                       "NO_CMAKE_FIND_ROOT_PATH"
+                                      "NO_CMAKE_INSTALL_PREFIX"
                                       "NO_CMAKE_PATH"
                                       "NO_CMAKE_SYSTEM_PATH"
                                       "NO_DEFAULT_PATH"
@@ -585,7 +643,17 @@
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
                                       "PATH_SUFFIXES"
-                                      "REQUIRED"))
+                                      "REQUIRED"
+                                      "REGISTRY_VIEW"
+                                      "VALIDATOR"
+                                      ;; Additional options to REGISTRY_VIEW
+                                      "64"
+                                      "32"
+                                      "64_32"
+                                      "32_64"
+                                      "HOST"
+                                      "TARGET"
+                                      "BOTH"))
     ("find_program"                . ("CMAKE_FIND_ROOT_PATH_BOTH"
                                       "DOC"
                                       "ENV"
@@ -595,6 +663,7 @@
                                       "NO_CACHE"
                                       "NO_CMAKE_ENVIRONMENT_PATH"
                                       "NO_CMAKE_FIND_ROOT_PATH"
+                                      "NO_CMAKE_INSTALL_PREFIX"
                                       "NO_CMAKE_PATH"
                                       "NO_CMAKE_SYSTEM_PATH"
                                       "NO_DEFAULT_PATH"
@@ -603,7 +672,17 @@
                                       "ONLY_CMAKE_FIND_ROOT_PATH"
                                       "PATHS"
                                       "PATH_SUFFIXES"
-                                      "REQUIRED"))
+                                      "REGISTRY_VIEW"
+                                      "REQUIRED"
+                                      "VALIDATOR"
+                                      ;; Additional options to REGISTRY_VIEW
+                                      "64"
+                                      "32"
+                                      "64_32"
+                                      "32_64"
+                                      "HOST"
+                                      "TARGET"
+                                      "BOTH"))
     ("foreach"                     . ("IN"
                                       "ITEMS"
                                       "LISTS"
@@ -657,6 +736,8 @@
                                       "CODE"
                                       "COMPONENT"
                                       "CONFIGURATIONS"
+                                      "CXX_MODULES_BMI"
+                                      "CXX_MODULES_DIRECTORY"
                                       "DESTINATION"
                                       "DIRECTORY"
                                       "DIRECTORY_PERMISSIONS"
@@ -666,6 +747,7 @@
                                       "EXPORT_ANDROID_MK"
                                       "EXPORT_LINK_INTERFACE_LIBRARIES"
                                       "FILE"
+                                      "FILE_SET"
                                       "FILES"
                                       "FILES_MATCHING"
                                       "FILE_PERMISSIONS"
@@ -775,6 +857,7 @@
                                       "CHECK_FAIL"
                                       "CHECK_PASS"
                                       "CHECK_START"
+                                      "CONFIGURE_LOG"
                                       "DEPRECATION"
                                       "DEBUG"
                                       "FATAL_ERROR"
@@ -921,30 +1004,80 @@
     ("target_sources"              . ("INTERFACE"
                                       "PRIVATE"
                                       "PUBLIC"))
-    ("try_compile"                 . ("CMAKE_FLAGS"
+    ("try_compile"                 . ("BINARY_DIR"
+                                      "CMAKE_FLAGS"
                                       "COMPILE_DEFINITIONS"
                                       "COPY_FILE"
                                       "COPY_FILE_ERROR"
+                                      "CUDA_EXTENSIONS"
+                                      "CUDA_STANDARD"
+                                      "CUDA_STANDARD_REQUIRED"
                                       "CXX_EXTENSIONS"
                                       "CXX_STANDARD"
                                       "CXX_STANDARD_REQUIRED"
                                       "C_EXTENSIONS"
                                       "C_STANDARD"
                                       "C_STANDARD_REQUIRED"
+                                      "HIP_EXTENSIONS"
+                                      "HIP_STANDARD"
+                                      "HIP_STANDARD_REQUIRED"
+                                      "OBJC_EXTENSIONS"
+                                      "OBJC_STANDARD"
+                                      "OBJC_STANDARD_REQUIRED"
+                                      "OBJCXX_EXTENSIONS"
+                                      "OBJCXX_STANDARD"
+                                      "OBJCXX_STANDARD_REQUIRED"
                                       "INCLUDE_DIRECTORIES"
                                       "LINK_DIRECTORIES"
                                       "LINK_LIBRARIES"
                                       "LINK_OPTIONS"
+                                      "LOG_DESCRIPTION"
+                                      "NO_CACHE"
+                                      "NO_LOG"
                                       "OUTPUT_VARIABLE"
+                                      "PROJECT"
+                                      "SOURCE_DIR"
+                                      "SOURCE_FROM_CONTENT"
+                                      "SOURCE_FROM_VAR"
+                                      "SOURCE_FROM_FILE"
                                       "SOURCES"))
     ("try_run"                     . ("ARGS"
                                       "CMAKE_FLAGS"
                                       "COMPILE_DEFINITIONS"
                                       "COMPILE_OUTPUT_VARIABLE"
+                                      "COPY_FILE"
+                                      "COPY_FILE_ERROR"
+                                      "CUDA_EXTENSIONS"
+                                      "CUDA_STANDARD"
+                                      "CUDA_STANDARD_REQUIRED"
+                                      "CXX_EXTENSIONS"
+                                      "CXX_STANDARD"
+                                      "CXX_STANDARD_REQUIRED"
+                                      "C_EXTENSIONS"
+                                      "C_STANDARD"
+                                      "C_STANDARD_REQUIRED"
+                                      "HIP_EXTENSIONS"
+                                      "HIP_STANDARD"
+                                      "HIP_STANDARD_REQUIRED"
+                                      "OBJC_EXTENSIONS"
+                                      "OBJC_STANDARD"
+                                      "OBJC_STANDARD_REQUIRED"
+                                      "OBJCXX_EXTENSIONS"
+                                      "OBJCXX_STANDARD"
+                                      "OBJCXX_STANDARD_REQUIRED"
                                       "LINK_LIBRARIES"
                                       "LINK_OPTIONS"
+                                      "LOG_DESCRIPTION"
+                                      "NO_CACHE"
+                                      "NO_LOG"
                                       "OUTPUT_VARIABLE"
                                       "RUN_OUTPUT_VARIABLE"
+                                      "RUN_OUTPUT_STDOUT_VARIABLE"
+                                      "RUN_OUTPUT_STDERR_VARIABLE"
+                                      "SOURCE_FROM_CONTENT"
+                                      "SOURCE_FROM_VAR"
+                                      "SOURCE_FROM_FILE"
+                                      "SOURCES"
                                       "WORKING_DIRECTORY"))
     ("unset"                       . ("CACHE"
                                       "PARENT_SCOPE"))
@@ -965,6 +1098,7 @@
     ("endif"       . "if")
     ("while"       . "if")
     ("endwhile"    . "if")
+    ("endblock"    . "block")
     ("endforeach"  . "foreach")
     ("endfunction" . "function")
     ("endmacro"    . "macro"))
@@ -989,8 +1123,13 @@ This is used to keep down the size of
     ("add_executable"         (:tgt) (("ALIAS" :tgt)))
     ("add_library"            (:tgt) (("ALIAS" :tgt)))
     ("aux_source_directory"   (nil :var))
+    ("block"                  () (("PROPAGATE" :repeat :var)))
     ("build_command"          (:var) (("TARGET" :tgt)))
-    ("cmake_host_system_information" () (("RESULT" :var)))
+    ("cmake_host_system_information" () (("ERROR_VARIABLE" :var)
+                                         ("RESULT" :var)))
+    ("cmake_language"                () (("CALL" :func :repeat :var)
+                                         ("GET_MESSAGE_LOG_LEVEL" :var)
+                                         ("SET_DEPENDENCY_PROVIDER" :func)))
     ("cmake_policy"           () (("GET" :policy :var)
                                   ("SET" :policy)))
     ("cmake_path"             () (("ABSOLUTE_PATH" :var)
@@ -1017,7 +1156,8 @@ This is used to keep down the size of
                                   ("REPLACE_EXTENSION" :var)
                                   ("REPLACE_FILENAME" :var)
                                   ("SET" :var)))
-    ("define_property"        () (("PROPERTY" :prop)))
+    ("define_property"        () (("PROPERTY" :prop)
+                                  ("INITIALIZE_FROM_VARIABLE" :var)))
     ("execute_process"        () (("RESULT_VARIABLE"  :var)
                                   ("RESULTS_VARIABLE" :var)
                                   ("OUTPUT_VARIABLE"  :var)
@@ -1025,7 +1165,8 @@ This is used to keep down the size of
                                   ("INPUT_FILE"       :path)
                                   ("OUTPUT_FILE"      :path)
                                   ("ERROR_FILE"       :path)))
-    ("export"                 () (("TARGETS" :repeat :tgt)))
+    ("export"                 () (("TARGETS" :repeat :tgt)
+                                  ("CXX_MODULES_DIRECTORY" :path)))
     ("file"                   ()     (("LOCK"            :path)
                                       ("CHMOD"           :repeat :path)
                                       ("CHMOD_RECURSE"   :repeat :path)
@@ -1077,21 +1218,25 @@ This is used to keep down the size of
      ;;    "HINTS ENV x y".
      ;;
      ;; This is not currently supported, as "ENV" is treated as a
-     ;; keyword and ths breaks the parsing of path arguments.
+     ;; keyword and this breaks the parsing of path arguments.
      (("HINTS" :repeat :path)
-      ("PATHS" :repeat :path)))
+      ("PATHS" :repeat :path)
+      ("VALIDATOR" :func)))
     ("find_library"           (:var :optional nil :repeat :path)
      ;; Note: See comment in "fild_file".
      (("HINTS" :repeat :path)
-      ("PATHS" :repeat :path)))
+      ("PATHS" :repeat :path)
+      ("VALIDATOR" :func)))
     ("find_path"              (:var :optional nil :repeat :path)
      ;; Note: See comment in "fild_file".
      (("HINTS" :repeat :path)
-      ("PATHS" :repeat :path)))
+      ("PATHS" :repeat :path)
+      ("VALIDATOR" :func)))
     ("find_program"           (:var :optional nil :repeat :path)
      ;; Note: See comment in "fild_file".
      (("HINTS" :repeat :path)
-      ("PATHS" :repeat :path)))
+      ("PATHS" :repeat :path)
+      ("VALIDATOR" :func)))
     ("foreach"                (:var) (("LISTS" :repeat :var)
                                       ("ZIP_LISTS" :repeat :var)))
     ("function"               (:func :repeat :var))
@@ -1142,6 +1287,7 @@ This is used to keep down the size of
       ("MATCHES"               :regexp)
       ("NOT"                   :optional :var)
       ("OR"                    :optional :var)
+      ("PATH_EQUAL"            :var)
       ("POLICY"                :policy)
       ("STREQUAL"              :var)
       ("STRGREATER"            :var)
@@ -1186,6 +1332,7 @@ This is used to keep down the size of
                                               ("FORCE" :repeat :var)))
     ("math"                   () (("EXPR" :var)))
     ("option"                 (:var))
+    ("return"                 () (("PROPAGATE" :repeat :var)))
     ("separate_arguments"     (:var))
     ("set"                    (:var))
     ("set_directory_properties" ()    (("PROPERTIES" :repeat (:prop nil))))
@@ -1230,6 +1377,8 @@ This is used to keep down the size of
                                        ("JOIN"      nil :var)
                                        ("TOUPPER"   nil :var)
                                        ("TOLOWER"   nil :var)
+                                       ;; Note: This is not correct
+                                       ;; for JSON LENGTH.
                                        ("LENGTH"    nil :var)
                                        ("REPEAT"    nil nil :var)
                                        ("SUBSTRING" nil nil nil :var)
@@ -1257,19 +1406,31 @@ This is used to keep down the size of
                                           ("PUBLIC"    :repeat :path)
                                           ("PRIVATE"   :repeat :path)
                                           ("REUSE_FROM" :tgt)))
-    ("target_sources"             (:tgt))
+    ("target_sources"             (:tgt) (("BASE_DIR" :repeat :path)
+                                          ("FILE_SET" nil)
+                                          ("FILES"    :repeat :path)
+                                          ("TYPE"     nil)))
     ;; Placement of :optional is to allow "try_compile(var dir SOURCES ...)"
-    ("try_compile"             (:var nil :optional nil nil :tgt)
-     (("OUTPUT_VARIABLE" :var)
+    ("try_compile"                (:var nil :optional nil nil :tgt)
+     (("OUTPUT_VARIABLE"     :var)
       ("COMPILE_DEFINITIONS" :repeat :def)
-      ("COPY_FILE_ERROR" :var)))
-    ("try_run"                 (:var :var)
-     (("COMPILE_OUTPUT_VARIABLE" :var)
-      ("OUTPUT_VARIABLE" :var)
-      ("RUN_OUTPUT_VARIABLE" :var)
-      ("COMPILE_DEFINITIONS" :repeat :def)))
-    ("unset"                   (:var))
-    ("variable_watch"          (:var)))
+      ("COPY_FILE_ERROR"     :var)
+      ("SOURCE_FROM_CONTENT" nil nil)
+      ("SOURCE_FROM_FILE"    nil :path)
+      ("SOURCE_FROM_VAR"     nil :var)
+      ("TARGET"              :tgt)))
+    ("try_run"                    (:var :var)
+     (("COMPILE_DEFINITIONS"        :repeat :def)
+      ("COMPILE_OUTPUT_VARIABLE"    :var)
+      ("OUTPUT_VARIABLE"            :var)
+      ("RUN_OUTPUT_STDOUT_VARIABLE" :var)
+      ("RUN_OUTPUT_STDERR_VARIABLE" :var)
+      ("RUN_OUTPUT_VARIABLE"        :var)
+      ("SOURCE_FROM_CONTENT"        nil nil)
+      ("SOURCE_FROM_FILE"           nil :path)
+      ("SOURCE_FROM_VAR"            nil :var)))
+    ("unset"                      (:var))
+    ("variable_watch"             (:var)))
   "*List of function signatures.
 
 Each element of the list is a list with two or three elements.
@@ -1920,7 +2081,8 @@ match."
   ;;
 
   (setq font-lock-multiline t)
-  (let* ((keywords '("break"
+  (let* ((keywords '("block"      "endblock"
+                     "break"
                      "continue"
                      "foreach"    "endforeach"
                      "function"   "endfunction"
